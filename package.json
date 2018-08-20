@@ -1,0 +1,26 @@
+{
+  "name": "property-valuation",
+  "version": "1.0.0",
+  "description": "Property Investment Application",
+  "main": "app.js",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "dotenv": "^6.0.0",
+    "knex": "^0.15.2",
+    "pg": "^7.4.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Alam3035/Property-Valuation.git"
+  },
+  "author": "Kyle, Peter, Sam, Alam",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Alam3035/Property-Valuation/issues"
+  },
+  "homepage": "https://github.com/Alam3035/Property-Valuation#readme"
+}
