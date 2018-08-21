@@ -24,7 +24,6 @@ exports.up = function (knex) {
             table.string('area');
             table.string('winloss');
             table.string('img');
-            table.string('mime_type');
             table.timestamps(false, true);
         }),
 
