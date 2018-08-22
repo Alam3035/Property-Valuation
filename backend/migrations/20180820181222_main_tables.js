@@ -8,23 +8,16 @@ exports.up = function (knex) {
             table.integer('phone');
             table.string('password');
             table.boolean('special_user');
+            table.string('facebook_id');
         }),
 
-        knex.schema.createTable('historical_transaction', (table) => {
-            table.increments('ht_id').primary();
+        knex.schema.createTable('real_estate', (table) => {
+            table.increments('re_id').primary();
             table.integer('id');
             table.string('addr');
-            table.string('catfathername');
+            table.string('catnamefather');
             table.string('catname');
-            table.string('block');
-            table.integer('rootid')
-            table.integer('price_value');
-            table.string('date');
-            table.decimal('sq_price_value');
             table.string('area');
-            table.string('winloss');
-            table.string('img');
-            table.timestamps(false, true);
         }),
 
     ])
@@ -32,6 +25,6 @@ exports.up = function (knex) {
 
 exports.down = function (knex, Promise) {
         return knex.schema.dropTable('users').then(() => {
-            return knex.schema.dropTable('historical_transaction')
+            return knex.schema.dropTable('real_estate')
         });
 }
