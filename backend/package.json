@@ -1,26 +1,22 @@
 {
-  "name": "property-valuation",
+  "name": "group-project-3",
   "version": "1.0.0",
-  "description": "Property Investment Application",
   "main": "app.js",
-  "dependencies": {
-    "body-parser": "^1.18.3",
-    "dotenv": "^6.0.0",
-    "knex": "^0.15.2",
-    "pg": "^7.4.3"
-  },
-  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Alam3035/Property-Valuation.git"
-  },
-  "author": "Kyle, Peter, Sam, Alam",
+  "author": "",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/Alam3035/Property-Valuation/issues"
+  "dependencies": {
+    "async": "^2.6.1",
+    "axios": "^0.18.0",
+    "dotenv": "^6.0.0",
+    "express": "^4.16.3",
+    "knex": "^0.15.2",
+    "pg": "^7.4.3",
+    "redis": "^2.8.0",
+    "request": "^2.87.0"
   },
-  "homepage": "https://github.com/Alam3035/Property-Valuation#readme"
+  "devDependencies": {},
+  "description": ""
 }
