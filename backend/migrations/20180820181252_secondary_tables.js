@@ -34,6 +34,7 @@ exports.up = function(knex, Promise) {
         knex.schema.createTable('historical_transaction', (table) => {
             table.increments('ht_id').primary();
             table.string('block');
+            table.string('root_id');
             table.sting('price_value');
             table.string('date');
             table.integer('sq_price');
