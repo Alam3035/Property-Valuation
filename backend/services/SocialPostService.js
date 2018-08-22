@@ -27,8 +27,8 @@ class SocialPostService {
             })
     }
 
-    // write users delete social post
-    deleteSocialPost(postID, userID) {
+    // users delete social post
+    deleteSocialPost(postID, userID) { //Deleting social post 
         let query = this.knex
             .select('post_id')
             .from('social_post')
@@ -45,7 +45,7 @@ class SocialPostService {
             })
     }
 
-    
+
 }
 
 module.exports = SocialPostService;

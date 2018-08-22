@@ -5,8 +5,8 @@ exports.up = function(knex, Promise) {
             table.increments('user_fav_prop').primary();
 
             //FK: Historical transactions ht_id
-            table.integer('ht_id').unsigned();
-            table.foreign('ht_id').references('historical_transaction.ht_id');
+            table.integer('re_id').unsigned();
+            table.foreign('re_id').references('real_estate.re_id');
 
             //FK: users user_id
             table.integer('user_id').unsigned();

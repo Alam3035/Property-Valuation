@@ -15,25 +15,44 @@ exports.up = function(knex, Promise) {
 
         knex.schema.createTable('trade_post', (table) => {
             table.increments('tp_id').primary();
-            table.string('address');
-            table.string('catname');
             table.integer('asking_price');
-            table.integer('area');
             table.string('special_note');
             table.string('images');
+
+
+            //FK: re.id
+            table.integer('re_id').unsigned();
+            table.foreign('re_id').references('real_estate.re_id');
 
             //FK: users.id
             table.integer('user_id').unsigned();
             table.foreign('user_id').references('users.user_id');
             table.timestamps(false,true);
+
         }),
 
-    ])
+        knex.schema.createTable('historical_transaction', (table) => {
+            table.increments('ht_id').primary();
+            table.string('block');
+            table.sting('price_value');
+            table.string('date');
+            table.integer('sq_price');
+            table.integer('winloss');
+            table.string('img-url');
+
+            //FK: re.id
+            table.integer('re_id').unsigned();
+            table.foreign('re_id').references('real_estate.re_id');
+        })
+
+    ]);
   
 };
 
 exports.down = function(knex, Promise) {
     return knex.schema.dropTable('social_post').then(() => {
-        return knex.schema.dropTable('trade_post')
-        })
+        return knex.schema.dropTable('trade_post').then(() => {
+            return knex.schema.dropTable('historical_transaction')
+        });
+    });
 };
