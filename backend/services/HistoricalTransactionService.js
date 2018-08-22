@@ -42,7 +42,7 @@ class HistoricalTransactionService {
     listHistoricalTransactionAverageEstatePrices(catname) { // list out  the average price of each estate?
         let query = this.knex
             .select(
-                'histroical_transaction.block',
+                'historical_transaction.block',
                 'historical_transaction.price_value',
                 'historical_transaction.winloss'
             )
@@ -65,7 +65,6 @@ class HistoricalTransactionService {
     getHistoricalTransactionDetail(htID){ // lists details of a historical transaction
         let query = this.knex
             .select(
-                'historical_transaction.ht_id',
                 'historical_transaction.addr',
                 'historical_transaction.catfathername',
                 'historical_transaction.catname',
@@ -73,15 +72,13 @@ class HistoricalTransactionService {
                 'historical_transaction.winloss',
                 'historical_transaction.price_value',
                 'historical_transaction.sq_price_value',
-                'historical_transaction.area',
-                'historical_transaction.img'
+                'historical_transaction.area'
             )
             .from('historical_transaction')
             .where('historical_transaction.ht_id', htID)
 
             return query.then(rows => {
                 return rows.map(row => ({
-                    ht_id: row.ht_id,
                     addr: row.addr,
                     catfathername: row.catfathername,
                     catname: row.catname,
@@ -90,11 +87,8 @@ class HistoricalTransactionService {
                     price_value: row.price_value,
                     sq_price_value: row.sq_price_value,
                     area: row.area,
-                    img: row.img
                 }));
             })
-
-
     }
 
 }
