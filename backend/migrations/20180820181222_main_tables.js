@@ -23,7 +23,7 @@ exports.up = function (knex) {
             table.decimal('sq_price_value');
             table.string('area');
             table.string('winloss');
-            table.binary('img');
+            table.string('img-url');
             table.string('mime_type');
             table.timestamps(false, true);
         }),
