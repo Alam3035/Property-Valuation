@@ -36,7 +36,7 @@ exports.up = function(knex, Promise) {
             table.integer('id');
             table.string('block');
             table.integer('rootid');
-            table.sting('price_value');
+            table.string('price_value');
             table.string('date');
             table.integer('sq_price');
             table.integer('winloss');
