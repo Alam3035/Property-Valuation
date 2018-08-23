@@ -13,9 +13,8 @@ exports.up = function (knex) {
 
         knex.schema.createTable('real_estate', (table) => {
             table.increments('re_id').primary();
-            table.integer('id');
             table.string('addr');
-            table.string('catnamefather');
+            table.string('catfathername');
             table.string('catname');
             table.string('area');
         }),

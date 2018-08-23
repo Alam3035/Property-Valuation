@@ -33,6 +33,7 @@ exports.up = function(knex, Promise) {
 
         knex.schema.createTable('historical_transaction', (table) => {
             table.increments('ht_id').primary();
+            table.integer('id');
             table.string('block');
             table.integer('rootid');
             table.string('price_value');
