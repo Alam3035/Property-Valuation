@@ -11,7 +11,7 @@ class HistoricalTransactionRouter {
         //Historical Transaction data
         //get historical transaction data by district (root menu get request)
             router.get('/rootID/:rootID', (req, res) => {
-                console.log('hhdddh')
+                console.log('list by rootid')
 
                 this.historicalTransactionService.listHistoricalTransactionsByDistrict(req.params.rootID)
                     .then((districtDetail) => res.json(districtDetail))
@@ -21,7 +21,8 @@ class HistoricalTransactionRouter {
 
         //get estate information err fro spaces in requests try + or \
             router.get('/estate/:catname', (req, res) => {
-                console.log(req.params.catname)
+                console.log('list by catname')
+
                 this.historicalTransactionService.listHistoricalTransactionAverageEstatePrices(req.params.catname)
                     .then((estateDetail) => res.json(estateDetail))
                     .catch((err) => res.status(500).json(err));
@@ -30,6 +31,8 @@ class HistoricalTransactionRouter {
 
         //get detailed information err
             router.get('/details/:htID', (req, res) => {
+                console.log('detailed transaction history')
+
                 this.historicalTransactionService.getHistoricalTransactionDetail(req.params.htID)
                     .then((htDetail) => res.json(htDetail))
                     .catch((err) => res.status(500).json(err));
