@@ -73,8 +73,8 @@ class TradingPlatformService {
                 special_note: row.special_note,
                 images: row.images
             }));
-        })
-    }
+        });
+    };
 
     removePropertyTradePost(postID, userID) {
         let query = this.knex  

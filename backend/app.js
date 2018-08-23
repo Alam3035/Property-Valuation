@@ -38,7 +38,7 @@ const { DirectMessageService,
         
         // let directMessageService = new DirectMessageService(knex);
         let historicalTransactionService = new HistoricalTransactionService(knex, redisClient);
-        // let socialPostService = new SocialPostService(knex);
+        let socialPostService = new SocialPostService(knex);
         let tradingPlatformService = new TradingPlatformService(knex, redisClient);
         let userService = new UserService(knex, redisClient);
 
@@ -48,7 +48,7 @@ const { DirectMessageService,
         new SocketIORouter(io,userService).router();
         // app.use('/api/direct_message', (new DirectMessageRouter(directMessageService)).router());
         app.use('/api/his_trans', (new HistoricalTransactionRouter(historicalTransactionService)).router());
-        // app.use('/api/socail_post', (new SocialPostRouter(socialPostService)).router());
+        app.use('/api/socail_post', (new SocialPostRouter(socialPostService)).router());
         app.use('/api/trade_plat', (new TradingPlatformRouter(tradingPlatformService)).router());
         app.use('/api/user', (new UserRouter(userService)).router());
 

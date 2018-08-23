@@ -39,7 +39,7 @@ class TradingPlatformRouter {
             this.tradingPlatformService.listPropertiesTradePost(req.params.userID)
                 .then((trade_post) => res.json(trade_post))
                 .catch((err) => res.status(500).json(err));
-        })
+        });
 
         return router;
 
