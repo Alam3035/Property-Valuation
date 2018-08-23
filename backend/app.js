@@ -1,5 +1,5 @@
-//General Initalization 
-require('dotenv').config(); //Define Enniroments
+//General Initilization 
+require('dotenv').config(); //Define Environments
 const REDIS_HOST = process.env.REDIS_HOST || 'localhost';
 const REDIS_PORT = process.env.REDIS_PORT || 6379
 const NODE_ENV = process.env.NODE_ENV || 'development' 
@@ -48,7 +48,7 @@ const { DirectMessageService,
         new SocketIORouter(io,userService).router();
         // app.use('/api/direct_message', (new DirectMessageRouter(directMessageService)).router());
         app.use('/api/his_trans', (new HistoricalTransactionRouter(historicalTransactionService)).router());
-        app.use('/api/socail_post', (new SocialPostRouter(socialPostService)).router());
+        app.use('/api/social_post', (new SocialPostRouter(socialPostService)).router());
         app.use('/api/trade_plat', (new TradingPlatformRouter(tradingPlatformService)).router());
         app.use('/api/user', (new UserRouter(userService)).router());
 
