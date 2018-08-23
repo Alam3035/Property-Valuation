@@ -1,4 +1,3 @@
-
 exports.up = function(knex, Promise) {
     return Promise.all([
         knex.schema.createTable('user_favourites_property', function (table) {

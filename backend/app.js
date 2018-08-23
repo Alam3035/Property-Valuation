@@ -21,6 +21,7 @@ const isLoggedIn = require('./utils/guard').isLoggedIn;
 //Routers and Services
 const { DirectMessageRouter,
         HistoricalTransactionRouter,
+        EstateRouter,
         SocialPostRouter,
         SocketIORouter,
         TradingPlatformRouter,
@@ -29,27 +30,29 @@ const { DirectMessageRouter,
 
 const { DirectMessageService,
         HistoricalTransactionService,
+        EstateService,
         SocialPostService,
         TradingPlatformService,
         UserService
          } = require('./services');
 
      
-        
-        // let directMessageService = new DirectMessageService(knex);
-        let historicalTransactionService = new HistoricalTransactionService(knex, redisClient);
         // let socialPostService = new SocialPostService(knex);
-        let tradingPlatformService = new TradingPlatformService(knex, redisClient);
+        // let directMessageService = new DirectMessageService(knex);
+        // let estateService = new EstateService(knex);
+        // let historicalTransactionService = new HistoricalTransactionService(knex, redisClient);
+        // let tradingPlatformService = new TradingPlatformService(knex, redisClient);
         let userService = new UserService(knex, redisClient);
 
         const {app,server,io} = require('./utils/init-app')(redisClient);
 
 
         new SocketIORouter(io,userService).router();
-        // app.use('/api/direct_message', (new DirectMessageRouter(directMessageService)).router());
-        app.use('/api/his_trans', (new HistoricalTransactionRouter(historicalTransactionService)).router());
+        //app.use('/api/estate', (new EstateRouter(estateService)).router());
+        // app.use('/api/direct_message', (new DirectMessageRouter(directMessageService)).router());        
         // app.use('/api/socail_post', (new SocialPostRouter(socialPostService)).router());
-        app.use('/api/trade_plat', (new TradingPlatformRouter(tradingPlatformService)).router());
+        // app.use('/api/his_trans', (new HistoricalTransactionRouter(historicalTransactionService)).router());
+        // app.use('/api/trade_plat', (new TradingPlatformRouter(tradingPlatformService)).router());
         app.use('/api/user', (new UserRouter(userService)).router());
 
 
