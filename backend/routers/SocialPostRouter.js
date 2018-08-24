@@ -11,6 +11,8 @@ class SocialPostRouter {
 
         //Adding a new Blog Post
         router.post('/:userID', (req, res) => {
+            console.log('You see this?')
+
             this .socialPostService.addSocialPost(req.body.header, req.body.body, req.body.header_image, req.session.passport.user_id, req.params.userID)
             .then(() => this.socialPostService.listSocialPost(req.params.userID))
             .then((social_post) => res.json(social_post))
@@ -19,6 +21,8 @@ class SocialPostRouter {
 
         //list all the blogs by special user
         router.get('/:userID', (req,res) => {
+            console.log('You see this?')
+
             this.socialPostService.listSocialPost(req.params.userID)
             .then((social_post) => res.json(social_post))
             .catch((err) => res.status(500).json(err));
@@ -26,6 +30,8 @@ class SocialPostRouter {
 
         //edit social post
         router.put('/:spostID', (req,res) => {
+            console.log('You see this?')
+
             this.socialPostService.editSocialPost(req.body.header, req.body.body, req.body.header_image, req.session.passport.user_id)
             .then((socialPostDetails) => res.json(socialPostDetails))
             .catch((err) => res.status(500).json(err));
@@ -33,7 +39,10 @@ class SocialPostRouter {
 
         //delete social post
         router.delete('/:spostID', (req, res) => {
+            console.log('You see this?')
+
             this.socialPostService.deleteSocialPost(req.params.userID)
+            .then(() => this.socialPostService.listSocialPost(req.params.userID))
             .then((social_post) => res.json(social_post))
             .catch((err) => res.status(500).json(err));
         })
