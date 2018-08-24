@@ -43,9 +43,6 @@ class UserService {
         })
     }
 
-       // write users favourite social posts
-    // write users favourite historical transaction
-    // write users favourite estate
     // write users chat messages
    
 

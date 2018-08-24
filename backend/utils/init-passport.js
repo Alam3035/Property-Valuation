@@ -23,6 +23,5 @@ module.exports = (app)=>{
     // });
     
     require('./strategies/local-strategy')(passport);
-    require('./strategies/facebook-strategy')(passport);
 
 }
