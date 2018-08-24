@@ -15,10 +15,13 @@ import {
   TouchableOpacity,
   FlatList,
   StatusBar,
-  Image
+  Image,
+  TextInput,
+  Button
 } from "react-native";
 
 import { NavigationComponentProps } from "react-native-navigation";
+import ModalExample from '../components/home/districtbotton'
 
 import styles from "../src/styles/style";
 
@@ -29,6 +32,7 @@ interface IHomeStates {
   refreshing: boolean;
   page: number;
   seed: number;
+  searchString:string;
   data: Array<{
     gender: string;
     name: {
@@ -94,9 +98,13 @@ export default class Home extends Component<IHomeProps, IHomeStates> {
       refreshing: false,
       page: 1,
       seed: 1,
-      data: []
+      data: [],
+      searchString: 'Which district/estate are you interested in?'
     };
   }
+
+
+
 
   componentDidMount() {
     this.makeRemoteRequest();
@@ -163,9 +171,32 @@ export default class Home extends Component<IHomeProps, IHomeStates> {
     );
   };
 
+  onSearchTextChanged = (event) => {
+    this.setState({ searchString: event.nativeEvent.text });
+    console.log(this.state.searchString)
+
+  }
+
   render() {
     return (
-      <View style={styles.container}>
+     
+        <View style={styles.container}>
+          <View style={styles.districtbox}>
+            <TextInput
+              underlineColorAndroid={'transparent'}
+              style={styles.searchInput}
+              value={this.state.searchString}
+              onChange={this.onSearchTextChanged} />
+            <Button
+              onPress={() => { }}
+              color='#48BBEC'
+              title='Go'
+            />
+          </View>
+          
+        <ModalExample></ModalExample>
+        
+          
         <StatusBar
           backgroundColor="blue"
           barStyle="light-content"
