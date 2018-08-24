@@ -51,20 +51,20 @@
 	</array>
 	<key>UIAppFonts</key>
 	<array>
-		<string>/Users/siuhang/Code/Property-Valuation/frontend/PropertyValuation/node_modules/react-native-vector-icons/Fonts/Octicons.ttf</string>
-		<string>/Users/siuhang/Code/Property-Valuation/frontend/PropertyValuation/node_modules/react-native-vector-icons/Fonts/Feather.ttf</string>
-		<string>/Users/siuhang/Code/Property-Valuation/frontend/PropertyValuation/node_modules/react-native-vector-icons/Fonts/Entypo.ttf</string>
-		<string>/Users/siuhang/Code/Property-Valuation/frontend/PropertyValuation/node_modules/react-native-vector-icons/Fonts/FontAwesome5_Brands.ttf</string>
-		<string>/Users/siuhang/Code/Property-Valuation/frontend/PropertyValuation/node_modules/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf</string>
-		<string>/Users/siuhang/Code/Property-Valuation/frontend/PropertyValuation/node_modules/react-native-vector-icons/Fonts/Foundation.ttf</string>
-		<string>/Users/siuhang/Code/Property-Valuation/frontend/PropertyValuation/node_modules/react-native-vector-icons/Fonts/Ionicons.ttf</string>
-		<string>/Users/siuhang/Code/Property-Valuation/frontend/PropertyValuation/node_modules/react-native-vector-icons/Fonts/FontAwesome5_Solid.ttf</string>
-		<string>/Users/siuhang/Code/Property-Valuation/frontend/PropertyValuation/node_modules/react-native-vector-icons/Fonts/FontAwesome5_Regular.ttf</string>
-		<string>/Users/siuhang/Code/Property-Valuation/frontend/PropertyValuation/node_modules/react-native-vector-icons/Fonts/FontAwesome.ttf</string>
-		<string>/Users/siuhang/Code/Property-Valuation/frontend/PropertyValuation/node_modules/react-native-vector-icons/Fonts/Zocial.ttf</string>
-		<string>/Users/siuhang/Code/Property-Valuation/frontend/PropertyValuation/node_modules/react-native-vector-icons/Fonts/EvilIcons.ttf</string>
-		<string>/Users/siuhang/Code/Property-Valuation/frontend/PropertyValuation/node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf</string>
-		<string>/Users/siuhang/Code/Property-Valuation/frontend/PropertyValuation/node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf</string>
+		<string>Entypo.ttf</string>
+		<string>EvilIcons.ttf</string>
+		<string>Feather.ttf</string>
+		<string>FontAwesome.ttf</string>
+		<string>FontAwesome5_Brands.ttf</string>
+		<string>FontAwesome5_Regular.ttf</string>
+		<string>FontAwesome5_Solid.ttf</string>
+		<string>Foundation.ttf</string>
+		<string>Ionicons.ttf</string>
+		<string>MaterialCommunityIcons.ttf</string>
+		<string>MaterialIcons.ttf</string>
+		<string>Octicons.ttf</string>
+		<string>SimpleLineIcons.ttf</string>
+		<string>Zocial.ttf</string>
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
