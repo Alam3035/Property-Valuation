@@ -40,7 +40,7 @@ exports.up = function(knex, Promise) {
             table.string('date');
             table.decimal('sq_price');
             table.integer('winloss');
-            table.string('img-url');
+            table.string('img_url');
 
             //FK: re.id
             table.integer('re_id').unsigned();
