@@ -4159,6 +4159,12 @@ react-is@^16.4.1:
   version "16.4.2"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.4.2.tgz#84891b56c2b6d9efdee577cc83501dfc5ecead88"
 
+react-native-modal-dropdown@^0.6.2:
+  version "0.6.2"
+  resolved "https://registry.yarnpkg.com/react-native-modal-dropdown/-/react-native-modal-dropdown-0.6.2.tgz#da6027b3546d2031fbce46242bffc95561e13599"
+  dependencies:
+    prop-types "^15.6.0"
+
 react-native-navigation@*, react-native-navigation@^1.1.480:
   version "1.1.480"
   resolved "https://registry.yarnpkg.com/react-native-navigation/-/react-native-navigation-1.1.480.tgz#7090a2adbc0399f223d8be906df33fbe12f6c272"

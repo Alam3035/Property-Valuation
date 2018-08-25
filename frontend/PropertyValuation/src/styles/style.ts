@@ -28,6 +28,27 @@ const homeStyles = StyleSheet.create({
     padding: 20,
     width: Dimensions.get("window").width
     // width: 270
-  }
+  },
+  districtbox: {
+    flexDirection: 'row',
+  },
+  districtbar: {
+    flexDirection: 'row',
+    alignItems: 'center'
+  }, 
+  searchInput: {
+    height: 50,
+    width: 350,
+    flexGrow: 1,
+    padding: 4,
+    marginRight: 5,
+    fontSize: 18,
+    borderWidth: 1,
+    borderColor: '#48BBEC',
+    borderRadius: 8,
+    color: '#48BBEC',
+  },
+
+
 });
 export default homeStyles;
