@@ -42,7 +42,7 @@ listHistoricalTransactionByRealEstate(reID){
                                 date: reRow.date,
                                 winloss: reRow.winloss,
                                 img_url: reRow.img_url,
-                                id: reRow.id,
+                                id: reRow.id,ffff
                                 ht_id: reRow.ht_id
                             });
                         });
