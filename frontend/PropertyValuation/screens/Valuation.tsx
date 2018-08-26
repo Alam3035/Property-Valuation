@@ -20,7 +20,7 @@ import {
 
 import { NavigationComponentProps } from "react-native-navigation";
 import { Navigation } from "react-native-navigation";
-import Auth from "../containers/Auth";
+import Auth from "./Auth";
 Navigation.registerComponent("example.auth", () => Auth);
 
 interface Props extends NavigationComponentProps {}
