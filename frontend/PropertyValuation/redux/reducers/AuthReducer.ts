@@ -1,31 +1,29 @@
 import {
-  LoginActions,
+  authAction,
   LOGIN_SUCCESS,
-  LOGOUT
-} from "../../components/auth/action";
+  LOGIN_FAILURE
+} from "../../components/auth/authAction";
 
-export interface IAuthState {
-  isAuthenticated: boolean;
+export interface AuthState {
+  auth: string;
 }
 
 const initialState = {
-  isAuthenticated: false
+  auth: "Press me the print greet messgae ~ :D"
 };
 
 export function authReducer(
-  state: IAuthState = initialState,
-  action: LoginActions
+  state: AuthState = initialState,
+  action: authAction
 ) {
   switch (action.type) {
     case LOGIN_SUCCESS:
       return {
-        ...state,
-        isAuthenticated: true
+        auth: "new hello world"
       };
-    case LOGOUT:
+    case LOGIN_FAILURE:
       return {
-        ...state,
-        isAuthenticated: false
+        auth: "new hello world"
       };
     default:
       return state;

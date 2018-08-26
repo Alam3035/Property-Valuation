@@ -9,15 +9,7 @@
 // import React, { Component } from "react";
 import * as React from "react";
 import { Component } from "react";
-import {
-  Platform,
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-  Image,
-  AlertIOS
-} from "react-native";
+import { Platform, StyleSheet, Text, View, AlertIOS } from "react-native";
 
 import { NavigationComponentProps } from "react-native-navigation";
 import { Navigation } from "react-native-navigation";

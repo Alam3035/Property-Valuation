@@ -27,8 +27,9 @@ export default class Auth extends Component<Props> {
         <Text style={styles.instructions}>Please login or signup!</Text>
         <Button
           onPress={() =>
-            this.props.navigator.dismissModal({
-              animationType: "slide-down" // 'none' / 'slide-down' , dismiss animation for the modal (optional, default 'slide-down')
+            this.props.navigator.pop({
+              animated: true, // does the pop have transition animation or does it happen immediately (optional)
+              animationType: "fade" // 'fade' (for both) / 'slide-horizontal' (for android) does the pop have different transition animation (optional)
             })
           }
           title="Continue without registration"
