@@ -3,94 +3,67 @@ class HistoricalTransactionService {
         this.knex = knex;
     }
 
-    // Historical Transaction Services
-    listHistoricalTransactionsByDistrict(rootID) { //list out data from home page this data is sorted by Island
-        let query = this.knex   
-            .select(
-                'historical_transaction.ht_id',
-                'historical_transaction.addr',
-                'historical_transaction.catfathername',
-                'historical_transaction.catname',
-                'historical_transaction.date',
-                'historical_transaction.winloss',
-                'historical_transaction.price_value',
-                'historical_transaction.sq_price_value',
-                'historical_transaction.area',
-                'historical_transaction.img'
-            )
-            .from('historical_transaction')
-            .where('historical_transaction.rootid', rootID)
-            .orderBy('historical_transaction.winloss', 'desc')
-
-            return query.then((rows) => {
-                return rows.map(row => ({
-                    ht_id: row.ht_id,
-                    addr: row.addr,
-                    catfathername: row.catfathername,
-                    catname: row.catname,
-                    date: row.date,
-                    winloss: row.winloss,
-                    price_value: row.price_value,
-                    sq_price_value: row.sq_price_value,
-                    area: row.area,
-                    img: row.img
-                }))
-            })
-
-    }
-
-    listHistoricalTransactionAverageEstatePrices(catname) { // list out  the average price of each estate?
+    //List all historical transactions per estate (re_id)
+    listHistoricalTransactionByRealEstate(reID) {
         let query = this.knex
             .select(
-                'historical_transaction.block',
-                'historical_transaction.price_value',
-                'historical_transaction.winloss'
+                'real_estate.addr',
+                'real_estate.catfathername',
+                'real_estate.catname',
+                'real_estate.re_id'
             )
-            .from('historical_transaction')
-            .where('historical_transaction.catname', catname)
+            .from('real_estate')
+            .where('real_estate.re_id', reID)
+        console.log('selecting')
 
+        return query.then(rows => {
+            return rows.map(row => ({
+                re_id: row.re_id,
+                addr: row.addr,
+                catfathername: row.catfathername,
+                catname: row.catname,
+                transactions: []
+            }));
+        })
+            .then(rows => { //Get Address for the historical transactions with same re_id
+                return Promise.all(
+                    rows.map(row => {
+                        let query = this.knex
+                            .select('historical_transaction.price_value',
+                                'historical_transaction.date',
+                                'historical_transaction.winloss',
+                                'historical_transaction.img_url',
+                                'historical_transaction.id',
+                                'historical_transaction.ht_id',
+                                'historical_transaction.re_id')
+                            .from('historical_transaction')
+                            .innerJoin('real_estate', 'historical_transaction.re_id', 'real_estate.re_id')
+                            .where('real_estate.re_id', row.re_id)
+                            .orderBy('historical_transaction.winloss', 'desc') //could also list by date
+                        console.log('selecting two')
 
-// here we should write the code that will create an average of all transactions with the same catname (estate)
-
-            return query.then(rows => {
-                return rows.map(row => ({
-                    block: row.block,
-                    price_value: row.price_value,
-                    winloss: row.winloss
-                }));
+                        return query.then(reRows => {
+                            reRows.forEach(reRow => {
+                                row.transactions.push({
+                                    re_id: reRow.re_id,
+                                    price_value: reRow.price_value,
+                                    date: reRow.date,
+                                    winloss: reRow.winloss,
+                                    img_url: reRow.img_url,
+                                    id: reRow.id,
+                                    ht_id: reRow.ht_id
+                                });
+                            });
+                            return row;
+                        })
+                    })
+                )
             })
-
     }
 
-    getHistoricalTransactionDetail(htID){ // lists details of a historical transaction
-        let query = this.knex
-            .select(
-                'historical_transaction.addr',
-                'historical_transaction.catfathername',
-                'historical_transaction.catname',
-                'historical_transaction.date',
-                'historical_transaction.winloss',
-                'historical_transaction.price_value',
-                'historical_transaction.sq_price_value',
-                'historical_transaction.area'
-            )
-            .from('historical_transaction')
-            .where('historical_transaction.ht_id', htID)
-
-            return query.then(rows => {
-                return rows.map(row => ({
-                    addr: row.addr,
-                    catfathername: row.catfathername,
-                    catname: row.catname,
-                    date: row.date,
-                    winloss: row.winloss,
-                    price_value: row.price_value,
-                    sq_price_value: row.sq_price_value,
-                    area: row.area,
-                }));
-            })
-    }
 
 }
 
 module.exports = HistoricalTransactionService;
+
+
