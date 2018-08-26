@@ -9,7 +9,14 @@
 // import React, { Component } from "react";
 import * as React from "react";
 import { Component } from "react";
-import { Platform, StyleSheet, Text, View, AlertIOS } from "react-native";
+import {
+  Platform,
+  StyleSheet,
+  Text,
+  View,
+  AlertIOS,
+  Alert
+} from "react-native";
 
 import { NavigationComponentProps } from "react-native-navigation";
 import { Navigation } from "react-native-navigation";
@@ -54,15 +61,25 @@ export default class Valuation extends Component<Props> {
     // this is the onPress handler for the two buttons together
     if (event.type == "NavBarButtonPress") {
       // this is the event type for button presses
-      if (event.id == "edit") {
-        // this is the same id field from the static navigatorButtons definition
-        AlertIOS.alert("NavBar", "Edit button pressed");
-      }
-      if (event.id == "add") {
-        AlertIOS.alert("NavBar", "Add button pressed");
-      }
       if (event.id == "favorite") {
-        AlertIOS.alert("NavBar", "Favorite button pressed");
+        // AlertIOS.alert("NavBar", "Favorite button pressed");
+        Alert.alert(
+          "Alert Title",
+          "My Alert Msg",
+          [
+            {
+              text: "Ask me later",
+              onPress: () => console.log("Ask me later pressed")
+            },
+            {
+              text: "Cancel",
+              onPress: () => console.log("Cancel Pressed"),
+              style: "cancel"
+            },
+            { text: "OK", onPress: () => console.log("OK Pressed") }
+          ],
+          { cancelable: false }
+        );
       }
     }
   }

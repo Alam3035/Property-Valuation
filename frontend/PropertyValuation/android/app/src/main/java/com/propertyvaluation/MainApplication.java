@@ -33,6 +33,7 @@ public class MainApplication extends NavigationApplication {
       // No need to add RnnPackage and MainReactPackage
         return Arrays.<ReactPackage>asList(
           // eg. new VectorIconsPackage()
+            new VectorIconsPackage()
       );
     }
 
@@ -58,7 +59,7 @@ public class MainApplication extends NavigationApplication {
 //     protected List<ReactPackage> getPackages() {
 //       return Arrays.<ReactPackage>asList(
 //           new MainReactPackage(),
-            new VectorIconsPackage(),
+            // new VectorIconsPackage(),
 //             new NavigationReactPackage()
 //       );
 //     }
