@@ -64,6 +64,7 @@ Navigation.startTabBasedApp({
     bottomTabBadgeBackgroundColor: "green",
     backButtonImage: require("./src/icons/IC-Account-Circle-18px.png")
   },
+
   passProps: {},
   animationType: "slide-down"
 });
