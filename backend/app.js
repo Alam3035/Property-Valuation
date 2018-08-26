@@ -41,7 +41,7 @@ const { DirectMessageService,
         // let directMessageService = new DirectMessageService(knex);
         let estateService = new EstateService(knex);
         let historicalTransactionService = new HistoricalTransactionService(knex, redisClient);
-        // let tradingPlatformService = new TradingPlatformService(knex, redisClient);
+        let tradingPlatformService = new TradingPlatformService(knex, redisClient);
         let userService = new UserService(knex, redisClient);
 
         const {app,server,io} = require('./utils/init-app')(redisClient);
@@ -52,7 +52,7 @@ const { DirectMessageService,
         // app.use('/api/direct_message', (new DirectMessageRouter(directMessageService)).router());        
         // app.use('/api/social_post', (new SocialPostRouter(socialPostService)).router());
         app.use('/api/his_trans', (new HistoricalTransactionRouter(historicalTransactionService)).router());
-        // app.use('/api/trade_plat', (new TradingPlatformRouter(tradingPlatformService)).router());
+        app.use('/api/trade_plat', (new TradingPlatformRouter(tradingPlatformService)).router());
         app.use('/api/user', (new UserRouter(userService)).router());
 
 

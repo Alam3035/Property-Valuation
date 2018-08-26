@@ -10,10 +10,12 @@ class TradingPlatformService {
             .where('real_estate.addr', address)
             .andWhere('catfathername', catfathername)
             .andWhere('catname', catname)
+            console.log('selecting')
+                console.log(query)
 
         return query.then((rows) => {
             if (rows.length !== 1) {
-                console.log('property exists user')
+                console.log('property exists')
                 return this.knex
                     .insert({
                         re_id: query[0].re_id, //migght be wrong
@@ -22,6 +24,9 @@ class TradingPlatformService {
                         images: image_url,
                         user_id: userID,
                     }).into('trade_post')
+                    .then(console.log('new property kinda '))
+
+
             } else {
                 return this.knex
                     .insert({
@@ -37,6 +42,10 @@ class TradingPlatformService {
                         images: image_url,
                         user_id: userID,
                     }).into('trade_post')
+                    .then(console.log('new property '))
+                    
+
+
 
             }
         })
@@ -107,7 +116,7 @@ class TradingPlatformService {
     .from('trade_post')
     .where('trade_post.tp_id', postID)
 
-    
+
     
 return query.then((rows) => {
     if (rows.length !== 1) {
