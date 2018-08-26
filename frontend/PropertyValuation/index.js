@@ -3,27 +3,27 @@
 // import {AppRegistry} from 'react-native';
 // import App from './App';
 // import {name as appName} from './app.json';
-
 // AppRegistry.registerComponent(appName, () => App);
 
 import { Navigation } from "react-native-navigation";
-// import { registerScreens } from "./screens";
 
 import App from "./App";
-import Auth from "./containers/Auth";
-import Home from "./containers/Home";
-import Valuation from "./containers/Valuation";
-import WatchList from "./containers/WatchList";
-import User from "./containers/User";
-
-// registerScreens(); // this is where you register all of your app's screens
+import Home from "./screens/HomeTab";
+import Valuation from "./screens/ValuationTab";
+import WatchList from "./screens/WatchListTab";
+import User from "./screens/UserTab";
+import Auth from "./screens/Auth";
+import LoginPage from "./components/auth/loginPage";
+import SignUpPage from "./components/auth/signUpPage";
 
 Navigation.registerComponent("example.app", () => App);
-Navigation.registerComponent("example.auth", () => Auth);
 Navigation.registerComponent("example.home", () => Home);
 Navigation.registerComponent("example.valuation", () => Valuation);
 Navigation.registerComponent("example.watchlist", () => WatchList);
 Navigation.registerComponent("example.user", () => User);
+Navigation.registerComponent("example.auth", () => Auth);
+Navigation.registerComponent("example.loginPage", () => LoginPage);
+Navigation.registerComponent("example.signUpPage", () => SignUpPage);
 
 Navigation.startTabBasedApp({
   tabs: [

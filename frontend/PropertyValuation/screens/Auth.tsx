@@ -24,7 +24,7 @@ export default class Auth extends Component<Props> {
     return (
       <View style={styles.container}>
         <Text style={styles.welcome}>Welcome to Property Valuation!</Text>
-        <Text style={styles.instructions}>Please register!</Text>
+        <Text style={styles.instructions}>Please login or signup!</Text>
         <Button
           onPress={() =>
             this.props.navigator.dismissModal({
@@ -37,21 +37,29 @@ export default class Auth extends Component<Props> {
         />
         <Button
           onPress={() =>
-            this.props.navigator.dismissModal({
-              animationType: "slide-down" // 'none' / 'slide-down' , dismiss animation for the modal (optional, default 'slide-down')
+            this.props.navigator.showModal({
+              screen: "example.loginPage",
+              title: "Auth",
+              passProps: {},
+              navigatorStyle: {},
+              animationType: "slide-up"
             })
           }
-          title="Sign Up"
+          title="Login"
           color="#841584"
           accessibilityLabel="Learn more about this purple button"
         />
         <Button
           onPress={() =>
-            this.props.navigator.dismissModal({
-              animationType: "slide-down" // 'none' / 'slide-down' , dismiss animation for the modal (optional, default 'slide-down')
+            this.props.navigator.showModal({
+              screen: "example.signUpPage",
+              title: "Auth",
+              passProps: {},
+              navigatorStyle: {},
+              animationType: "slide-up"
             })
           }
-          title="Login"
+          title="Sign Up"
           color="#841584"
           accessibilityLabel="Learn more about this purple button"
         />
