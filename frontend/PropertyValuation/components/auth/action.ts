@@ -25,26 +25,10 @@ export interface ILogOutAction {
   user: IAuthUser;
 }
 
-// function loginSuccess(user: IAuthUser) {
-//   return {
-//     user,
-//     type: LOGIN_SUCCESS
-//   };
-// }
-
-// function loginFailure(message: string) {
-//   return {
-//     type: LOGIN_FAILURE,
-//     message: message
-//   };
-// }
-
-// function logOutAction(user: IAuthUser) {
-//   return {
-//     user,
-//     type: LOGOUT
-//   };
-// }
+export type ILoginActions =
+  | ILoginSuccessAction
+  | ILoginFailureAction
+  | ILogOutAction;
 
 export function logInUser(user: IAuthUser): ILoginActions {
   // Login User
@@ -61,8 +45,3 @@ export function logOutUser(user: IAuthUser): ILoginActions {
     type: LOGOUT
   };
 }
-
-export type ILoginActions =
-  | ILoginSuccessAction
-  | ILoginFailureAction
-  | ILogOutAction;
