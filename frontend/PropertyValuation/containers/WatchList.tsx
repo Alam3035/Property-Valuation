@@ -52,30 +52,19 @@ export default class WatchList extends React.Component<
   public render() {
     return (
       <View style={styles.container}>
-        {/* <TouchableOpacity
+        <TouchableOpacity
           onPress={() =>
             this.props.navigator.showModal({
-              screen: "example.auth", // unique ID registered with Navigation.registerScreen
-              title: "Auth", // title of the screen as appears in the nav bar (optional)
-              passProps: {}, // simple serializable object that will pass as props to the modal (optional)
-              navigatorStyle: {}, // override the navigator style for the screen, see "Styling the navigator" below (optional)
-              animationType: "slide-up" // 'none' / 'slide-up' , appear animation for the modal (optional, default 'slide-up')
+              screen: "example.auth",
+              title: "Auth",
+              passProps: {},
+              navigatorStyle: {},
+              animationType: "slide-up"
             })
           }
-        > */}
-        <TouchableOpacity onPress={this.loginYouIn}>
-          <Image
-            style={{ width: 50, height: 50 }}
-            source={require("../src/icons/IC-Add-Circle-24px.png")}
-          />
+        >
+          <Text>{this.state.loginMsg}</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={this.loginYouOut}>
-          <Image
-            style={{ width: 50, height: 50 }}
-            source={require("../src/icons/IC-Remove-Circle-Outline-24px.png")}
-          />
-        </TouchableOpacity>
-        <Text>{this.state.loginMsg}</Text>
       </View>
     );
   }
