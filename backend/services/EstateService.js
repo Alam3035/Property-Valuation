@@ -95,6 +95,7 @@ class EstateService {
             )
             .from('real_estate')
             .where('real_estate.catname', catname)
+            .limit(100)
             console.log('selecting')
 
             return query.then(rows => {
@@ -140,7 +141,8 @@ class EstateService {
                 )
             })
     }
-
+        
+    //will work in post man if the address is encodeURI() -- we will need to give users address options
     listEstateByAddr(addr) { //list by addr wont work due to / in addr?
         let query = this.knex
         .select(
@@ -149,7 +151,7 @@ class EstateService {
             'real_estate.catfathername'
         )
         .from('real_estate')
-        .where('real_estate.addr', addr)
+        .where('real_estate.addr', addr)// 'like',  `%${addr}%`)
         console.log('selecting')
         console.log(addr)
 
@@ -158,9 +160,11 @@ class EstateService {
                 re_id: row.re_id,
                 catname: row.catname,
                 catfathername: row.catfathername,
+                transactions: []
             }));
         })
         .then(rows => {
+            console.log(rows);
             return Promise.all(
                 rows.map(row => {
                     let query = this.knex
@@ -178,6 +182,7 @@ class EstateService {
                     console.log('selecting two')
 
                     return query.then(reRows => {
+                        console.log(reRows)
                         reRows.forEach(reRow => {
                             row.transactions.push({
                                 re_id: reRow.re_id,

@@ -35,7 +35,7 @@ class EstateRouter {
                 .catch((err) => res.status(500).json(err));
         })
 
-        //get Estate by Addr
+        //get Estate by Addr  encodeURI() in  the front end we need to encode the 'addr'
         router.get('/address/:addr', (req, res) => {
             console.log('list by addr')
 

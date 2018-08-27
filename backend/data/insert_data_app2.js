@@ -8,10 +8,10 @@ const asyncModule = require('async');
 
 require('dotenv').config(); //Define Enniroments
 const NODE_ENV = process.env.NODE_ENV || 'development' 
-const knexFile = require('./knexfile')[NODE_ENV] // Connect to DB
+const knexFile = require('../knexfile')[NODE_ENV] // Connect to DB
 const knex = require('knex')(knexFile)
 
-let instream = fs.createReadStream('./data/28housefinal.csv');
+let instream = fs.createReadStream('./recent_data.csv');
 let outstream = new stream;
 outstream.readable = true;
 outstream.writeable = true;
@@ -57,7 +57,7 @@ const asyncQueue = asyncModule.queue(async function(his_trans_data, cb) {
 
             }).into('historical_transaction')
                     
-}, 1);
+}, 15);
 
 rl.on('line', function (line) {
     let his_trans_data = line.split(",")

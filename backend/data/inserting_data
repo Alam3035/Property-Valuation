@@ -22,6 +22,8 @@ ensure that the path to file is correct (as well as the information in your knex
 
 run in node 
 
+make sure the .env is in the same folder otherwise knex wont run
+
 insert_data_app.js (real_estate table)
 insert_data_app2.js (historical transaction tables)
 

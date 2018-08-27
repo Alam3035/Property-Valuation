@@ -9,7 +9,7 @@ const asyncModule = require('async');
 
 require('dotenv').config(); //Define Enniroments
 const NODE_ENV = process.env.NODE_ENV || 'development' 
-const knexFile = require('./knexfile')[NODE_ENV] // Connect to DB
+const knexFile = require('../knexfile')[NODE_ENV] // Connect to DB
 const knex = require('knex')(knexFile)
 
 let instream = fs.createReadStream('./data/28housefinal.csv');
