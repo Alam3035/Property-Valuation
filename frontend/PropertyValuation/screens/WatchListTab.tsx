@@ -16,6 +16,7 @@ import {
   TouchableOpacity,
   Dimensions
 } from "react-native";
+import Auth from "./Auth";
 
 interface IWatchListProps {}
 
