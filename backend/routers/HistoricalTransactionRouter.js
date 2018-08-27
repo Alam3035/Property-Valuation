@@ -10,10 +10,18 @@ class HistoricalTransactionRouter {
 
         //Historical Transaction data
         //list histroical transactions per re_id giving an empty object
-        router.get('/list/:reID', (req, res) => {
+        router.get('/listre/:reID', (req, res) => {
             console.log('list by reID')
 
             this.historicalTransactionService.listHistoricalTransactionByRealEstate(req.params.reID)
+                .then((listDetails) => res.json(listDetails))
+                .catch((err) => res.status(500).json(err));
+        })
+
+        router.get('/listht/:htID', (req, res) => {
+            console.log('list by htID')
+
+            this.historicalTransactionService.listEstateByHTID(req.params.htID)
                 .then((listDetails) => res.json(listDetails))
                 .catch((err) => res.status(500).json(err));
         })

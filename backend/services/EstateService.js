@@ -3,56 +3,62 @@ class EstateService {
         this.knex = knex;
     }
 
-    //EstateServices
+    //EstateServices // refactor the real_estate data first. then retrieve the historical trans
     listEstatesByIsland(rootID) { //breaks due to size?
         let query = this.knex
             .select(
-                'historical_transaction.rootid',
-                'historical_transaction.re_id',
-                'historical_transaction.img_url',
+                'real_estate.re_id',
+                'real_estate.addr',
+                'real_estate.catfathername',
+                'real_estate.catname'
+            )
+            .from('real_estate')
+            .innerJoin('historical_transaction', 'real_estate.re_id', 'historical_transaction.re_id')
+            .where('historical_transaction.rootid', rootID )
+            .limit(100)
 
-        )
-            .from('historical_transaction')
-            .where('historical_transaction.rootid', rootID)
-        console.log('selecting')
-
-        return query.then(rows => {
-            return rows.map(row => ({
-                rootid: row.rootid,
-                re_id: row.re_id,
-                img_url: row.img_url,
-                estates: []
-            }));
-        })
-            .then(rows => { //Get all estates within this island (rootID)
+            return query.then(rows => {
+                return rows.map(row => ({
+                    re_id: row.re_id,
+                    addr: row.addr,
+                    catfathername: row.catfathername,
+                    catname: row.catname,
+                    transactions: []
+                }));
+            })
+            .then(rows => {
                 return Promise.all(
                     rows.map(row => {
                         let query = this.knex
-                            .select
-                            ('real_estate.re_id',
-                            'real_estate.addr',
-                            'real_estate.catfathername',
-                            'real_estate.catname')
-                            .from('real_estate')
-                            .innerJoin('historical_transaction', 'real_estate.re_id', 'historical_transaction.re_id')
-                            .where('real_estate.re_id', row.re_id)
-                            .orderBy('historical_transaction.re_id', 'asc')
-                        console.log("selecting two")
+                        .select(
+                            'historical_transaction.rootid',
+                            'historical_transaction.price_value',
+                            'historical_transaction.date',
+                            'historical_transaction.winloss',
+                            'historical_transaction.id',
+                            'historical_transaction.img_url',
+                            'historical_transaction.ht_id',
+                        )
+                        .from('historical_transaction')
+                        .where('historical_transaction.re_id', row.re_id)
+                        .orderBy('historical_transaction.winloss', 'asc')
 
                         return query.then(reRows => {
                             reRows.forEach(reRow => {
-                                row.estates.push({
-                                    re_id: reRow.re_id,
-                                    addr: reRow.addr,
-                                    catfathername: reRow.catfathername,
-                                    catname: reRow.catname
+                                row.transactions.push({
+                                    rootid: reRow.rootid,
+                                    price_value: reRow.price_value,
+                                    date: reRow.date,
+                                    winloss: reRow.winloss,
+                                    id: reRow.id,
+                                    img_url: reRow.img_url,
+                                    ht_id: reRow.ht_id,
                                 });
                             });
                             return row;
                         })
                     })
                 )
-
             })
     }
 
@@ -66,6 +72,7 @@ class EstateService {
             )
             .from('real_estate')
             .where('real_estate.catfathername', catfathername)
+            .limit(100)
             console.log('selecting')
 
             return query.then(rows => {
@@ -144,6 +151,7 @@ class EstateService {
         .from('real_estate')
         .where('real_estate.addr', addr)
         console.log('selecting')
+        console.log(addr)
 
         return query.then(rows => {
             return rows.map(row => ({
