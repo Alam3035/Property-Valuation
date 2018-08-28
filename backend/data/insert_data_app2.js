@@ -14,7 +14,7 @@ const knex = require('knex')(knexFile)
 
 //data stream hong kong
 
-let instream = fs.createReadStream('./data/28housefinal1.csv');
+let instream = fs.createReadStream('./recent_data.csv');
 let outstream = new stream;
 outstream.readable = true;
 outstream.writeable = true;
@@ -60,7 +60,7 @@ const asyncQueue = asyncModule.queue(async function(his_trans_data, cb) {
 
             }).into('historical_transaction')
                     
-}, 15);
+}, 1);
 
 rl.on('line', function (line) {
     let his_trans_data = line.split(",")
