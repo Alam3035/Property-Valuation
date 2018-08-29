@@ -3,6 +3,59 @@ class EstateService {
         this.knex = knex;
     }
 
+    //Get the transaction history of an estate
+    getInfoOnEstate(catname){
+        console.log('my function')
+        let query = this.knex
+            .select(
+                'real_estate.re_id',
+                'real_estate.catfathername'
+            )
+            .from('real_estate')
+            .where('real_estate.catname', catname)
+            .limit(150)
+
+            return query.then(rows=> {
+                console.log('gathering sticks')
+                return rows.map(row => ({
+                    re_id: row.re_id,
+                    catfathername: row.catfathername,
+                    averages: []
+                }));
+            })
+            .then(rows => {
+                console.log(rows)
+                return Promise.all(
+                    rows.map(row => {
+                        console.log('getting bigger sticks')
+                        let query = this.knex
+                        .select(
+                            'historical_transaction.price_value',
+                            'historical_transaction.winloss'
+                        )
+                        .from('historical_transaction')
+                        .innerJoin('real_estate', 'historical_transaction.re_id', 'real_estate.re_id')
+                        .where('historical_transaction.re_id', row.re_id)
+
+                        return query.then(reRows => {
+                            console.log('this works')
+                            reRows.forEach(reRow => {
+                                row.averages.push({
+                                    price_value: reRow.price_value,
+                                    winloss: reRow.winloss,
+                                });
+                            });
+                            console.log('help me sleep')
+                            return row;
+                        })
+
+                    })
+                )
+            })
+            
+
+    }
+
     //EstateServices // refactor the real_estate data first. then retrieve the historical trans
     listEstatesByIsland(rootID) { //breaks due to size?
         let query = this.knex

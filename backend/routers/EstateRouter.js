@@ -44,6 +44,15 @@ class EstateRouter {
                 .catch((err) => res.status(500).json(err));
         })
 
+        //get Estate his_trans average price
+        router.get('/infoP/:catname', (req, res) => {
+            console.log('infoP by catname')
+
+            this.estateService.getInfoOnEstate(req.params.catname)
+                .then((estateInfo) => res.json(estateInfo))
+                .catch((err) => res.status(500).json(err));
+        })
+
             return router;
 
     }

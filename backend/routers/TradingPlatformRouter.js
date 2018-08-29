@@ -48,6 +48,14 @@ class TradingPlatformRouter {
                 .catch((err) => res.status(500).json(err));
         });
 
+        router.get('/list/list', (req, res) => {
+            console.log('listing list')
+            this.tradingPlatformService.listAllTradePosts(req)
+            .then((trade_post) => res.json(trade_post))
+                .catch((err) => res.status(500).json(err));
+
+        })
+
         return router;
 
     }

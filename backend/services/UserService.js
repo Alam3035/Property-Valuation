@@ -4,7 +4,7 @@ class UserService {
     }
 
     //Add profile service
-    addUserDetails(name, phone, email, special_user, password, google_id){
+    addUserDetails(name, phone, email, special_user, password, facebook_id){
         let query = this.knex
         .select()
         .from('users')
@@ -14,15 +14,16 @@ class UserService {
             if(rows.length > 0) {
                 return new Error ('User Already exists');
             } else {
-                return this.knex('user')
+                return this.knex('users')
                     .insert({
                         name: name,
                         password: password,
                         email: email,
                         phone: phone,
+                        password: password,
                         special_user: special_user,
-                        google_id: google_id
-                    })
+                        facebook_id: facebook_id
+                    }).then
             }
         })
 
@@ -47,23 +48,27 @@ class UserService {
     }
 
     //Change user details
-    updateUserDetail(userID, name, email, phone, special_user) {
+    updateUserDetail(name, email, phone, userID) {
+        console.log('updating the user')
         let query = this.knex
-        .select()
+        .select('users.user_id')
         .from('users')
         .where('users.user_id', userID);
 
+
         return query.then(rows => {
-            if(rows.length !== 1) {
-                return new Error ('Invalid User');
+                    console.log(rows)
+                if(rows.length !== 1) {
+                console.log('User undefined')
             } else {
-                return this.knex('user')
-                    .where('user_id', userID)
+                console.log('I figured out where I fucked up?')
+                console.log(name, email, phone)
+                return this.knex('users')
+                    .where('users.user_id', userID)
                     .update({
                         name: name,
-                        email: email,
-                        phone: phone,
-                        special_user: special_user
+                        phone: phone,                        
+                        email: email
                     })
             }
         })

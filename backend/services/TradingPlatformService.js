@@ -166,6 +166,13 @@ class TradingPlatformService {
                         })
                 })
         }
+
+        listAllTradePosts(){
+            let query = this.knex
+            .select(
+                
+            )
+        }
 }
 
 module.exports = TradingPlatformService;
