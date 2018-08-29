@@ -16,27 +16,37 @@ import {
   FlatList,
   StatusBar,
   Image,
-  AlertIOS
+  AlertIOS,
+  TextInput,
+  Button,
+  ActivityIndicator
 } from "react-native";
 
 import { NavigationComponentProps } from "react-native-navigation";
-
+import ModalExample from '../components/home/districtbotton'
+import SearchBar from '../components/home/searchbar'
 import styles from "../src/styles/style";
 import { IUser } from "../models/models";
 
-interface IHomeProps extends NavigationComponentProps {}
-interface IHomeStates {
+
+interface IHomeProps extends NavigationComponentProps {
+}
+  interface IHomeStates {
   loading: boolean;
   error: any;
   refreshing: boolean;
   page: number;
   seed: number;
   data: Array<IUser>;
+  
+
 }
 
 // type Props = {};
 export default class Home extends Component<IHomeProps, IHomeStates> {
+ 
   constructor(props: IHomeProps) {
+    
     super(props);
 
     this.state = {
@@ -45,7 +55,9 @@ export default class Home extends Component<IHomeProps, IHomeStates> {
       refreshing: false,
       page: 1,
       seed: 1,
-      data: []
+      data: [],
+  
+   
     };
   }
 
@@ -114,14 +126,15 @@ export default class Home extends Component<IHomeProps, IHomeStates> {
     );
   };
 
+
   render() {
+    
     return (
       <View style={styles.container}>
-        <StatusBar
-          backgroundColor="blue"
-          barStyle="light-content"
-          hidden={true}
-        />
+      <View style={styles.searchbar}>
+         
+          </View>
+        <ModalExample />
         <View style={styles.homePanel} />
         <FlatList
           data={this.state.data}

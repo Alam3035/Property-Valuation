@@ -13,9 +13,13 @@ const NODE_ENV = process.env.NODE_ENV || 'development'
 const knexFile = require('../knexfile')[NODE_ENV] // Connect to DB
 const knex = require('knex')(knexFile)
 
+<<<<<<< HEAD
+let instream = fs.createReadStream('/Users/kylechung/code/capstone/Property-Valuation/backend/data/recent_data.csv');
+=======
 
 //data stream hong kong
 let instream = fs.createReadStream('./recent_data.csv');
+>>>>>>> c3f0966d98ba412e320f9baa6da693610cf09b9d
 let outstream = new stream;
 outstream.readable = true;
 outstream.writeable = true;

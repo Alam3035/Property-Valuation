@@ -60,3 +60,10 @@ export interface IAuthUser {
     isLoggingIn: boolean;
   };
 }
+
+
+export interface IProperty{
+  propertyname:string,
+  address:string,
+  price:number
+}

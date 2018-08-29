@@ -16,6 +16,7 @@ import Auth from "./screens/Auth";
 import LoginPage from "./components/auth/loginPage";
 import SignUpPage from "./components/auth/signUpPage";
 
+
 Navigation.registerComponent("example.app", () => App);
 Navigation.registerComponent("example.home", () => Home);
 Navigation.registerComponent("example.valuation", () => Valuation);
@@ -24,6 +25,7 @@ Navigation.registerComponent("example.user", () => User);
 Navigation.registerComponent("example.auth", () => Auth);
 Navigation.registerComponent("example.loginPage", () => LoginPage);
 Navigation.registerComponent("example.signUpPage", () => SignUpPage);
+
 
 Navigation.startTabBasedApp({
   tabs: [
