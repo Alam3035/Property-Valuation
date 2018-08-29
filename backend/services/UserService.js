@@ -3,6 +3,32 @@ class UserService {
         this.knex = knex;
     }
 
+    //Add profile service
+    addUserDetails(name, phone, email, special_user, password, google_id){
+        let query = this.knex
+        .select()
+        .from('users')
+        .where('users.email', email)
+
+        return query.then(rows => {
+            if(rows.length > 0) {
+                return new Error ('User Already exists');
+            } else {
+                return this.knex('user')
+                    .insert({
+                        name: name,
+                        password: password,
+                        email: email,
+                        phone: phone,
+                        special_user: special_user,
+                        google_id: google_id
+                    })
+            }
+        })
+
+    }
+
+
     //Profile details services
     getUserDetail(userID){
         let query = this.knex
