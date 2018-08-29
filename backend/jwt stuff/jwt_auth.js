@@ -14,7 +14,7 @@ const auth = authClass();
 app.use(auth.initialize());
 app.use(cors());
 
-//allow CORS you tube 
+//allow CORS ==> this all goes into app.js
 // app.use(function (req, res, next) {
 //     res.header("Access-Control-Allow-Origin", "*");
 //     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-")//find out what goes here
