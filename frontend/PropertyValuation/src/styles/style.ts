@@ -6,7 +6,22 @@ const homeStyles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#F5FCFF"
+    backgroundColor: "#F5FCFF",
+  },
+  searchinput:{
+    height: 50,
+    width: 350,
+    flexGrow: 1,
+    padding: 4,
+    marginRight: 5,
+    fontSize: 18,
+    borderWidth: 1,
+    borderColor: '#48BBEC',
+    borderRadius: 8,
+    color: '#48BBEC',
+  },
+    searchbar: {
+    flexDirection: 'row',
   },
   homePanel: {
     flex: 1,
@@ -35,7 +50,7 @@ const homeStyles = StyleSheet.create({
   districtbar: {
     flexDirection: 'row',
     alignItems: 'center'
-  }, 
+  },
   searchInput: {
     height: 50,
     width: 350,
