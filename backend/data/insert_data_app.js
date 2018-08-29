@@ -9,10 +9,10 @@ const asyncModule = require('async');
 
 require('dotenv').config(); //Define Enniroments
 const NODE_ENV = process.env.NODE_ENV || 'development' 
-const knexFile = require('./knexfile')[NODE_ENV] // Connect to DB
+const knexFile = require('../knexfile')[NODE_ENV] // Connect to DB
 const knex = require('knex')(knexFile)
 
-let instream = fs.createReadStream('./data/28housefinal.csv');
+let instream = fs.createReadStream('/Users/kylechung/code/capstone/Property-Valuation/backend/data/recent_data.csv');
 let outstream = new stream;
 outstream.readable = true;
 outstream.writeable = true;
