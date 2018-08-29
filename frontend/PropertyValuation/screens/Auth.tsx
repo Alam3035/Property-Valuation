@@ -9,17 +9,14 @@
 // import React, { Component } from "react";
 import * as React from "react";
 import { Component } from "react";
-import {
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-  Button,
-  Alert
-} from "react-native";
+import { Navigator } from "react-native-navigation";
+import { StyleSheet, Text, View, Button } from "react-native";
 
-type Props = {};
-export default class Auth extends Component<Props> {
+interface IAuthProps {
+  navigator: Navigator;
+}
+
+export default class Auth extends Component<IAuthProps> {
   render() {
     return (
       <View style={styles.container}>
@@ -41,7 +38,6 @@ export default class Auth extends Component<Props> {
             this.props.navigator.push({
               screen: "example.loginPage", // unique ID registered with Navigation.registerScreen
               title: undefined, // navigation bar title of the pushed screen (optional)
-              subtitle: undefined, // navigation bar subtitle of the pushed screen (optional)
               titleImage: require("../src/icons/IC-Remove-Red-Eye-24px.png"), // iOS only. navigation bar title image instead of the title text of the pushed screen (optional)
               passProps: {}, // Object that will be passed as props to the pushed screen (optional)
               animated: true, // does the push have transition animation or does it happen immediately (optional)
@@ -69,12 +65,12 @@ export default class Auth extends Component<Props> {
           color="#841584"
           accessibilityLabel="Learn more about this purple button"
         />
+
         <Button
           onPress={() =>
             this.props.navigator.push({
               screen: "example.signUpPage", // unique ID registered with Navigation.registerScreen
               title: undefined, // navigation bar title of the pushed screen (optional)
-              subtitle: undefined, // navigation bar subtitle of the pushed screen (optional)
               titleImage: require("../src/icons/IC-Remove-Red-Eye-24px.png"), // iOS only. navigation bar title image instead of the title text of the pushed screen (optional)
               passProps: {}, // Object that will be passed as props to the pushed screen (optional)
               animated: true, // does the push have transition animation or does it happen immediately (optional)

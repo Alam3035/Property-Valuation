@@ -9,6 +9,8 @@
 // import React, { Component } from "react";
 import * as React from "react";
 import { Component } from "react";
+import { Navigator } from "react-native-navigation";
+
 import {
   StyleSheet,
   Text,
@@ -18,7 +20,9 @@ import {
 } from "react-native";
 import Auth from "./Auth";
 
-interface IWatchListProps {}
+interface IWatchListProps {
+  navigator: Navigator;
+}
 
 interface IWatchListStates {
   loginMsg: string;
@@ -36,6 +40,10 @@ export default class WatchList extends React.Component<
     };
   }
 
+  // componentWillMount() {
+  //   this.props.navigator.resetTo({ screen: "example.watchlist" });
+  // }
+
   public render() {
     return (
       <View style={styles.container}>
@@ -44,7 +52,6 @@ export default class WatchList extends React.Component<
             this.props.navigator.push({
               screen: "example.auth", // unique ID registered with Navigation.registerScreen
               title: undefined, // navigation bar title of the pushed screen (optional)
-              subtitle: undefined, // navigation bar subtitle of the pushed screen (optional)
               titleImage: require("../src/icons/IC-Remove-Red-Eye-24px.png"), // iOS only. navigation bar title image instead of the title text of the pushed screen (optional)
               passProps: {}, // Object that will be passed as props to the pushed screen (optional)
               animated: true, // does the push have transition animation or does it happen immediately (optional)

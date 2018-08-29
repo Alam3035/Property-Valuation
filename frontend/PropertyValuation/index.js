@@ -15,7 +15,8 @@ import User from "./screens/UserTab";
 import Auth from "./screens/Auth";
 import LoginPage from "./components/auth/loginPage";
 import SignUpPage from "./components/auth/signUpPage";
-
+import { Provider } from "react-redux";
+import { store } from "./redux/store";
 
 Navigation.registerComponent("example.app", () => App);
 Navigation.registerComponent("example.home", () => Home);
@@ -23,9 +24,18 @@ Navigation.registerComponent("example.valuation", () => Valuation);
 Navigation.registerComponent("example.watchlist", () => WatchList);
 Navigation.registerComponent("example.user", () => User);
 Navigation.registerComponent("example.auth", () => Auth);
-Navigation.registerComponent("example.loginPage", () => LoginPage);
-Navigation.registerComponent("example.signUpPage", () => SignUpPage);
-
+Navigation.registerComponent(
+  "example.loginPage",
+  () => LoginPage,
+  store,
+  Provider
+);
+Navigation.registerComponent(
+  "example.signUpPage",
+  () => SignUpPage,
+  store,
+  Provider
+);
 
 Navigation.startTabBasedApp({
   tabs: [
