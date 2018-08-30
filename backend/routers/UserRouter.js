@@ -11,7 +11,7 @@ class UserRouter {
         //add user service 
         router.post('/signup', (req, res) => { 
             console.log('signing up')
-            this.userService.addUserDetails(req.body.name,req.body.phone,req.body.email,req.body.password,req.body.facebook_id,req.body.special_user)
+            this.userService.addUserDetails(req.body.name,req.body.email,req.body.password,req.body.phone,req.body.facebook_id,req.body.special_user)
                 .then((userDetails) => res.json(userDetails)).then(console.log('this also goes'))
                 .catch((err) => res.status(500).json(err));
 
@@ -26,7 +26,7 @@ class UserRouter {
 
         //edit user service
         router.put('/details/:userID', (req, res) => { //updating the users details
-            this.userService.updateUserDetail(req.params.userID,req.body.name,req.body.phone,req.body.email)
+            this.userService.updateUserDetail(req.body.name,req.body.phone,req.params.userID)
                 .then((userDetails) => res.json(userDetails)).then(console.log('actually worked?'))
                 .catch((err) => res.status(500).json(err));
 
