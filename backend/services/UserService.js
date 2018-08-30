@@ -5,15 +5,18 @@ class UserService {
 
     //Add profile service
     addUserDetails(name, phone, email, special_user, password, facebook_id){
+        console.log('this works')
         let query = this.knex
         .select()
         .from('users')
         .where('users.email', email)
 
         return query.then(rows => {
+            console.log(query)
             if(rows.length > 0) {
                 return new Error ('User Already exists');
             } else {
+                console.log('inserting')
                 return this.knex('users')
                     .insert({
                         name: name,
@@ -23,7 +26,7 @@ class UserService {
                         password: password,
                         special_user: special_user,
                         facebook_id: facebook_id
-                    }).then
+                    }).then('should have worked')
             }
         })
 
