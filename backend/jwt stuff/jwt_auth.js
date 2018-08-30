@@ -34,14 +34,14 @@ app.post('/login', function(req, res) {
     if (req.body.email && req.body.password) {
         var email = req.body.email;
         var password = req.body.password;
-        var user = users.find((u)=> {
-            return u.email === email && u.password === password;
+        var user = users.find((u)=> { // change to a knex selection --> check if query.length is 0 or 1 -- to verify user in database
+            return u.email === email && u.password === password; //change below to knex and how information comes from knex
         });
         if (user) {
             var payload = {
                 id: user.user_id
             };
-            var token = jwt.encode(payload, config.jwtSecret);
+            var token = jwt.encode(payload, config.jwtSecret);// this part should be okay
             res.json({
                 token: token
             });
