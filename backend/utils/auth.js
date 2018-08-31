@@ -1,17 +1,17 @@
 var passport = require('passport');
-var passportJWT = require('passport-jtw');
-var config = require('./config');
+const passportJWT = require('passport-jwt');
+const config = require('./config');
 
 
 const ExtractJwt = passportJWT.ExtractJwt;
 
-export default function () {
+function cunty() {
     const strategy = new passportJWT.Strategy({
         secretOrKey: config.jwtSecret,
         jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken()
     },(payload,done)=> {
 
-        const userID = knex.select('user_id').from('users').where('users.user_id' = payload.id) //may need to change to facebook due to coloumn name
+        const userID = knex.select('user_id').from('users').where('users.user_id' == payload.id) //may need to change to facebook due to coloumn name
         const user= users.find((user)=>{
             return user.user_id == payload.id
         });
@@ -33,3 +33,5 @@ export default function () {
         }
     };
 }
+
+module.exports = cunty 
