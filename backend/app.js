@@ -16,7 +16,7 @@ const redisClient = redis.createClient({
 const fs = require('fs');
 const https = require('https');
 
-const isLoggedIn = require('./utils/guard').isLoggedIn;
+// const isLoggedIn = require('./utils/guard').isLoggedIn;
 
 //Routers and Services
 const { DirectMessageRouter,
