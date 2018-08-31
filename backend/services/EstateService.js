@@ -153,23 +153,26 @@ class EstateService {
                             .from('historical_transaction')
                             .innerJoin('real_estate', 'historical_transaction.re_id', 'real_estate.re_id')
                             .where('historical_transaction.re_id', row.re_id)
+
                         return query.then(reRows => {
-                            console.log('hungry hippos')
-                            console.log(reRows)
+
+                        
                             if (reRows.length === 0) {
                                 reRows.push({
                                     price_value: 1000000,
                                     winloss: 10
                                 })
                             }
+
                             const averageHT = reRows.reduce(function (acc, reRow) {
                                 console.log('the hunter is huntering')
                                 return acc + Number(reRow.price_value)
                             }, 0) / reRows.length
+
                             // const averageHT = reRows.reduce(function (acc, reRow) { return acc + isNaN(Number(reRow.price_value)) }, 0)/reRows.length
+
                             const averageWL = reRows.reduce(function (acc, reRow) { return acc + Number(reRow.winloss) }, 0) / reRows.length
 
-                            console.log(averageHT, averageWL)
                             row.average = ({
                                 averageHT: averageHT,
                                 averagewinloss: averageWL
@@ -197,61 +200,95 @@ class EstateService {
         //     // .groupBy('real_estate.catname')
         //     .limit(100)
 
-            let query = this.knex.select('real_estate.catname', this.knex.raw('SUM(price_value')).from('historical_transaction')
-            .join('historical_transaction', 'real_estate.re_id', 'historical_transaction.re_id')
-            .where('real_estate.catfathername', 'like', `%${catfathername}%`)
-            .groupByRaw('real_estate.catname')
-            .limit(100)
+            // let query = this.knex
+            // .select('real_estate.catname', this.knex.raw('SUM(price_value'))
+            // .from('historical_transaction')
+            // .join('historical_transaction', 'real_estate.re_id', 'historical_transaction.re_id')
+            // .where('real_estate.catfathername', 'like', `%${catfathername}%`)
+            // .groupByRaw('real_estate.catname')
+            // .limit(100) knex.select('year', knex.raw('SUM(profit)')).from('sales').groupByRaw('year WITH ROLLUP')
 
-
-
-
-        console.log('selecting')
+            let query = this.knex
+            .sum('price_value')
+            .sum('winloss')
+            
+            .column('catname')
+            .from('historical_transaction').innerJoin('real_estate', 'historical_transaction.re_id', 'real_estate.re_id').where('real_estate.catfathername', 'like', `%${catfathername}%`).limit(150)
+            .groupBy('real_estate.catname')
+        console.log(query)
 
         return query.then(rows => {
-            console.log(rows)
-
+        console.log(rows)
+            
             return rows.map(row => ({
                 catname: row.catname,
                 avPrice_value: row.price_value,
-                avWinloss_value: row.winloss
             }));
         })
-            // .then(rows => {
-            //     return Promise.all(
-            //         rows.map(row => {
-            //             console.log(rows)
 
-            //             console.log('OMFG')
-            //             let query = this.knex
-            //                 // .select(this.knex.raw('avg(price_value) as real_estate_AV, catname'))
-            //                 .select('catname')
-            //                 .from('historical_transaction')
-            //                 .innerJoin('real_estate', 'historical_transaction.re_id', 'real_estate.re_id')
-            //                 .where('real_estate.catfathername', 'like', `%${catfathername}%`)
-            //                 .limit(100)
-            //             //.groupBy('catname')
-            //             console.log(query)
+// ============================================ this is the best so far? i CANT GET IT TO WORK SORRY 
+        //     let query = this.knex
+        //         .select(
+        //             'real_estate.catname',
+        //             'real_estate.catfathername',
+        //             'real_estate.re_id',
+        //             'historical_transaction.re_id',
+        //             'historical_transaction.price_value',
+        //             'historical_transaction.winloss'
+        //         )
+        //         .from('historical_transaction')
+        //         .innerJoin('real_estate', 'historical_transaction.re_id', 'real_estate.re_id')
+        //         .where('real_estate.catfathername', 'like', `%${catfathername}%`)
+        //         .limit(100)
 
+        
+        // console.log(typeof 'real_estate.catname')
+        
 
-            //             console.log(row.catname)
+        // return query.then(rows => {
+        // console.log(rows) // DO SOMETHING HERE REGARDING THE ROWS.CATNAME?
+            
+        //     return rows.map(row => ({
+        //         re_id: row.re_id,
+        //         catname: row.catname,
+        //         avPrice_value: row.price_value,
+        //         avWinloss_value: row.winloss
+        //     }));
+        // })
+        // ============================================ this is the best so far?
 
-            //             return query.then(reRows => {
-            //                 console.log('second last')
-            //                 reRows.forEach(reRow => {
-            //                     console.log('last')
-            //                     row.average.push({
+        // .then(rows => {
+        //     console.log('yeah')
+        //     return Promise.all(
+        //         rows.map(row => {
+        //             let query = this.knex
 
-            //                         price_value: reRow.price_value,
-            //                         winloss: reRow.winloss
+        //             .select(
+        //                 'real_estate.catname',
+        //                 'real_estate.catfathername',
+        //                 'real_estate.re_id',
+        //                 'historical_transaction.re_id',
+        //                 'historical_transaction.price_value',
+        //                 'historical_transaction.winloss'
+        //             )
+        //             .from('historical_transaction')
+        //             .innerJoin('real_estate', 'historical_transaction.re_id', 'real_estate.re_id')
+        //             .where('real_estate.catfathername', 'like', `%${catfathername}%`)
+        //             .groupBy(row.catname)
+        //             .limit(100)
 
-            //                     });
-            //                 });
-            //                 return row;
-            //             })
-            //         })
-            //     )
-            // })
+        //             return query.then(reRows => {
+
+        //                 return reRows.map(reRow => ({
+        //                     catname: reRow.catname,
+        //                     avPrice_value: reRow.price_value,
+        //                     avWinloss_value: reRow.winloss
+        //                 }));
+        //             })
+        //         })
+                
+        //     )
+        // })
 
     }
 

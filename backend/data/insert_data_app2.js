@@ -14,7 +14,9 @@ const knex = require('knex')(knexFile)
 
 //data stream hong kong
 
-let instream = fs.createReadStream('./recent_data.csv');
+//all data into the table
+function insertData (num) {
+    let instream = fs.createReadStream(`./28housefinal${num}.csv`);
 let outstream = new stream;
 outstream.readable = true;
 outstream.writeable = true;
@@ -78,6 +80,13 @@ rl.on('line', function (line) {
         img_url: his_trans_data[11],
     })
 });
+}
+
+insertData(1)
+insertData(2)
+insertData(3)
+insertData(170)
+
 
     // //data stream kowloon
 
