@@ -3366,7 +3366,7 @@ lodash.throttle@^4.1.1:
   version "4.1.1"
   resolved "https://registry.yarnpkg.com/lodash.throttle/-/lodash.throttle-4.1.1.tgz#c23e91b710242ac70c37f1e1cda9274cc39bf2f4"
 
-lodash@^4.13.1, lodash@^4.17.10, lodash@^4.17.4, lodash@^4.17.5, lodash@^4.3.0, lodash@^4.6.1:
+lodash@4.x.x, lodash@^4.13.1, lodash@^4.17.10, lodash@^4.17.4, lodash@^4.17.5, lodash@^4.3.0, lodash@^4.6.1:
   version "4.17.10"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.10.tgz#1b7793cf7259ea38fb3661d4d38b3260af8ae4e7"
 
@@ -4234,6 +4234,12 @@ react-devtools-core@^3.2.2:
 react-is@^16.4.1:
   version "16.4.2"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.4.2.tgz#84891b56c2b6d9efdee577cc83501dfc5ecead88"
+
+react-native-navigation@^1.1.484:
+  version "1.1.484"
+  resolved "https://registry.yarnpkg.com/react-native-navigation/-/react-native-navigation-1.1.484.tgz#e3fc86b8833178b2972e0af608d4c90260e6ec32"
+  dependencies:
+    lodash "4.x.x"
 
 react-native-typescript-transformer@^1.2.10:
   version "1.2.10"
