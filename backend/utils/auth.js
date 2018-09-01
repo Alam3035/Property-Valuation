@@ -5,7 +5,7 @@ const config = require('./config');
 
 const ExtractJwt = passportJWT.ExtractJwt;
 
-function cunty() {
+function jwtLogin() {
     const strategy = new passportJWT.Strategy({
         secretOrKey: config.jwtSecret,
         jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken()
@@ -34,4 +34,4 @@ function cunty() {
     };
 }
 
-module.exports = cunty 
+module.exports = jwtLogin 

@@ -161,8 +161,12 @@ app.post("/api/register", async (req, res) => {
         let hash = await bcrypt.hashPassword(req.body.password)
 
         let userID = await knex("users").insert({
+            name: req.body.name,
             email: req.body.email,
-            password: hash
+            password: hash,
+            phone: Number(req.body.phone),
+            // facebook_id: req.body.facebook_id,
+            special_user: Boolean(req.body.special_user)
         })
             .returning("user_id")
 
@@ -178,7 +182,7 @@ app.post("/api/register", async (req, res) => {
     }
 })
 
-// //verify credentials on protected routes
+//verify credentials on protected routes
 // app.post('/api/protected', function (req, res) {
 
 //     //view posted values
@@ -197,26 +201,31 @@ app.post("/api/register", async (req, res) => {
 //     res.end();
 // });
 
-function verifyToken(userid, token) {
+// function verifyToken(userid, token) {
 
-    //get user object
-    var user = users.find(function(obj) {
-        return obj.user_id === userid;
-    });
+//     //get user object
+//     var user = await knex('users')
+//     .select('users.user_id')
 
-    //verify token
-    if(token && user) {
-        var decoded = jwt.verify(token, user.secondFactor);
-        console.log('decoded token');
-        console.log(decoded);
+   
+   
+//     // users.find(function(obj) {
+//     //     return obj.user_id === userid;
+//     // });
 
-        //match token info with user info
-        if(decoded.email === user.email && decoded.id === user.user_id){
-            return {email: decoded.email, userid: decoded.user_id}
-        }
-    }
-    return null;
-}
+//     //verify token
+//     if(token && user) {
+//         var decoded = jwt.verify(token, user.secondFactor);
+//         console.log('decoded token');
+//         console.log(decoded);
+
+//         //match token info with user info
+//         if(decoded.email === user.email && decoded.id === user.user_id){
+//             return {email: decoded.email, userid: decoded.user_id}
+//         }
+//     }
+//     return null;
+// }
 
     const httpsOptions = {
             key: fs.readFileSync('./localhost.key'),
