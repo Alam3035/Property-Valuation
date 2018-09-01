@@ -7,7 +7,7 @@ export default class MortgageInput extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      rate: '',
+      rate: 0,
       principal: 0,
       years: 0,
       response: '',
@@ -76,21 +76,21 @@ export default class MortgageInput extends React.Component {
           placeholder="Rate"
           style={styles.inputs}
           value={this.state.rate}
-          onChangeText={(text) => this.setState({rate: text})}
+          onChangeText={(number) => this.setState({rate: number})}
         />
         <TextInput
           keyboardType = 'numeric'
           placeholder="Principal"
           style={styles.inputs}
           value={this.state.principal}
-          onChangeText={(text) => this.setState({principal: text})}
+          onChangeText={(number) => this.setState({principal: number})}
         />
         <TextInput
           keyboardType = 'numeric'
           placeholder="Years"
           style={styles.inputs}
           value={this.state.years}
-          onChangeText={(text) => this.setState({years: text})}
+          onChangeText={(number) => this.setState({years: number})}
         />
         <Button
           onPress={this.calculate}
@@ -111,10 +111,11 @@ export default class MortgageInput extends React.Component {
 
 const styles = StyleSheet.create({
   button: {
-    backgroundColor: 'orange',
-    height: 10,
-    width: 30,
-    color: 'white'
+    backgroundColor: '#FFA500',
+    height: 5,
+    width: 15,
+    color: '#FFFAFA',
+    bottom: 15
   },
   container: {
     flex: 1,
