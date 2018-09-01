@@ -15,7 +15,7 @@ module.exports = (app) => {
 
     passport.use('local-signup', new LocalStrategy(
         {passReqToCallback : true},
-        async (req, email, password, speacialUser, done) => {
+        async (req, email, password, specialUser, done) => {
             try{
                 let users = await knex('users').where({email:email});
                 if (users.length > 0) {
@@ -24,7 +24,7 @@ module.exports = (app) => {
                 let hash = await bcrypt.hashPassword(password)
                 const newUser = {
                     email:email,
-                    speacialUser:boolean,
+                    specialUser: specialUser,
                     password:hash,
                     name:req.body.name,
                 };
