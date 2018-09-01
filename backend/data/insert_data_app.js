@@ -2,6 +2,8 @@
 // to amke this faster, make maybe rl up to 3 
 //read 3 seperate files
 
+//4.5 hours
+
 var fs = require('fs');
 var readline = require('readline');
 var stream = require('stream');
@@ -15,7 +17,7 @@ const knex = require('knex')(knexFile)
 
 //all data into the table   
 function getData(num){
-let instream = fs.createReadStream(`./28housefinal${num}.csv`);
+let instream = fs.createReadStream(`./recent_data.csv`);
 let outstream = new stream;
 outstream.readable = true;
 outstream.writeable = true;
@@ -62,9 +64,9 @@ rl.on('line', function (line) {
     })
 });
 }
-
-getData(1)
-getData(2)
-getData(3)
-getData(170)
+getData()
+// getData(1)
+// getData(2)
+// getData(3)
+// getData(170)
 

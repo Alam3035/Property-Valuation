@@ -1,4 +1,5 @@
-// historical trans
+// historical trans started 8 pm
+//finished before 8 am under 12 yay
 
 var fs = require('fs');
 var readline = require('readline');
@@ -16,7 +17,8 @@ const knex = require('knex')(knexFile)
 
 //all data into the table
 function insertData (num) {
-    let instream = fs.createReadStream(`./28housefinal${num}.csv`);
+    let instream = fs.createReadStream(`./recent_data.csv`);
+    // let instream = fs.createReadSteam(`./28housefinal${num}.csv`)
 let outstream = new stream;
 outstream.readable = true;
 outstream.writeable = true;
@@ -82,10 +84,12 @@ rl.on('line', function (line) {
 });
 }
 
-insertData(1)
-insertData(2)
-insertData(3)
-insertData(170)
+insertData()
+
+// insertData(1)
+// insertData(2)
+// insertData(3)
+// insertData(170)
 
 
     // //data stream kowloon

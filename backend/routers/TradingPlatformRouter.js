@@ -25,7 +25,7 @@ class TradingPlatformRouter {
         router.put('/edit/:postID', (req, res) => {
             console.log('editing?')
 
-            this.tradingPlatformService.editPropertyTradePost(req.body.asking_price, req.body.special_note, req.body.image_url, req.params.postID).then(console.log(req.params.postID)) 
+            this.tradingPlatformService.editPropertyTradePost(req.body.asking_price, req.body.special_note, req.body.image_url, req.params.postID)
             //req.session.passport.user.id second section doesnt work
                 .then(() => this.tradingPlatformService.listPropertiesTradePostPost(req.params.postID))
                 .then((propertyDetails) => res.json(propertyDetails))

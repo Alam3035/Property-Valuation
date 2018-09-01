@@ -158,8 +158,6 @@ class TradingPlatformService {
                     return this.knex('trade_post')
                         .where('trade_post.tp_id', postID)
                         .update({
-                            re_id: rows[0].re_id,
-                            user_id: rows[0].user_id,
                             asking_price: asking_price,
                             special_note: special_note,
                             images: image_url
@@ -169,10 +167,48 @@ class TradingPlatformService {
 
         listAllTradePosts(){
             let query = this.knex
-            .select(
-                
+            .select()
+            .from('trade_post')
+
+            return query.then((rows) => {
+                return rows.map(row => ({
+                    tp_id: row.tp_id,
+                    re_id: row.re_id,
+            asking_price: row.asking_price,
+            special_note: row.special_note,
+            images: row.images,
+            address: []
+        }))
+    })
+        .then(rows => { //get the real_estate for each trade post.
+            return Promise.all(
+                rows.map(row => {
+                    let query = this.knex
+                        .select(
+                            'real_estate.catname',
+                            'real_estate.catfathername',
+                            'real_estate.addr',
+                            'real_estate.area'
+                        )
+                        .from('real_estate')
+                        .where('real_estate.re_id', row.re_id)
+
+                    return query.then(reRows => {
+                        reRows.forEach(reRow => {
+                            row.address.push({
+                                catname: reRow.catname,
+                                catfathername: reRow.catfathername,
+                                addr: reRow.addr,
+                                area: reRow.area
+                            });
+                        });
+                        return row;
+                    })
+                })
             )
-        }
+        })
+    }
+          
 }
 
 module.exports = TradingPlatformService;
