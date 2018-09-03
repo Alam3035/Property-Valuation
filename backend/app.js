@@ -67,7 +67,7 @@ const { DirectMessageService,
         // app.use('/api/social_post', auth.authenticate(), (new SocialPostRouter(socialPostService)).router());
         app.use('/api/his_trans', (new HistoricalTransactionRouter(historicalTransactionService)).router());
         app.use('/api/trade_plat', auth.authenticate(), (new TradingPlatformRouter(tradingPlatformService)).router());
-        app.use('/api/user', (new UserRouter(userService)).router());
+        app.use('/api/user', auth.authenticate(), (new UserRouter(userService)).router());
          
 //Handle Login POST
 
