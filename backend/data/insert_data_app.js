@@ -17,7 +17,7 @@ const knex = require('knex')(knexFile)
 
 //all data into the table   
 function getData(num){
-let instream = fs.createReadStream(`./recent_data.csv`);
+let instream = fs.createReadStream(`./28housefinal${num}.csv`);
 let outstream = new stream;
 outstream.readable = true;
 outstream.writeable = true;
@@ -64,9 +64,9 @@ rl.on('line', function (line) {
     })
 });
 }
-getData()
-// getData(1)
-// getData(2)
-// getData(3)
-// getData(170)
+// getData()
+getData(1)
+getData(2)
+getData(3)
+getData(170)
 

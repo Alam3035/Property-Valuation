@@ -99,6 +99,7 @@ class EstateService {
                                 'historical_transaction.price_value',
                                 'historical_transaction.date',
                                 'historical_transaction.winloss',
+                                'historical_transaction.sq_price',
                                 'historical_transaction.id',
                                 'historical_transaction.img_url',
                                 'historical_transaction.ht_id',
@@ -113,6 +114,7 @@ class EstateService {
                                     rootid: reRow.rootid,
                                     price_value: reRow.price_value,
                                     date: reRow.date,
+                                    sq_price: reRow.sq_price,
                                     winloss: reRow.winloss,
                                     id: reRow.id,
                                     img_url: reRow.img_url,
@@ -249,6 +251,7 @@ class EstateService {
                                 'historical_transaction.date',
                                 'historical_transaction.winloss',
                                 'historical_transaction.img_url',
+                                'historical_transaction.sq_price',
                                 'historical_transaction.id',
                                 'historical_transaction.ht_id',
                                 'historical_transaction.re_id')
@@ -264,6 +267,7 @@ class EstateService {
                                     re_id: reRow.re_id,
                                     price_value: reRow.price_value,
                                     date: reRow.date,
+                                    sq_price: reRow.sq_price,
                                     winloss: reRow.winloss,
                                     img_url: reRow.img_url,
                                     id: reRow.id,
@@ -305,6 +309,7 @@ class EstateService {
                         let query = this.knex
                             .select('historical_transaction.price_value',
                                 'historical_transaction.date',
+                                'historical_transaction.sp_price',
                                 'historical_transaction.winloss',
                                 'historical_transaction.img_url',
                                 'historical_transaction.id',
@@ -322,6 +327,7 @@ class EstateService {
                                 row.transactions.push({
                                     re_id: reRow.re_id,
                                     price_value: reRow.price_value,
+                                    sq_price: reRow.sq_price,
                                     date: reRow.date,
                                     winloss: reRow.winloss,
                                     img_url: reRow.img_url,

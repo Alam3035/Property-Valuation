@@ -15,7 +15,6 @@ const redisClient = redis.createClient({
 
 const jwt = require("jwt-simple")
 var bcrypt = require('./utils/bcrypt');
-var uuid = require('uuid');
 var authClass = require('./utils/auth');
 const cors = require('cors');
 const config = require("./utils/config")
@@ -62,12 +61,12 @@ const { DirectMessageService,
         let tradingPlatformService = new TradingPlatformService(knex, redisClient);
         let userService = new UserService(knex, redisClient);
 
-        new SocketIORouter(io,userService).router();
+        new SocketIORouter(io,userService).router(); //this is where we provide the middlware to check whether or not users are logged in
         app.use('/api/estate', (new EstateRouter(estateService)).router());
-        // app.use('/api/direct_message', (new DirectMessageRouter(directMessageService)).router());        
-        // app.use('/api/social_post', (new SocialPostRouter(socialPostService)).router());
+        // app.use('/api/direct_message', auth.authenticate(), (new DirectMessageRouter(directMessageService)).router());        
+        // app.use('/api/social_post', auth.authenticate(), (new SocialPostRouter(socialPostService)).router());
         app.use('/api/his_trans', (new HistoricalTransactionRouter(historicalTransactionService)).router());
-        app.use('/api/trade_plat', (new TradingPlatformRouter(tradingPlatformService)).router());
+        app.use('/api/trade_plat', auth.authenticate(), (new TradingPlatformRouter(tradingPlatformService)).router());
         app.use('/api/user', (new UserRouter(userService)).router());
          
 //Handle Login POST
