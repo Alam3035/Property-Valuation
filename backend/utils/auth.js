@@ -60,10 +60,12 @@ module.exports = function () {
     }, async (payload, done) => {
         const user = await knex.select('user_id')
         .from('users')
-        .where('user_id' == payload.user_id)
+        .where('user_id', payload.user_id)
         await user;
         console.log(user)
         console.log(payload.user_id)
+
+
 
         if(user.length !== 0 ) {
             return done(null, {id: user[0].user_id});
