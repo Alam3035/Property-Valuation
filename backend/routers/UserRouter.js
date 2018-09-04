@@ -8,14 +8,14 @@ class UserRouter {
     router() {
         let router = express.Router();
 
-        //add user service 
-        router.post('/signup', (req, res) => { 
-            console.log('signing up')
-            this.userService.addUserDetails(req.body.name,req.body.email,req.body.password,req.body.phone,req.body.facebook_id,req.body.special_user)
-                .then((userDetails) => res.json(userDetails)).then(console.log('this also goes'))
-                .catch((err) => res.status(500).json(err));
+        // //add user service 
+        // router.post('/signup', (req, res) => { 
+        //     console.log('signing up')
+        //     this.userService.addUserDetails(req.body.name,req.body.email,req.body.password,req.body.phone,req.body.facebook_id,req.body.special_user)
+        //         .then((userDetails) => res.json(userDetails)).then(console.log('this also goes'))
+        //         .catch((err) => res.status(500).json(err));
 
-        })
+        // })
 
         // Profile details service
         router.get('/details/:userID', (req, res) => { //getting details of user profile
