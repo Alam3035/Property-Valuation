@@ -3,32 +3,32 @@ class UserService {
         this.knex = knex;
     }
 
-    //Add profile service
-    addUserDetails(name,  email, password, phone, facebook_id, special_user){
-        console.log('this works')
-        let query = this.knex
-        .select()
-        .from('users')
-        .where('users.email', email)
+    //Add profile service -- > not needed after jwt.
+    // addUserDetails(name,  email, password, phone, facebook_id, special_user){
+    //     console.log('this works')
+    //     let query = this.knex
+    //     .select()
+    //     .from('users')
+    //     .where('users.email', email)
 
-        return query.then(rows => {
-            if(rows.length > 0) {
-                console.log('User Already exists');
-            } else {
-                console.log('inserting')
-                return this.knex('users')
-                    .insert({
-                        name: name,
-                        email: email,
-                        password: password,
-                        phone: Number(phone),
-                        facebook_id: facebook_id,
-                        special_user: Boolean(special_user)
-                    }).then('should have worked')
-            }
-        })
+    //     return query.then(rows => {
+    //         if(rows.length > 0) {
+    //             console.log('User Already exists');
+    //         } else {
+    //             console.log('inserting')
+    //             return this.knex('users')
+    //                 .insert({
+    //                     name: name,
+    //                     email: email,
+    //                     password: password,
+    //                     phone: Number(phone),
+    //                     facebook_id: facebook_id,
+    //                     special_user: Boolean(special_user)
+    //                 }).then('should have worked')
+    //         }
+    //     })
 
-    }
+    // }
 
 
     //Profile details services
