@@ -71,6 +71,7 @@ const { DirectMessageService,
         app.use('/api/trade_plat', auth.authenticate(), (new TradingPlatformRouter(tradingPlatformService)).router());
         app.use('/api/user', auth.authenticate(), (new UserRouter(userService)).router());
        app.use('/api/fav', (new UserFavRouter(userFavService)).router());
+       //fixed routes?
 
 //Handle Login POST
 
