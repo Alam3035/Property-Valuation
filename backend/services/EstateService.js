@@ -3,6 +3,23 @@ class EstateService {
         this.knex = knex;
     }
 
+    // List Initial District
+
+    async listEstateByInitialDistrict(district) {
+        
+        return await this.knex
+            .select(
+                'real_estate.re_id',
+                'real_estate.addr',
+                'real_estate.catname'
+            )
+            .from('real_estate')
+            .where('real_estate.catfathername', district)
+            .limit(100)
+
+    }
+
+
     //Get the transaction history of an estate
     getInfoOnEstate(catname) {
         let query = this.knex
