@@ -5,7 +5,9 @@ class EstateService {
 
     // List Initial District
 
-    async listEstateByInitialDistrict(district) {
+    async listEstateByInitialDistrict(district, page, numberOfResults) {
+        console.log(page)
+        console.log(numberOfResults)
         
         return await this.knex
             .select(
@@ -15,7 +17,8 @@ class EstateService {
             )
             .from('real_estate')
             .where('real_estate.catfathername', district)
-            .limit(100)
+            .offset(page * numberOfResults - numberOfResults)
+            .limit(Number(numberOfResults))
 
     }
 
@@ -83,8 +86,8 @@ class EstateService {
             })
     }
 
-    //EstateServices // refactor the real_estate data first. then retrieve the historical trans
-    listEstatesByIsland(rootID) { //breaks due to size?
+    //EstateServices 
+    listEstatesByIsland(rootID) { 
         let query = this.knex
             .select(
                 'real_estate.re_id',
