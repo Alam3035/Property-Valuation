@@ -1,11 +1,8 @@
-    
-
-    class UserFavService {
+        class UserFavService {
         constructor(knex) {
             this.knex = knex;
         }
 
-    //  link these to favorite button
 
     // users favourite social posts
         isFavSocialPost(postID, userID) {
