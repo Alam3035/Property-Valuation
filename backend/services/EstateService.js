@@ -92,7 +92,7 @@ class EstateService {
 
               
 
-                return { catname, avPrice_sq, avWinloss } 
+                return [{ catname, avPrice_sq, avWinloss }] 
             })
     }
 
