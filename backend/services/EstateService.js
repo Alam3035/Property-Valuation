@@ -79,10 +79,12 @@ class EstateService {
             .then(rows => {
                 const actualAverageHT = rows.reduce(function (acc, row) { return acc + Number(row.averages.averageHT) }, 0) / rows.length
                 const actualAverageWL = rows.reduce(function (acc, row) { return acc + Number(row.averages.averagewinloss) }, 0) / rows.length
-                const roundedAverageHT = actualAverageHT.toFixed(0)
-                const roundedAverageWL = actualAverageWL.toFixed(0)
+                const avPrice_value = actualAverageHT.toFixed(0)
+                const avWinloss = actualAverageWL.toFixed(0)
 
-                return { roundedAverageHT, roundedAverageWL }
+              
+
+                return { catname, avPrice_value, avWinloss }
             })
     }
 
