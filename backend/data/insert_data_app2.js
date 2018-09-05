@@ -18,7 +18,7 @@ const knex = require('knex')(knexFile)
 //all data into the table
 function insertData (num) {
     // let instream = fs.createReadStream(`./recent_data.csv`);
-    let instream = fs.createReadSteam(`./28housefinal${num}.csv`)
+    let instream = fs.createReadStream(`./28housefinal${num}.csv`)
 let outstream = new stream;
 outstream.readable = true;
 outstream.writeable = true;

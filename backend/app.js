@@ -71,7 +71,6 @@ const { DirectMessageService,
         app.use('/api/trade_plat', auth.authenticate(), (new TradingPlatformRouter(tradingPlatformService)).router());
         app.use('/api/user', auth.authenticate(), (new UserRouter(userService)).router());
        app.use('/api/fav', (new UserFavRouter(userFavService)).router());
-       //fixed routes?
 
 //Handle Login POST
 
@@ -85,7 +84,7 @@ app.post("/api/login", async function (req, res) {
         let result = await bcrypt.checkPassword(req.body.password, user.password);
         if (result) {
             var payload = {
-                user_id: users[0].id
+                user_id: users[0].user_id
             };
             var token = jwt.encode(payload, config.jwtSecret);
             res.json({
