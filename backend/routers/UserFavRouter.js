@@ -62,6 +62,8 @@ class UserFavRouter {
                 .then((real_estate) => res.json(real_estate))
                 .catch((err) => res.status(500).json(err));
         })
+
+        return router;
     }
 }
 
