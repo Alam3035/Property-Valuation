@@ -57,7 +57,7 @@ class EstateRouter {
          router.get('/infoA', (req, res) => {
              console.log('list Properties in Initial District')
  
-             this.estateService.listEstateByInitialDistrict('Jordan', req.query.page, req.query.numberOfResults)
+             this.estateService.listEstateByInitialDistrict('Wan Chai', req.query.page, req.query.numberOfResults)
                  .then((districtDetail) => res.json(districtDetail))
                  .catch((err) => res.status(500).json(err));
          })
@@ -74,7 +74,7 @@ class EstateRouter {
          router.get('/infoA/:catfathername', (req, res) => {
              console.log('list by catfathername')
  
-             this.estateService.listEstateByDistrict(req.params.catfathername || 'Jordan')
+             this.estateService.listEstateByDistrict(req.params.catfathername || 'Wan Chai')
                  .then((districtDetail) => res.json(districtDetail))
                  .catch((err) => res.status(500).json(err));
          })

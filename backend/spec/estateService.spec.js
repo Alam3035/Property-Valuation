@@ -1,7 +1,7 @@
 const EstateService = require('../services/EstateService')
 
 
-describe('EstateService', function () {
+describe('EstateService', function () { //set up jasmine spies to run real tests
 
     it('lists the av wl/pricevalue of one Estate you seached for', function () {
         const estateService = new EstateService()
