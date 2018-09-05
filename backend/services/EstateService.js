@@ -86,7 +86,7 @@ class EstateService {
             })
     }
 
-    //EstateServices 
+    //EstateServices please change my name. or say it.
     listEstatesByIsland(rootID) { 
         let query = this.knex
             .select(
