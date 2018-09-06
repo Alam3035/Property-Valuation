@@ -13,7 +13,7 @@ class SocialPostRouter {
         router.post('/:userID', (req, res) => {
             console.log('You see this?')
 
-            this .socialPostService.addSocialPost(req.body.header, req.body.body, req.body.header_image, req.session.passport.user_id, req.params.userID)
+            this .socialPostService.addSocialPost(req.body.header, req.body.body, req.body.header_image,req.params.userID)
             .then(() => this.socialPostService.listSocialPost(req.params.userID))
             .then((social_post) => res.json(social_post))
             .catch((err) => rest.status(500).json(err));
@@ -32,7 +32,7 @@ class SocialPostRouter {
         router.put('/:spostID', (req,res) => {
             console.log('You see this?')
 
-            this.socialPostService.editSocialPost(req.body.header, req.body.body, req.body.header_image, req.session.passport.user_id)
+            this.socialPostService.editSocialPost(req.body.header, req.body.body, req.body.header_image)
             .then((socialPostDetails) => res.json(socialPostDetails))
             .catch((err) => res.status(500).json(err));
         })

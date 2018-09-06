@@ -91,6 +91,7 @@
         }
 
         addFavFlat(reID, userID) {
+            console.log(userID, reID)
             return this.knex('user_favourites_property')
             .insert({"user_id":userID, "re_id":reID})
         };
@@ -102,7 +103,7 @@
             .delete()
         };
 
-        listFavFlat(rootID) { //breaks due to size?
+        listFavFlat(rootID) { 
             let query = this.knex
                 .select(
                     'real_estate.re_id',
