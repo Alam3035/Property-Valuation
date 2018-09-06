@@ -97,24 +97,26 @@ class EstateService {
     }
 
     //EstateServices please change my name. or say it.
-    listEstatesByIsland(rootID) { 
+    listEstatesByIsland(rootID, page, numberOfResults) { 
         let query = this.knex
             .select(
                 'real_estate.re_id',
                 'real_estate.addr',
                 'real_estate.catfathername',
-                'real_estate.catname'
+                'real_estate.catname',
+                'real_estate.area'
             )
             .from('real_estate')
             .innerJoin('historical_transaction', 'real_estate.re_id', 'historical_transaction.re_id')
             .where('historical_transaction.rootid', rootID)
-
-            .limit(100)
+            .offset(page * numberOfResults - numberOfResults)
+            .limit(Number(numberOfResults))
 
         return query.then(rows => {
             return rows.map(row => ({
                 re_id: row.re_id,
                 addr: row.addr,
+                area: row.area,
                 catfathername: row.catfathername,
                 catname: row.catname,
                 transactions: []
@@ -159,7 +161,7 @@ class EstateService {
     }
 
     //List by district
-    listEstateByDistrict(catfathername) { // add average winloss and price_value to estate not address.
+    listEstateByDistrict(catfathername, page, numberOfResults) { // add average winloss and price_value to estate not address.
         let query = this.knex
             .select(
                 'real_estate.catname',
@@ -167,7 +169,10 @@ class EstateService {
             )
             .from('real_estate')
             .where('real_estate.catfathername', 'like', `%${catfathername}%`)
-            .limit(100)
+            .offset(page * numberOfResults - numberOfResults)
+            .limit(Number(numberOfResults))
+           
+            //.limit(100)
         console.log('selecting')
 
         return query.then(rows => {
@@ -253,7 +258,7 @@ class EstateService {
 
 
     //list by Estate
-    listEstateByEstate(catname) {
+    listEstateByEstate(catname, page, numberOfResults) {
         let query = this.knex
             .select(
                 'real_estate.re_id',
@@ -262,7 +267,11 @@ class EstateService {
             )
             .from('real_estate')
             .where('real_estate.catname', 'like', `%${catname}%`)
-            .limit(100)
+            .offset(page * numberOfResults - numberOfResults)
+            .limit(numberOfResults)
+            
+            
+            //.limit(100)
         console.log('selecting')
 
         return query.then(rows => {

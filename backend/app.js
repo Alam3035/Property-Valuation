@@ -125,6 +125,59 @@ app.post("/api/register", async (req, res) => {
     }
 })
 
+//facebook login with jwt access token
+app.post("/api/login/facebook", function (req, res) {
+    if(req.body.access_token) {
+        var accessToken = req.body.access_token;
+        axios.get(`https://graph.facebook.com/me?fields=id,name,picture,email&access_token=${accessToken}`)
+            .then( async function (res) {
+                if(!res.data.error){
+                    let query = knex
+                        .select('user_id')
+                        .from('users')
+                        .where('facebook_id', res.data.id)
+                    return query.then(async function (rows) {
+                        if(rows.length === 0) {
+                            var user = await knex('users')
+                                .insert({
+                                    name: res.data.name,
+                                    email: res.data,email,
+                                    facebook_id: res.data.id,
+
+                                })
+                                .returning('user_id')
+                            var payload = {
+                                user_id: user.id
+                            }
+                            var token = jwt.encode(payload, config.jwtSecret);
+                            rresponse.json({
+                                token: token
+                            });
+                        } else {
+                            var payoad = {
+                                id: rows[0].user_id
+                            }
+                            var token = jwt.encode(payoad, config.jwtSecret);
+                            response.json({
+                                user_id: payload.id,
+                                token: token
+                            });
+                        }
+                    })
+                } else {
+                    res.sendStatus(401);
+                }
+            }).catch((err) => {
+                console.log(err);
+                res.sendStatus(401);
+            });
+    } else {
+        res.sendStatus(401);
+    }
+});
+
+//implement socket for chatroom/ dm messages
+
     const httpsOptions = {
             key: fs.readFileSync('./localhost.key'),
             cert: fs.readFileSync('./localhost.crt')

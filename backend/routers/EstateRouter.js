@@ -12,7 +12,7 @@ class EstateRouter {
         router.get('/rootID/:rootID', (req, res) => {
             console.log('list by rootid')
 
-            this.estateService.listEstatesByIsland(req.params.rootID)
+            this.estateService.listEstatesByIsland(req.params.rootID, req.query.page, req.query.numberOfResults)
                 .then((islandDetail) => res.json(islandDetail))
                 .catch((err) => res.status(500).json(err));
         })
@@ -21,7 +21,7 @@ class EstateRouter {
         router.get('/district/:catfathername', (req, res) => {
             console.log('list by catfathername')
 
-            this.estateService.listEstateByDistrict(req.params.catfathername)
+            this.estateService.listEstateByDistrict(req.params.catfathername, req.query.page, req.query.numberOfResults)
                 .then((districtDetail) => res.json(districtDetail))
                 .catch((err) => res.status(500).json(err));
         })
@@ -30,7 +30,7 @@ class EstateRouter {
         router.get('/estate/:catname', (req, res) => {
             console.log('list by catname')
 
-            this.estateService.listEstateByEstate(req.params.catname)
+            this.estateService.listEstateByEstate(req.params.catname, req.query.page, req.query.numberOfResults)
                 .then((estateDetail) => res.json(estateDetail))
                 .catch((err) => res.status(500).json(err));
         })
