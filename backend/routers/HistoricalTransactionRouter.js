@@ -13,7 +13,7 @@ class HistoricalTransactionRouter {
         router.get('/listre/:reID', (req, res) => {
             console.log('list by reID')
 
-            this.historicalTransactionService.listHistoricalTransactionByRealEstate(req.params.reID)
+            this.historicalTransactionService.listHistoricalTransactionByRealEstate(req.params.reID, req.query.page, req.query.numberOfResults)
                 .then((listDetails) => res.json(listDetails))
                 .catch((err) => res.status(500).json(err));
         })

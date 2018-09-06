@@ -54,13 +54,30 @@ class EstateRouter {
         })
 
          //get Estate his_trans average price
-         router.get('/infoA/:catfathername', (req, res) => {
-            console.log('infoA by catfathername')
+         router.get('/infoA', (req, res) => {
+             console.log('list Properties in Initial District')
+ 
+             this.estateService.listEstateByInitialDistrict('Wan Chai', req.query.page, req.query.numberOfResults)
+                 .then((districtDetail) => res.json(districtDetail))
+                 .catch((err) => res.status(500).json(err));
+         })
 
-            this.estateService.getAverageOfCatFatherName(req.params.catfathername)
-                .then((estateInfo) => res.json(estateInfo))
-                .catch((err) => res.status(500).json(err));
-        })
+         router.get('/infoA/:catfathername', (req, res) => {
+             console.log('infoA by catfathername')
+ 
+             this.estateService.getAverageOfCatFatherName(req.params.catfathername)
+                 .then((estateInfo) => res.json(estateInfo))
+                 .catch((err) => res.status(500).json(err));
+         })
+ 
+         //get Estate by District
+         router.get('/infoA/:catfathername', (req, res) => {
+             console.log('list by catfathername')
+ 
+             this.estateService.listEstateByDistrict(req.params.catfathername || 'Wan Chai')
+                 .then((districtDetail) => res.json(districtDetail))
+                 .catch((err) => res.status(500).json(err));
+         })
 
             return router;
 

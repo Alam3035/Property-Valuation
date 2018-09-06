@@ -3,6 +3,26 @@ class EstateService {
         this.knex = knex;
     }
 
+    // List Initial District
+
+    async listEstateByInitialDistrict(district, page, numberOfResults) {
+        console.log(page)
+        console.log(numberOfResults)
+        
+        return await this.knex
+            .select(
+                'real_estate.re_id',
+                'real_estate.addr',
+                'real_estate.catname'
+            )
+            .from('real_estate')
+            .where('real_estate.catfathername', district)
+            .offset(page * numberOfResults - numberOfResults)
+            .limit(Number(numberOfResults))
+
+    }
+
+
     //Get the transaction history of an estate
     getInfoOnEstate(catname) {
         let query = this.knex
@@ -26,8 +46,9 @@ class EstateService {
                     rows.map(row => {
                         let query = this.knex
                             .select(
-                                'historical_transaction.price_value',
-                                'historical_transaction.winloss'
+                                //'historical_transaction.price_value', // for AV price
+                                'historical_transaction.winloss',
+                                'historical_transaction.sq_price'
                             )
                             .from('historical_transaction')
                             .innerJoin('real_estate', 'historical_transaction.re_id', 'real_estate.re_id')
@@ -37,17 +58,22 @@ class EstateService {
                             if (reRows.length === 0) {
                                 reRows.push({
                                     price_value: 1000000,
+                                    sq_price: 8000,
                                     winloss: 10
                                 })
                                 console.log(reRows)
                             }
-                            const averageHT = reRows.reduce(function (acc, reRow) {
-                                return acc + Number(reRow.price_value)
-                            }, 0) / reRows.length
-                            // const averageHT = reRows.reduce(function (acc, reRow) { return acc + isNaN(Number(reRow.price_value)) }, 0)/reRows.length
+                           // const averageHT = reRows.reduce(function (acc, reRow) { // for AV price
+                               // return acc + Number(reRow.price_value)
+                            //     const averageSQP = reRows.reduce(function (acc, reRow) {                               
+                            //    return acc + Number(reRow.sq_price)
+                            // }, 0) / reRows.length
+                            // const averageHT = reRows.reduce(function (acc, reRow) { return acc + isNaN(Number(reRow.price_value)) }, 0)/reRows.length // for average price
+                            const averageSQP = reRows.reduce(function (acc, reRow) { return acc + Number(reRow.sq_price) }, 0)/reRows.length
                             const averageWL = reRows.reduce(function (acc, reRow) { return acc + Number(reRow.winloss) }, 0) / reRows.length
                             row.averages = ({
-                                averageHT: averageHT,
+                                // averageHT: averageHT,
+                                averageSqPrice: averageSQP,
                                 averagewinloss: averageWL
                             });
                             return row;
@@ -57,17 +83,21 @@ class EstateService {
                 )
             })
             .then(rows => {
-                const actualAverageHT = rows.reduce(function (acc, row) { return acc + Number(row.averages.averageHT) }, 0) / rows.length
+                //const actualAverageHT = rows.reduce(function (acc, row) { return acc + Number(row.averages.averageHT) }, 0) / rows.length
+                const actualAverageSQP = rows.reduce(function (acc, row) { return acc + Number(row.averages.averageSqPrice) }, 0) / rows.length
                 const actualAverageWL = rows.reduce(function (acc, row) { return acc + Number(row.averages.averagewinloss) }, 0) / rows.length
-                const roundedAverageHT = actualAverageHT.toFixed(0)
-                const roundedAverageWL = actualAverageWL.toFixed(0)
+                //const avPrice_value = actualAverageHT.toFixed(0)
+                const avPrice_sq = actualAverageSQP.toFixed(0)
+                const avWinloss = actualAverageWL.toFixed(0)
 
-                return { roundedAverageHT, roundedAverageWL }
+              
+
+                return [{ catname, avPrice_sq, avWinloss }] 
             })
     }
 
-    //EstateServices // refactor the real_estate data first. then retrieve the historical trans
-    listEstatesByIsland(rootID) { //breaks due to size?
+    //EstateServices please change my name. or say it.
+    listEstatesByIsland(rootID) { 
         let query = this.knex
             .select(
                 'real_estate.re_id',
@@ -194,8 +224,8 @@ class EstateService {
     getAverageOfCatFatherName(catfathername) {
             let query = this.knex
     
-            // .avg('sq_price')
-            .avg('price_value')
+            .avg('sq_price')
+            // .avg('price_value')
             .sum('winloss')
             .count('winloss')
             
@@ -212,8 +242,8 @@ class EstateService {
             return rows.map(row => ({
             
                 catname: row.catname,
-                avPrice_value: (Number(row.avg)).toFixed(0),
-               // avPrice_sq: (Number(row.avg)).toFixed(0),
+                // avPrice_value: (Number(row.avg)).toFixed(0),
+               avPrice_sq: (Number(row.avg)).toFixed(0),
                 avWinloss:  (Number((row.sum)/row.count)).toFixed(0)
                 
             }));
