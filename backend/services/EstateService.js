@@ -224,8 +224,8 @@ class EstateService {
     getAverageOfCatFatherName(catfathername) {
             let query = this.knex
     
-            // .avg('sq_price')
-            .avg('price_value')
+            .avg('sq_price')
+            // .avg('price_value')
             .sum('winloss')
             .count('winloss')
             
@@ -242,8 +242,8 @@ class EstateService {
             return rows.map(row => ({
             
                 catname: row.catname,
-                avPrice_value: (Number(row.avg)).toFixed(0),
-               // avPrice_sq: (Number(row.avg)).toFixed(0),
+                // avPrice_value: (Number(row.avg)).toFixed(0),
+               avPrice_sq: (Number(row.avg)).toFixed(0),
                 avWinloss:  (Number((row.sum)/row.count)).toFixed(0)
                 
             }));
