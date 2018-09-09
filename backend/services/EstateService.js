@@ -53,6 +53,7 @@ class EstateService {
                             .from('historical_transaction')
                             .innerJoin('real_estate', 'historical_transaction.re_id', 'real_estate.re_id')
                             .where('historical_transaction.re_id', row.re_id)
+                            .whereNot('historical_transaction.sq_price', 0.00 | null | undefined) // may not work
                         return query.then(reRows => {
                             console.log(reRows)
                             if (reRows.length === 0) {
@@ -138,7 +139,7 @@ class EstateService {
                             )
                             .from('historical_transaction')
                             .where('historical_transaction.re_id', row.re_id)
-                            .orderBy('historical_transaction.winloss', 'asc')
+                            .orderBy('historical_transaction.winloss', 'desc')
 
                         return query.then(reRows => {
                             reRows.forEach(reRow => {
@@ -225,7 +226,8 @@ class EstateService {
             })
 
     }
-    // need to test but should produce both values wanted. 
+    // need to test but should produce both values wanted. implement pagination
+    //where not for better filtering?
     getAverageOfCatFatherName(catfathername) {
             let query = this.knex
     
@@ -238,6 +240,7 @@ class EstateService {
             .from('historical_transaction')
             .innerJoin('real_estate', 'historical_transaction.re_id', 'real_estate.re_id')
             .where('real_estate.catfathername', 'like', `%${catfathername}%`)
+            .whereNot('historical_transaction.sq_price', 0.00 | undefined | null) //unsure if this will work yet
             .limit(150)
             .groupBy('real_estate.catname')
             
@@ -321,65 +324,65 @@ class EstateService {
     }
 
     //will work in post man if the address is encodeURI() -- we will need to give users address options
-    listEstateByAddr(addr) { //list by addr wont work due to / in addr?
-        let query = this.knex
-            .select(
-                'real_estate.re_id',
-                'real_estate.catname',
-                'real_estate.catfathername'
-            )
-            .from('real_estate')
-            .where('real_estate.addr', 'like', `%${addr}%`)// 'like',  `%${addr}%`)
-        console.log('selecting')
-        console.log(addr)
+    // listEstateByAddr(addr) { //list by addr wont work due to / in addr?
+    //     let query = this.knex
+    //         .select(
+    //             'real_estate.re_id',
+    //             'real_estate.catname',
+    //             'real_estate.catfathername'
+    //         )
+    //         .from('real_estate')
+    //         .where('real_estate.addr', 'like', `%${addr}%`)// 'like',  `%${addr}%`)
+    //     console.log('selecting')
+    //     console.log(addr)
 
-        return query.then(rows => {
-            return rows.map(row => ({
-                re_id: row.re_id,
-                catname: row.catname,
-                catfathername: row.catfathername,
-                transactions: []
-            }));
-        })
-            .then(rows => {
-                console.log(rows);
-                return Promise.all(
-                    rows.map(row => {
-                        let query = this.knex
-                            .select('historical_transaction.price_value',
-                                'historical_transaction.date',
-                                'historical_transaction.sp_price',
-                                'historical_transaction.winloss',
-                                'historical_transaction.img_url',
-                                'historical_transaction.id',
-                                'historical_transaction.ht_id',
-                                'historical_transaction.re_id')
-                            .from('historical_transaction')
-                            .innerJoin('real_estate', 'historical_transaction.re_id', 'real_estate.re_id')
-                            .where('real_estate.re_id', row.re_id)
-                            .orderBy('historical_transaction.winloss', 'desc')
-                        console.log('selecting two')
+    //     return query.then(rows => {
+    //         return rows.map(row => ({
+    //             re_id: row.re_id,
+    //             catname: row.catname,
+    //             catfathername: row.catfathername,
+    //             transactions: []
+    //         }));
+    //     })
+    //         .then(rows => {
+    //             console.log(rows);
+    //             return Promise.all(
+    //                 rows.map(row => {
+    //                     let query = this.knex
+    //                         .select('historical_transaction.price_value',
+    //                             'historical_transaction.date',
+    //                             'historical_transaction.sp_price',
+    //                             'historical_transaction.winloss',
+    //                             'historical_transaction.img_url',
+    //                             'historical_transaction.id',
+    //                             'historical_transaction.ht_id',
+    //                             'historical_transaction.re_id')
+    //                         .from('historical_transaction')
+    //                         .innerJoin('real_estate', 'historical_transaction.re_id', 'real_estate.re_id')
+    //                         .where('real_estate.re_id', row.re_id)
+    //                         .orderBy('historical_transaction.winloss', 'desc')
+    //                     console.log('selecting two')
 
-                        return query.then(reRows => {
-                            console.log(reRows)
-                            reRows.forEach(reRow => {
-                                row.transactions.push({
-                                    re_id: reRow.re_id,
-                                    price_value: reRow.price_value,
-                                    sq_price: reRow.sq_price,
-                                    date: reRow.date,
-                                    winloss: reRow.winloss,
-                                    img_url: reRow.img_url,
-                                    id: reRow.id,
-                                    ht_id: reRow.ht_id
-                                });
-                            });
-                            return row;
-                        })
-                    })
-                )
-            })
-    }
+    //                     return query.then(reRows => {
+    //                         console.log(reRows)
+    //                         reRows.forEach(reRow => {
+    //                             row.transactions.push({
+    //                                 re_id: reRow.re_id,
+    //                                 price_value: reRow.price_value,
+    //                                 sq_price: reRow.sq_price,
+    //                                 date: reRow.date,
+    //                                 winloss: reRow.winloss,
+    //                                 img_url: reRow.img_url,
+    //                                 id: reRow.id,
+    //                                 ht_id: reRow.ht_id
+    //                             });
+    //                         });
+    //                         return row;
+    //                     })
+    //                 })
+    //             )
+    //         })
+    // }
 
 }
 

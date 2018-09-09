@@ -13,7 +13,7 @@ class TradingPlatformRouter {
         //add property -- may need to change the userID....?
         router.post('/add/:userID', (req, res) => {
             console.log('adding?')
-            this.tradingPlatformService.addPropertyTradePost(req.body.address, req.body.catfathername, req.body.catname, req.body.asking_price, req.body.area, req.body.special_note, req.body.image_url, req.params.userID) //req.user.user_id
+            this.tradingPlatformService.addPropertyTradePost(req.body.address, req.body.catfathername, req.body.catname, req.body.asking_price, req.body.area, req.body.special_note, req.body.image_url, req.user.user_id) //req.user.user_id
         //req.session.passport.user.id add in?
                 .then(() => this.tradingPlatformService.listPropertiesTradePostUser(req.params.userID))
                 .then(console.log('second one'))
