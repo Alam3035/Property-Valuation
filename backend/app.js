@@ -61,7 +61,7 @@ const { DirectMessageService,
         let historicalTransactionService = new HistoricalTransactionService(knex, redisClient);
         let tradingPlatformService = new TradingPlatformService(knex, redisClient);
         let userService = new UserService(knex, redisClient);
-       let userFavService = new UserFavService(knex);
+        let userFavService = new UserFavService(knex);
 
         new SocketIORouter(io,userService).router(); //this is where we provide the middlware to check whether or not users are logged in
         app.use('/api/estate', (new EstateRouter(estateService)).router());
