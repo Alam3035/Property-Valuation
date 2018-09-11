@@ -4,11 +4,11 @@ class UserFavService {
   }
 
   // users favourite social posts
-  isFavSocialPost(postID, userID) {
+  isFavSocialPost(postID, user_id) {
     let query = this.knex
       .select()
       .from("user_favourites_blogpost")
-      .where("user_id", userID)
+      .where("user_id", user_id)
       .andWhere("post_id", postID);
 
     return query.then(rows => {
@@ -21,27 +21,27 @@ class UserFavService {
   }
 
   // make a Social Post favourite
-  addFavSocialPost(postID, userID) {
+  addFavSocialPost(postID, user_id) {
     return this.knex("user_favourites_blogpost").insert({
-      user_id: userID,
+      user_id: user_id,
       post_id: postID
     });
   }
 
   //delete favourite Social post
-  delFavSocialPost(postID, userID) {
+  delFavSocialPost(postID, user_id) {
     return this.knex("user_favourites_blogpost")
-      .where("user_id", userID)
+      .where("user_id", user_id)
       .andWhere("post_id", postID)
       .delete();
   }
 
   // list favourite social post
-  listFavSocialPost(userID) {
+  listFavSocialPost(user_id) {
     let query = this.knex
       .select()
       .from("user_favourite_blogpost")
-      .where("user_favourite_blogpost.user_id", userID);
+      .where("user_favourite_blogpost.user_id", user_id);
 
     return query
       .then(rows => {
@@ -74,11 +74,11 @@ class UserFavService {
   }
 
   // users favourite Flat
-  isFavFlat(reID, userID) {
+  isFavFlat(reID, user_id) {
     let query = this.knex
       .select()
       .from("user_favourites_property")
-      .where("user_id", userID)
+      .where("user_id", user_id)
       .andWhere("re_id", reID);
 
     return query.then(rows => {
@@ -90,18 +90,18 @@ class UserFavService {
     });
   }
 
-  addFavFlat(reID, userID) {
-    console.log("Add WatchItem: " + "reID: " + reID, "userID: " + userID);
+  addFavFlat(reID, user_id) {
+    console.log("Add WatchItem: " + "reID: " + reID, "userID: " + user_id);
     return this.knex("user_favourites_property").insert({
-      user_id: userID,
+      user_id: user_id,
       re_id: reID
     });
   }
 
-  deleteFavFlat(reID, userID) {
-    console.log("Delete WatchItem" + "reID: " + reID, "userID: " + userID);
+  deleteFavFlat(reID, user_id) {
+    console.log("Delete WatchItem" + "reID: " + reID, "userID: " + user_id);
     return this.knex("user_favourites_property")
-      .where("user_id", userID)
+      .where("user_id", user_id)
       .andWhere("re_id", reID)
       .delete();
   }
@@ -158,11 +158,11 @@ class UserFavService {
   //         );
   //       });
   //   }
-  listFlatFavs(userID) {
+  listFlatFavs(user_id) {
     let query = this.knex
       .select("re_id")
       .from("user_favourites_property")
-      .where("user_id", userID);
+      .where("user_id", user_id);
 
     return query
       .then(rows => {

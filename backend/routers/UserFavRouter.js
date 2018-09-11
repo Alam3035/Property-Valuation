@@ -52,25 +52,25 @@ class UserFavRouter {
         .catch(err => res.status(500).json(err));
     });
 
-    router.post("/addflat/:userID/:reID", (req, res) => {
+    router.post("/addflat/:reID", (req, res) => {
       // add flat to favoutire
       console.log("Add Flat");
       this.userFavService
-        .addFavFlat(req.params.reID, req.params.userID)
+        .addFavFlat(req.params.reID, req.user.id)
         .then(() =>
-          this.userFavService.isFavFlat(req.params.reID, req.params.userID)
+          this.userFavService.isFavFlat(req.params.reID, req.user.id)
         )
         .then(status => res.json(status))
         .catch(err => res.status(500).json(err));
     });
 
-    router.delete("/deleflat/:userID/:reID", (req, res) => {
+    router.delete("/deleflat/:reID", (req, res) => {
       // delete flat from favoutires
       console.log("Delete Flat");
       this.userFavService
-        .deleteFavFlat(req.params.reID, req.params.userID)
+        .deleteFavFlat(req.params.reID, req.user.id)
         .then(() =>
-          this.userFavService.isFavFlat(req.params.reID, req.params.userID)
+          this.userFavService.isFavFlat(req.params.reID, req.user.id)
         )
         .then(status => res.json(status))
         .catch(err => res.status(500).json(err));
@@ -80,16 +80,16 @@ class UserFavRouter {
     //   // list favoutire flat
     //   console.log("List Flat");
     //   this.userFavService
-    //     .listFavFlat(req.params.userID)
+    //     .listFavFlat(req.user.id)
     //     .then(real_estate => res.json(real_estate))
     //     .catch(err => res.status(500).json(err));
     // });
 
-    router.get("/watchlist/:userID", (req, res) => {
+    router.get("/watchlist", (req, res) => {
       console.log("List Flat");
       // list favoutire flat
       this.userFavService
-        .listFlatFavs(req.params.userID)
+        .listFlatFavs(req.user.id)
         .then(real_estate => res.json(real_estate))
         .catch(err => res.status(500).json(err));
     });

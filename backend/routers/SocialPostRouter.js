@@ -13,8 +13,8 @@ class SocialPostRouter {
         router.post('/:userID', (req, res) => {
             console.log('You see this?')
 
-            this .socialPostService.addSocialPost(req.body.header, req.body.body, req.body.header_image,req.params.userID)
-            .then(() => this.socialPostService.listSocialPost(req.params.userID))
+            this .socialPostService.addSocialPost(req.body.header, req.body.body, req.body.header_image,req.user.id)
+            .then(() => this.socialPostService.listSocialPost(req.user.id))
             .then((social_post) => res.json(social_post))
             .catch((err) => rest.status(500).json(err));
         })
@@ -23,7 +23,7 @@ class SocialPostRouter {
         router.get('/:userID', (req,res) => {
             console.log('You see this?')
 
-            this.socialPostService.listSocialPost(req.params.userID)
+            this.socialPostService.listSocialPost(req.user.id)
             .then((social_post) => res.json(social_post))
             .catch((err) => res.status(500).json(err));
         });
@@ -41,8 +41,8 @@ class SocialPostRouter {
         router.delete('/:spostID', (req, res) => {
             console.log('You see this?')
 
-            this.socialPostService.deleteSocialPost(req.params.userID)
-            .then(() => this.socialPostService.listSocialPost(req.params.userID))
+            this.socialPostService.deleteSocialPost(req.user.id)
+            .then(() => this.socialPostService.listSocialPost(req.user.id))
             .then((social_post) => res.json(social_post))
             .catch((err) => res.status(500).json(err));
         })
