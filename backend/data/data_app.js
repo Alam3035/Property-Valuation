@@ -1,6 +1,6 @@
 const axios = require('axios');
 // const fs = require('fs');
-const stringify = require('csv-stringify');
+// const stringify = require('csv-stringify');
 
 require('dotenv').config(); //Define Enniroments
 const NODE_ENV = process.env.NODE_ENV || 'development'
@@ -11,7 +11,6 @@ const knex = require('knex')(knexFile)
 const config = {
     headers: {
         'Content-Type': 'application/x-www-form-urlencoded'
-
     }
 }
 
@@ -23,54 +22,8 @@ const getTransactionHistory = async function (i, num, callback) { //num for dist
     try {
         let response = await axios.post('https://data.28hse.com/en/webservice', `draw=7&columns%5B0%5D%5Bdata%5D=date&columns%5B0%5D%5Bname%5D=&columns%5B0%5D%5Bsearchable%5D=true&columns%5B0%5D%5Borderable%5D=false&columns%5B0%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B0%5D%5Bsearch%5D%5Bregex%5D=false&columns%5B1%5D%5Bdata%5D=catfathername&columns%5B1%5D%5Bname%5D=&columns%5B1%5D%5Bsearchable%5D=true&columns%5B1%5D%5Borderable%5D=false&columns%5B1%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B1%5D%5Bsearch%5D%5Bregex%5D=false&columns%5B2%5D%5Bdata%5D=catname&columns%5B2%5D%5Bname%5D=&columns%5B2%5D%5Bsearchable%5D=true&columns%5B2%5D%5Borderable%5D=false&columns%5B2%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B2%5D%5Bsearch%5D%5Bregex%5D=false&columns%5B3%5D%5Bdata%5D=price&columns%5B3%5D%5Bname%5D=&columns%5B3%5D%5Bsearchable%5D=true&columns%5B3%5D%5Borderable%5D=false&columns%5B3%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B3%5D%5Bsearch%5D%5Bregex%5D=false&columns%5B4%5D%5Bdata%5D=winloss&columns%5B4%5D%5Bname%5D=&columns%5B4%5D%5Bsearchable%5D=true&columns%5B4%5D%5Borderable%5D=false&columns%5B4%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B4%5D%5Bsearch%5D%5Bregex%5D=false&columns%5B5%5D%5Bdata%5D=area&columns%5B5%5D%5Bname%5D=&columns%5B5%5D%5Bsearchable%5D=true&columns%5B5%5D%5Borderable%5D=false&columns%5B5%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B5%5D%5Bsearch%5D%5Bregex%5D=false&columns%5B6%5D%5Bdata%5D=sq_price&columns%5B6%5D%5Bname%5D=&columns%5B6%5D%5Bsearchable%5D=true&columns%5B6%5D%5Borderable%5D=false&columns%5B6%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B6%5D%5Bsearch%5D%5Bregex%5D=false&columns%5B7%5D%5Bdata%5D=addr&columns%5B7%5D%5Bname%5D=&columns%5B7%5D%5Bsearchable%5D=true&columns%5B7%5D%5Borderable%5D=false&columns%5B7%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B7%5D%5Bsearch%5D%5Bregex%5D=false&columns%5B8%5D%5Bdata%5D=contract&columns%5B8%5D%5Bname%5D=&columns%5B8%5D%5Bsearchable%5D=true&columns%5B8%5D%5Borderable%5D=false&columns%5B8%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B8%5D%5Bsearch%5D%5Bregex%5D=false&columns%5B9%5D%5Bdata%5D=addr&columns%5B9%5D%5Bname%5D=&columns%5B9%5D%5Bsearchable%5D=true&columns%5B9%5D%5Borderable%5D=false&columns%5B9%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B9%5D%5Bsearch%5D%5Bregex%5D=false&start=${i * 10}&length=10&search%5Bvalue%5D=&search%5Bregex%5D=false&cmd=area_deals&area_id=${num}`, config); // implement a function to get ${num}all four areas ${num}
         
-        // let dataId = response.data.data.map(i => i.id)
-        // let dataAddr = response.data.data.map(i => i.addr)
-        // let dataCatfatherName = response.data.data.map(i => i.catfathername)
-        // let dataCatname = response.data.data.map(i => i.catname)
-        // let dataBlock = response.data.data.map(i => i.block)
-        // let dataRootId = response.data.data.map(i => i.rootid)
-        // let dataPriceValue = response.data.data.map(i => i.price_value)
-        // let dataDate = response.data.data.map(i => i.date)
-        // let dataSqPriceValue = response.data.data.map(i => i.sq_price_value)
-        // let dataArea = response.data.data.map(i => i.area)
-        // let dataWinloss = response.data.data.map(i => i.winloss)
-
-        // console.log(dataId[0])
-        // console.log(dataAddr[0])
-        // console.log(dataCatfatherName[0])
-        // console.log(dataCatname[0])
-        // console.log(dataBlock[0])
-        // console.log(dataRootId[0])
-        // console.log(dataPriceValue[0])
-        // console.log(dataDate[0])
-        // console.log(dataSqPriceValue[0])
-        // console.log(dataArea[0])
-        // console.log(dataWinloss[0])
-
-        // let responseData = [];
-        // let columns = {
-        //     id: 'id',
-        //     addr: 'addr',
-        //     catfathername: 'catfathername',
-        //     catname: 'catname',
-        //     block: 'block',
-        //     rootid: 'rootid',
-        //     price_value: 'price_value',
-        //     date: 'date',
-        //     sq_price_value: 'sq_price_value',
-        //     area: 'area',
-        //     winloss: 'winloss'
-        // };
-        //     for (var i = 0; i < 20; i++) {
-        //   response.data.data.push([i, 'Name ' + i]);
-        // }
-        // stringify(response.data.data, { header: false, columns: columns }, async function (err, output) {
-        //     console.log(response.data.data)
-        //     if (err) throw err;
-      
-
         //first item in object
-            let query = await knex //doesnt work with the objs. 
+            let query = await knex 
                 .select('re_id')
                 .from('real_estate')
                 .where('real_estate.addr', response.data.data[0].addr)
