@@ -13,10 +13,11 @@ const redisClient = redis.createClient({
   port: REDIS_PORT
 });
 
+const axios = require('axios');
 const jwt = require("jwt-simple");
-var bcrypt = require("./utils/bcrypt");
-var authClass = require("./utils/auth");
-const cors = require("cors");
+var bcrypt = require('./utils/bcrypt');
+var authClass = require('./utils/auth');
+const cors = require('cors');
 const config = require("./utils/config");
 
 const { app, server, io } = require("./utils/init-app")(redisClient);
