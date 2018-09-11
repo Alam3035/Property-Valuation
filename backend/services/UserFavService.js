@@ -4,11 +4,11 @@ class UserFavService {
   }
 
   // users favourite social posts
-  isFavSocialPost(postID, userID) {
+  isFavSocialPost(postID, user_id) {
     let query = this.knex
       .select()
       .from("user_favourites_blogpost")
-      .where("user_id", userID)
+      .where("user_id", user_id)
       .andWhere("post_id", postID);
 
     return query.then(rows => {
@@ -21,27 +21,27 @@ class UserFavService {
   }
 
   // make a Social Post favourite
-  addFavSocialPost(postID, userID) {
+  addFavSocialPost(postID, user_id) {
     return this.knex("user_favourites_blogpost").insert({
-      user_id: userID,
+      user_id: user_id,
       post_id: postID
     });
   }
 
   //delete favourite Social post
-  delFavSocialPost(postID, userID) {
+  delFavSocialPost(postID, user_id) {
     return this.knex("user_favourites_blogpost")
-      .where("user_id", userID)
+      .where("user_id", user_id)
       .andWhere("post_id", postID)
       .delete();
   }
 
   // list favourite social post
-  listFavSocialPost(userID) {
+  listFavSocialPost(user_id) {
     let query = this.knex
       .select()
       .from("user_favourite_blogpost")
-      .where("user_favourite_blogpost.user_id", userID);
+      .where("user_favourite_blogpost.user_id", user_id);
 
     return query
       .then(rows => {
@@ -74,11 +74,11 @@ class UserFavService {
   }
 
   // users favourite Flat
-  isFavFlat(reID, userID) {
+  isFavFlat(reID, user_id) {
     let query = this.knex
       .select()
       .from("user_favourites_property")
-      .where("user_id", userID)
+      .where("user_id", user_id)
       .andWhere("re_id", reID);
 
     return query.then(rows => {
@@ -90,18 +90,18 @@ class UserFavService {
     });
   }
 
-  addFavFlat(reID, userID) {
-    console.log("Add WatchItem: " + "reID: " + reID, "userID: " + userID);
+  addFavFlat(reID, user_id) {
+    console.log("Add WatchItem: " + "reID: " + reID, "userID: " + user_id);
     return this.knex("user_favourites_property").insert({
-      user_id: userID,
+      user_id: user_id,
       re_id: reID
     });
   }
 
-  deleteFavFlat(reID, userID) {
-    console.log("Delete WatchItem" + "reID: " + reID, "userID: " + userID);
+  deleteFavFlat(reID, user_id) {
+    console.log("Delete WatchItem" + "reID: " + reID, "userID: " + user_id);
     return this.knex("user_favourites_property")
-      .where("user_id", userID)
+      .where("user_id", user_id)
       .andWhere("re_id", reID)
       .delete();
   }
@@ -158,11 +158,11 @@ class UserFavService {
   //         );
   //       });
   //   }
-  listFlatFavs(userID) {
+  listFlatFavs(user_id) {
     let query = this.knex
       .select("re_id")
       .from("user_favourites_property")
-      .where("user_id", userID);
+      .where("user_id", user_id);
 
     return query
       .then(rows => {
@@ -204,114 +204,6 @@ class UserFavService {
               });
               return rows;
             });
-<<<<<<< HEAD
-        }
-
-        addFavFlat(reID, userID) {
-            console.log(userID, reID)
-            return this.knex('user_favourites_property')
-            .insert({"user_id":userID, "re_id":reID})
-        };
-
-        delFavFlat(reID, userID) {
-            return this.knex('user_favourites_property')
-            .where('user_id', userID)
-            .andWhere('re_id', reID)
-            .delete()
-        };
-
-        listFavFlat(rootID) { 
-            let query = this.knex
-                .select(
-                    'real_estate.re_id',
-                    'real_estate.addr',
-                    'real_estate.catfathername',
-                    'real_estate.catname'
-                )
-                .from('real_estate')
-                .innerJoin('historical_transaction', 'real_estate.re_id', 'historical_transaction.re_id')
-                .where('historical_transaction.rootid', rootID )
-    
-                return query.then(rows => {
-                    return rows.map(row => ({
-                        re_id: row.re_id,
-                        addr: row.addr,
-                        catfathername: row.catfathername,
-                        catname: row.catname,
-                        transactions: []
-                    }));
-                })
-                .then(rows => {
-                    return Promise.all(
-                        rows.map(row => {
-                            let query = this.knex
-                            .select(
-                                'historical_transaction.rootid',
-                                'historical_transaction.id',
-                                'historical_transaction.img_url',
-                            )
-                            .from('historical_transaction')
-                            .where('historical_transaction.re_id', row.re_id)
-    
-                            return query.then(reRows => {
-                                reRows.forEach(reRow => {
-                                    row.transactions.push({
-                                        rootid: reRow.rootid,
-                                        id: reRow.id,
-                                        img_url: reRow.img_url,
-                                    });
-                                });
-                                return row;
-                            })
-                        })
-                    )
-                })
-        }
-
-        //untested but might be better
-
-        listFlatFavs (userID) {
-            let query = this.knex
-            .select()
-            .from('user_favourites_property')
-            .where('user_id', userID)
-
-            return query.then(rows => {
-                return rows.map(row => ({
-                    re_id: row.re_id,
-                    address: []
-                }));
-            }).then(rows => {
-                let query = this.knex
-                .select(
-                    'real_estate.catname',
-                    'real_estate.catfathername',
-                    'historical_transaction.sq_price',
-                    'historical_transaction.winloss')
-                    .avg('sq_price')
-                    .sum('winloss')
-                    .count('winloss')
-                    .from('real_estate')
-                    .innerJoin('historical_transaction', 'real_estate.re_id', 'historical_transaction.re_id')
-                    .where('real_estate.re_id', row.re_id)
-                    .groupBy('real_estate.catname')
-
-                    return query.then(reRows => {
-                        reRows.forEach(reRow =>{
-                            row.address.push({
-                                catname: reRow.catname,
-                                catfathername: reRow.catfathername,
-                            avPrice_sq: (Number(reRow.avg)).toFixed(0),
-                                avWinloss: (Number((row.sum)/row.count)).toFixed(0)
-                            })
-                        })
-                    })
-            })
-        }
-    }
-
-    module.exports = UserFavService;
-=======
           })
         );
       });
@@ -319,4 +211,3 @@ class UserFavService {
 }
 
 module.exports = UserFavService;
->>>>>>> aaf788abcc55cd385d6c069db2f3d29c9ec16c3a

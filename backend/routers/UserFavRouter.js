@@ -52,25 +52,25 @@ class UserFavRouter {
         .catch(err => res.status(500).json(err));
     });
 
-    router.post("/addflat/:userID/:reID", (req, res) => {
+    router.post("/addflat/:reID", (req, res) => {
       // add flat to favoutire
       console.log("Add Flat");
       this.userFavService
-        .addFavFlat(req.params.reID, req.params.userID)
+        .addFavFlat(req.params.reID, req.user.id)
         .then(() =>
-          this.userFavService.isFavFlat(req.params.reID, req.params.userID)
+          this.userFavService.isFavFlat(req.params.reID, req.user.id)
         )
         .then(status => res.json(status))
         .catch(err => res.status(500).json(err));
     });
 
-    router.delete("/deleflat/:userID/:reID", (req, res) => {
+    router.delete("/deleflat/:reID", (req, res) => {
       // delete flat from favoutires
       console.log("Delete Flat");
       this.userFavService
-        .deleteFavFlat(req.params.reID, req.params.userID)
+        .deleteFavFlat(req.params.reID, req.user.id)
         .then(() =>
-          this.userFavService.isFavFlat(req.params.reID, req.params.userID)
+          this.userFavService.isFavFlat(req.params.reID, req.user.id)
         )
         .then(status => res.json(status))
         .catch(err => res.status(500).json(err));
@@ -80,38 +80,18 @@ class UserFavRouter {
     //   // list favoutire flat
     //   console.log("List Flat");
     //   this.userFavService
-    //     .listFavFlat(req.params.userID)
+    //     .listFavFlat(req.user.id)
     //     .then(real_estate => res.json(real_estate))
     //     .catch(err => res.status(500).json(err));
     // });
-
-<<<<<<< HEAD
-        router.get('/watchlist/:userID', (req, res) => { // list favoutire flat
-            this.userFavService.listFlatFavs(req.params.userID)
-                .then((real_estate) => res.json(real_estate))
-                .catch((err) => res.status(500).json(err));
-        })
-
         router.get('/watchlist/:reID', (req, res) => { // list favoutire flat
-            this.userFavService.listFavFlat(req.params.userID)
+            this.userFavService.listFavFlat(req.user.id)
                 .then((real_estate) => res.json(real_estate))
                 .catch((err) => res.status(500).json(err));
         })
         return router;
     }
-=======
-    router.get("/watchlist/:userID", (req, res) => {
-      console.log("List Flat");
-      // list favoutire flat
-      this.userFavService
-        .listFlatFavs(req.params.userID)
-        .then(real_estate => res.json(real_estate))
-        .catch(err => res.status(500).json(err));
-    });
 
-    return router;
-  }
->>>>>>> aaf788abcc55cd385d6c069db2f3d29c9ec16c3a
 }
 
 module.exports = UserFavRouter;
