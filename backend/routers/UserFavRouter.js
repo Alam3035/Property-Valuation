@@ -65,7 +65,7 @@ class UserFavRouter {
     });
 
     router.delete("/deleflat/:reID", (req, res) => {
-      // delete flat from favoutires
+      // delete flat from favoutires small edit
       console.log("Delete Flat");
       this.userFavService
         .deleteFavFlat(req.params.reID, req.user.id)
