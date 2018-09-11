@@ -45,19 +45,19 @@ class UserFavRouter {
 
         router.post('/addflat/:reID', (req, res) => { // add flat to favoutire 
             this.userFavService.addFavFlat(req.params.reID, req.params.userID)
-                .then(() => this.userFavService.isFavSocialPost(req.params.reID))
+                .then(() => this.userFavService.isFavSocialPost(req.params.reID, req.params.userID))
                     .then((status) => res.json(status))
                     .catch((err) => res.status(500).json(err));
         })
 
         router.delete('/deleflat/:reID' ,(req, res) => { // delete flat from favoutires
             this.userFavService.deleteFavFlat(req.params.reID)
-                .then(() => this.userFavService.isFavSocialPost(req.params.reID))
+                .then(() => this.userFavService.isFavSocialPost(req.params.reID, req.params.userID))
                     .then((status) => res.json(status))
                     .catch((err) => res.status(500).json(err));
         })
 
-        router.get('/watchlist/:reID', (req, res) => { // list favoutire flat
+        router.get('/watchlist/:userID', (req, res) => { // list favoutire flat
             this.userFavService.listFavFlat(req.params.userID)
                 .then((real_estate) => res.json(real_estate))
                 .catch((err) => res.status(500).json(err));
