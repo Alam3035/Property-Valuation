@@ -19,14 +19,14 @@ class UserRouter {
 
         // Profile details service
         router.get('/details/:userID', (req, res) => { //getting details of user profile
-            this.userService.getUserDetail(req.params.userID)
+            this.userService.getUserDetail(req.user.id)
             .then((userDetails) => res.json(userDetails))
             .catch((err) => re.status(500).json(err));
         })
 
         //edit user service
         router.put('/details/:userID', (req, res) => { //updating the users details
-            this.userService.updateUserDetail(req.body.name,req.body.phone,req.params.userID)
+            this.userService.updateUserDetail(req.body.name,req.body.phone,req.user.id)
                 .then((userDetails) => res.json(userDetails)).then(console.log('actually worked?'))
                 .catch((err) => res.status(500).json(err));
 

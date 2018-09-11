@@ -10,12 +10,12 @@ class TradingPlatformRouter {
 
         //Trade post service
 
-        //add property -- may need to change the userID....?
+        //add property 
         router.post('/add/:userID', (req, res) => {
             console.log('adding?')
-            this.tradingPlatformService.addPropertyTradePost(req.body.address, req.body.catfathername, req.body.catname, req.body.asking_price, req.body.area, req.body.special_note, req.body.image_url, req.user.user_id) //req.user.user_id
+            this.tradingPlatformService.addPropertyTradePost(req.body.address, req.body.catfathername, req.body.catname, req.body.asking_price, req.body.area, req.body.special_note, req.body.image_url, req.user.id) //req.user.user_id
         //req.session.passport.user.id add in?
-                .then(() => this.tradingPlatformService.listPropertiesTradePostUser(req.user.user_id))
+                .then(() => this.tradingPlatformService.listPropertiesTradePostUser(req.user.id))
                 .then(console.log('second one'))
                 .then((trade_post) => res.json(trade_post))
                 .catch((err) => res.status(500).json(err));
@@ -43,7 +43,7 @@ class TradingPlatformRouter {
         router.get('/listUser/:userID', (req, res) => {
             console.log('listing user?')
 
-            this.tradingPlatformService.listPropertiesTradePostUser(req.params.userID) //req.user.user_id
+            this.tradingPlatformService.listPropertiesTradePostUser(req.user.id) //req.user.user_id
                 .then((trade_post) => res.json(trade_post))
                 .catch((err) => res.status(500).json(err));
         });
