@@ -22,8 +22,6 @@ const config = require("./utils/config");
 
 const { app, server, io } = require("./utils/init-app")(redisClient);
 
-const axios = require("axios");
-
 //body parsers required to parse form
 var bodyParser = require("body-parser");
 app.use(bodyParser.json());
