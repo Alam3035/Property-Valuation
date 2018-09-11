@@ -13,11 +13,12 @@ const redisClient = redis.createClient({
     port: REDIS_PORT
 });
 
-const jwt = require("jwt-simple")
+const axios = require('axios');
+const jwt = require("jwt-simple");
 var bcrypt = require('./utils/bcrypt');
 var authClass = require('./utils/auth');
 const cors = require('cors');
-const config = require("./utils/config")
+const config = require("./utils/config");
 
 const {app,server,io} = require('./utils/init-app')(redisClient);
 
@@ -126,10 +127,10 @@ app.post("/api/register", async (req, res) => {
 })
 
 //facebook login with jwt access token
-app.post("/api/login/facebook", function (req, res) {
+app.post("/api/login/facebook", function (req, response) {
     if(req.body.access_token) {
         var accessToken = req.body.access_token;
-        axios.get(`https://graph.facebook.com/me?fields=id,name,picture,email&access_token=${accessToken}`)
+        axios.get(`https://graph.facebook.com/me?fields=id,name,email&access_token=${accessToken}`)
             .then( async function (res) {
                 if(!res.data.error){
                     let query = knex
@@ -141,25 +142,25 @@ app.post("/api/login/facebook", function (req, res) {
                             var user = await knex('users')
                                 .insert({
                                     name: res.data.name,
-                                    email: res.data,email,
+                                    email: res.data.email,
                                     facebook_id: res.data.id,
 
                                 })
                                 .returning('user_id')
                             var payload = {
-                                user_id: user.id
+                                id: user.user_id
                             }
                             var token = jwt.encode(payload, config.jwtSecret);
-                            rresponse.json({
+                            response.json({
                                 token: token
                             });
                         } else {
-                            var payoad = {
+                            var payload = {
                                 id: rows[0].user_id
                             }
-                            var token = jwt.encode(payoad, config.jwtSecret);
+                            var token = jwt.encode(payload, config.jwtSecret);
                             response.json({
-                                user_id: payload.id,
+                                id: payload.id,
                                 token: token
                             });
                         }

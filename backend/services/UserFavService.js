@@ -150,6 +150,47 @@
                     )
                 })
         }
+
+        //untested but might be better
+
+        listFlatFavs (userID) {
+            let query = this.knex
+            .select()
+            .from('user_favourites_property')
+            .where('user_id', userID)
+
+            return query.then(rows => {
+                return rows.map(row => ({
+                    re_id: row.re_id,
+                    address: []
+                }));
+            }).then(rows => {
+                let query = this.knex
+                .select(
+                    'real_estate.catname',
+                    'real_estate.catfathername',
+                    'historical_transaction.sq_price',
+                    'historical_transaction.winloss')
+                    .avg('sq_price')
+                    .sum('winloss')
+                    .count('winloss')
+                    .from('real_estate')
+                    .innerJoin('historical_transaction', 'real_estate.re_id', 'historical_transaction.re_id')
+                    .where('real_estate.re_id', row.re_id)
+                    .groupBy('real_estate.catname')
+
+                    return query.then(reRows => {
+                        reRows.forEach(reRow =>{
+                            row.address.push({
+                                catname: reRow.catname,
+                                catfathername: reRow.catfathername,
+                            avPrice_sq: (Number(reRow.avg)).toFixed(0),
+                                avWinloss: (Number((row.sum)/row.count)).toFixed(0)
+                            })
+                        })
+                    })
+            })
+        }
     }
 
     module.exports = UserFavService;
