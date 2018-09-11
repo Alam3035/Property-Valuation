@@ -32,7 +32,7 @@ class EstateService {
             )
             .from('real_estate')
             .where('real_estate.catname', 'like', `%${catname}%`)
-            .limit(300)
+            .limit(100)
 
         return query.then(rows => {
             return rows.map(row => ({
