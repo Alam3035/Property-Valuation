@@ -84,7 +84,7 @@ class UserFavRouter {
     //     .then(real_estate => res.json(real_estate))
     //     .catch(err => res.status(500).json(err));
     // });
-        router.get('/watchlist/:reID', (req, res) => { // list favoutire flat
+        router.get('/watchlist', (req, res) => { // list favoutire flat
             this.userFavService.listFlatFavs(req.user.id)
                 .then((real_estate) => res.json(real_estate))
                 .catch((err) => res.status(500).json(err));

@@ -282,6 +282,7 @@ class EstateService {
                 re_id: row.re_id,
                 addr: row.addr,
                 catfathername: row.catfathername,
+                transactions: []
             }));
         })
             .then(rows => {
