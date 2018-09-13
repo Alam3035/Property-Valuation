@@ -460,7 +460,7 @@ const getTransactionHistory = async function (i, num, callback) { //num for dist
                         .andWhere('real_estate.addr',response.data.data[4].addr)
                         .andWhere('catfathername', response.data.data[4].catfathername)
                         .andWhere('catname', response.data.data[4].catname)
-                        .andWhere('rootid', response.data.data[4].rootid)
+                        .andWhere('rootid', response.data.data[4].rootid).then(console.log(htQuery4))
 
                          .insert({
                         re_id: htQuery4[0].re_id,
