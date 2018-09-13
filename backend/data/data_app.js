@@ -23,7 +23,7 @@ const getTransactionHistory = async function (i, num, callback) { //num for dist
         let response = await axios.post('https://data.28hse.com/en/webservice', `draw=7&columns%5B0%5D%5Bdata%5D=date&columns%5B0%5D%5Bname%5D=&columns%5B0%5D%5Bsearchable%5D=true&columns%5B0%5D%5Borderable%5D=false&columns%5B0%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B0%5D%5Bsearch%5D%5Bregex%5D=false&columns%5B1%5D%5Bdata%5D=catfathername&columns%5B1%5D%5Bname%5D=&columns%5B1%5D%5Bsearchable%5D=true&columns%5B1%5D%5Borderable%5D=false&columns%5B1%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B1%5D%5Bsearch%5D%5Bregex%5D=false&columns%5B2%5D%5Bdata%5D=catname&columns%5B2%5D%5Bname%5D=&columns%5B2%5D%5Bsearchable%5D=true&columns%5B2%5D%5Borderable%5D=false&columns%5B2%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B2%5D%5Bsearch%5D%5Bregex%5D=false&columns%5B3%5D%5Bdata%5D=price&columns%5B3%5D%5Bname%5D=&columns%5B3%5D%5Bsearchable%5D=true&columns%5B3%5D%5Borderable%5D=false&columns%5B3%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B3%5D%5Bsearch%5D%5Bregex%5D=false&columns%5B4%5D%5Bdata%5D=winloss&columns%5B4%5D%5Bname%5D=&columns%5B4%5D%5Bsearchable%5D=true&columns%5B4%5D%5Borderable%5D=false&columns%5B4%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B4%5D%5Bsearch%5D%5Bregex%5D=false&columns%5B5%5D%5Bdata%5D=area&columns%5B5%5D%5Bname%5D=&columns%5B5%5D%5Bsearchable%5D=true&columns%5B5%5D%5Borderable%5D=false&columns%5B5%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B5%5D%5Bsearch%5D%5Bregex%5D=false&columns%5B6%5D%5Bdata%5D=sq_price&columns%5B6%5D%5Bname%5D=&columns%5B6%5D%5Bsearchable%5D=true&columns%5B6%5D%5Borderable%5D=false&columns%5B6%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B6%5D%5Bsearch%5D%5Bregex%5D=false&columns%5B7%5D%5Bdata%5D=addr&columns%5B7%5D%5Bname%5D=&columns%5B7%5D%5Bsearchable%5D=true&columns%5B7%5D%5Borderable%5D=false&columns%5B7%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B7%5D%5Bsearch%5D%5Bregex%5D=false&columns%5B8%5D%5Bdata%5D=contract&columns%5B8%5D%5Bname%5D=&columns%5B8%5D%5Bsearchable%5D=true&columns%5B8%5D%5Borderable%5D=false&columns%5B8%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B8%5D%5Bsearch%5D%5Bregex%5D=false&columns%5B9%5D%5Bdata%5D=addr&columns%5B9%5D%5Bname%5D=&columns%5B9%5D%5Bsearchable%5D=true&columns%5B9%5D%5Borderable%5D=false&columns%5B9%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B9%5D%5Bsearch%5D%5Bregex%5D=false&start=${i * 10}&length=10&search%5Bvalue%5D=&search%5Bregex%5D=false&cmd=area_deals&area_id=${num}`, config); // implement a function to get ${num}all four areas ${num}
         
         //first item in object
-            let query = await knex 
+            let query = await knex
                 .select('re_id')
                 .from('real_estate')
                 .where('real_estate.addr', response.data.data[0].addr)
@@ -33,8 +33,23 @@ const getTransactionHistory = async function (i, num, callback) { //num for dist
                 let str = response.data.data[0].winloss
                 let cleanStr = str.slice(0, str.length - 1)
                     console.log('information already there' + query[0].re_id)
-                await knex
-                    .insert({
+                    let htQuery = await knex
+                    
+                    .select('id', 'rootid','historical_transaction.re_id')
+                    .from('historical_transaction')
+                    .innerJoin('real_estate', 'historical_transaction.re_id', 'real_estate.re_id')
+                    .where('historical_transaction.id', response.data.data[0].id)
+                    .andWhere('real_estate.addr', response.data.data[0].addr)
+                    .andWhere('real_estate.catfathername', response.data.data[0].catfathername)
+                    .andWhere('real_estate.catname', response.data.data[0].catname)
+                    .andWhere('historical_transaction.rootid', response.data.data[0].rootid)
+
+                    if (htQuery.length >= 1 ) {
+                        console.log("I've been inserted already")
+                    } else {
+
+                    await knex
+                .insert({
                         re_id: query[0].re_id,
                         id: response.data.data[0].id,
                         block: response.data.data[0].block,
@@ -44,29 +59,32 @@ const getTransactionHistory = async function (i, num, callback) { //num for dist
                         sq_price: response.data.data[0].sq_price_value,
                         winloss: cleanStr
                     }).into('historical_transaction').then(console.log('done one'))
+                }
                 
             } else {
                 let str = response.data.data[0].winloss
                 let cleanStr = str.slice(0, str.length - 1)
-                return await knex
+                await knex
                     .insert({
                         addr: response.data.data[0].addr,
                         catfathername: response.data.data[0].catfathername,
                         catname: response.data.data[0].catname,
                         area: response.data.data[0].area
                     }).into('real_estate').returning('re_id')
+
+    
                 let htQuery = await knex
                     
                     .select('id', 'rootid','re_id')
                     .from('historical_transaction')
                     .innerJoin('real_estate', 'historical_transaction.re_id', 'real_estate.re_id')
-                    .where('id', response.data.data[0].id)
-                    .andWhere('real_estate.addr',response.data.data[0].addr)
-                    .andWhere('catfathername', response.data.data[0].catfathername)
-                    .andWhere('catname', response.data.data[0].catname)
-                    .andWhere('rootid', response.data.data[0].rootid)
+                    .where('historical_transaction.id', response.data.data[0].id)
+                    .andWhere('real_estate.addr', response.data.data[0].addr)
+                    .andWhere('real_estate.catfathername', response.data.data[0].catfathername)
+                    .andWhere('real_estate.catname', response.data.data[0].catname)
+                    .andWhere('historical_transaction.rootid', response.data.data[0].rootid)
 
-                    if (htQuery.length >= 0 ) {
+                    if (htQuery.length >= 1 ) {
                         console.log("I've been inserted already")
                     } else {
 
@@ -85,7 +103,8 @@ const getTransactionHistory = async function (i, num, callback) { //num for dist
             }
 
             //second item in object
-            let query1 = await knex //doesnt work with the objs. 
+            let query1 = await knex 
+             
                 .select('re_id')
                 .from('real_estate')
                 .where('real_estate.addr', response.data.data[1].addr)
@@ -96,7 +115,23 @@ const getTransactionHistory = async function (i, num, callback) { //num for dist
                 let cleanStr = str.slice(0, str.length - 1)
 
                     console.log('information already there' + query1[0].re_id)
-                await knex
+
+                    let htQuery = await knex
+                    
+                    .select('id', 'rootid','historical_transaction.re_id')
+                    .from('historical_transaction')
+                    .innerJoin('real_estate', 'historical_transaction.re_id', 'real_estate.re_id')
+                    .where('historical_transaction.id', response.data.data[1].id)
+                    .andWhere('real_estate.addr', response.data.data[1].addr)
+                    .andWhere('real_estate.catfathername', response.data.data[1].catfathername)
+                    .andWhere('real_estate.catname', response.data.data[1].catname)
+                    .andWhere('historical_transaction.rootid', response.data.data[1].rootid)
+
+                    if (htQuery.length >= 1 ) {
+                        console.log("I've been inserted already")
+                    } else {                
+                
+                    await knex
                     .insert({
                         re_id: query1[0].re_id,
                         id: response.data.data[1].id,
@@ -107,17 +142,19 @@ const getTransactionHistory = async function (i, num, callback) { //num for dist
                         sq_price: response.data.data[1].sq_price_value,
                         winloss: cleanStr
                     }).into('historical_transaction').then(console.log('done 2'))
+                }
                 
             } else {
                 let str = response.data.data[1].winloss
                 let cleanStr = str.slice(0, str.length - 1)
-                return await knex
+                await knex
                     .insert({
                         addr: response.data.data[1].addr,
                         catfathername: response.data.data[1].catfathername,
                         catname: response.data.data[1].catname,
                         area: response.data.data[1].area
                     }).into('real_estate').returning('re_id')
+
                 let htQuery1 = await knex
                     
                     .select('id', 'rootid','re_id')
@@ -129,7 +166,7 @@ const getTransactionHistory = async function (i, num, callback) { //num for dist
                     .andWhere('catname', response.data.data[1].catname)
                     .andWhere('rootid', response.data.data[1].rootid)
 
-                    if (htQuery1.length >= 0 ) {
+                    if (htQuery1.length >= 1 ) {
                         console.log("I've been inserted already")
                     } else {
 
@@ -148,7 +185,7 @@ const getTransactionHistory = async function (i, num, callback) { //num for dist
             }
 
             //third item in object
-            let query2 = await knex //doesnt work with the objs. 
+            let query2 = await knex
                 .select('re_id')
                 .from('real_estate')
                 .where('real_estate.addr', response.data.data[2].addr)
@@ -159,6 +196,24 @@ const getTransactionHistory = async function (i, num, callback) { //num for dist
                 let cleanStr = str.slice(0, str.length - 1)
 
                     console.log('information already there' + query2[0].re_id)
+
+                    let htQuery = await knex
+                    
+                    .select('id', 'rootid','historical_transaction.re_id')
+                    .from('historical_transaction')
+                    .innerJoin('real_estate', 'historical_transaction.re_id', 'real_estate.re_id')
+                    .where('historical_transaction.id', response.data.data[2].id)
+                    .andWhere('real_estate.addr', response.data.data[2].addr)
+                    .andWhere('real_estate.catfathername', response.data.data[2].catfathername)
+                    .andWhere('real_estate.catname', response.data.data[2].catname)
+                    .andWhere('historical_transaction.rootid', response.data.data[2].rootid)
+
+                    if (htQuery.length >= 1 ) {
+                        console.log("I've been inserted already")
+                    } else {
+
+
+
                 await knex
                     .insert({
                         re_id: query2[0].re_id,
@@ -170,11 +225,12 @@ const getTransactionHistory = async function (i, num, callback) { //num for dist
                         sq_price: response.data.data[2].sq_price_value,
                         winloss: cleanStr
                     }).into('historical_transaction').then(console.log('done 3'))
+                }
                 
             } else {
                 let str = response.data.data[2].winloss
                 let cleanStr = str.slice(0, str.length - 1)
-                return await knex
+                await knex
                     .insert({
                         addr: response.data.data[2].addr,
                         catfathername: response.data.data[2].catfathername,
@@ -192,7 +248,7 @@ const getTransactionHistory = async function (i, num, callback) { //num for dist
                     .andWhere('catname', response.data.data[2].catname)
                     .andWhere('rootid', response.data.data[2].rootid)
 
-                    if (htQuery2.length >= 0 ) {
+                    if (htQuery2.length >= 1 ) {
                         console.log("I've been inserted already")
                     } else {
 
@@ -211,7 +267,7 @@ const getTransactionHistory = async function (i, num, callback) { //num for dist
             }
 
             //first item in object
-            let query3 = await knex //doesnt work with the objs. 
+            let query3 = await knex
                 .select('re_id')
                 .from('real_estate')
                 .where('real_estate.addr', response.data.data[3].addr)
@@ -222,6 +278,23 @@ const getTransactionHistory = async function (i, num, callback) { //num for dist
                 let cleanStr = str.slice(0, str.length - 1)
 
                     console.log('information already there' + query3[0].re_id)
+                    let htQuery = await knex
+                    
+                    .select('id', 'rootid','historical_transaction.re_id')
+                    .from('historical_transaction')
+                    .innerJoin('real_estate', 'historical_transaction.re_id', 'real_estate.re_id')
+                    .where('historical_transaction.id', response.data.data[3].id)
+                    .andWhere('real_estate.addr', response.data.data[3].addr)
+                    .andWhere('real_estate.catfathername', response.data.data[3].catfathername)
+                    .andWhere('real_estate.catname', response.data.data[3].catname)
+                    .andWhere('historical_transaction.rootid', response.data.data[3].rootid)
+
+                    if (htQuery.length >= 1 ) {
+                        console.log("I've been inserted already")
+                    } else {
+
+
+
                 await knex
                     .insert({
                         re_id: query3[0].re_id,
@@ -233,12 +306,13 @@ const getTransactionHistory = async function (i, num, callback) { //num for dist
                         sq_price: response.data.data[3].sq_price_value,
                         winloss: cleanStr
                     }).into('historical_transaction').then(console.log('done 4'))
+                }
 
                 
             } else {
                 let str = response.data.data[3].winloss
                 let cleanStr = str.slice(0, str.length - 1)
-                return await knex
+                await knex
                     .insert({
                         addr: response.data.data[3].addr,
                         catfathername: response.data.data[3].catfathername,
@@ -256,7 +330,7 @@ const getTransactionHistory = async function (i, num, callback) { //num for dist
                     .andWhere('catname', response.data.data[3].catname)
                     .andWhere('rootid', response.data.data[3].rootid)
 
-                    if (htQuery3.length >= 0 ) {
+                    if (htQuery3.length >= 1 ) {
                         console.log("I've been inserted already")
                     } else {
 
@@ -275,7 +349,7 @@ const getTransactionHistory = async function (i, num, callback) { //num for dist
             }
 
             //fourth item in object
-            let query4 = await knex //doesnt work with the objs. 
+            let query4 = await knex
                 .select('re_id')
                 .from('real_estate')
                 .where('real_estate.addr', response.data.data[4].addr)
@@ -285,6 +359,22 @@ const getTransactionHistory = async function (i, num, callback) { //num for dist
                 let str = response.data.data[4].winloss
                 let cleanStr = str.slice(0, str.length - 1)
                     console.log('information already there' + query4[0].re_id)
+
+                    let htQuery = await knex
+                    
+                    .select('id', 'rootid','historical_transaction.re_id')
+                    .from('historical_transaction')
+                    .innerJoin('real_estate', 'historical_transaction.re_id', 'real_estate.re_id')
+                    .where('historical_transaction.id', response.data.data[0].id)
+                    .andWhere('real_estate.addr', response.data.data[0].addr)
+                    .andWhere('real_estate.catfathername', response.data.data[0].catfathername)
+                    .andWhere('real_estate.catname', response.data.data[0].catname)
+                    .andWhere('historical_transaction.rootid', response.data.data[0].rootid)
+
+                    if (htQuery.length >= 1 ) {
+                        console.log("I've been inserted already")
+                    } else {
+
                 await knex
                     .insert({
                         re_id: query4[0].re_id,
@@ -296,11 +386,12 @@ const getTransactionHistory = async function (i, num, callback) { //num for dist
                         sq_price: response.data.data[4].sq_price_value,
                         winloss: cleanStr
                     }).into('historical_transaction').then(console.log('done 5'))
+                }
                 
             } else {
                 let str = response.data.data[4].winloss
                 let cleanStr = str.slice(0, str.length - 1)
-                return await knex
+                 await knex
                     .insert({
                         addr: response.data.data[4].addr,
                         catfathername: response.data.data[4].catfathername,
@@ -318,7 +409,7 @@ const getTransactionHistory = async function (i, num, callback) { //num for dist
                     .andWhere('catname', response.data.data[4].catname)
                     .andWhere('rootid', response.data.data[4].rootid)
 
-                    if (htQuery4.length >= 0 ) {
+                    if (htQuery4.length >= 1 ) {
                         console.log("I've been inserted already")
                     } else {
 
@@ -337,7 +428,7 @@ const getTransactionHistory = async function (i, num, callback) { //num for dist
             }
 
             //fifth item in object
-            let query5 = await knex //doesnt work with the objs. 
+            let query5 = await knex
                 .select('re_id')
                 .from('real_estate')
                 .where('real_estate.addr', response.data.data[5].addr)
@@ -347,6 +438,22 @@ const getTransactionHistory = async function (i, num, callback) { //num for dist
                 let str = response.data.data[5].winloss
                 let cleanStr = str.slice(0, str.length - 1)
                     console.log('information already there' + query5[0].re_id)
+
+                    let htQuery = await knex
+                    
+                    .select('id', 'rootid','historical_transaction.re_id')
+                    .from('historical_transaction')
+                    .innerJoin('real_estate', 'historical_transaction.re_id', 'real_estate.re_id')
+                    .where('historical_transaction.id', response.data.data[5].id)
+                    .andWhere('real_estate.addr', response.data.data[5].addr)
+                    .andWhere('real_estate.catfathername', response.data.data[5].catfathername)
+                    .andWhere('real_estate.catname', response.data.data[5].catname)
+                    .andWhere('historical_transaction.rootid', response.data.data[5].rootid)
+
+                    if (htQuery.length >= 1 ) {
+                        console.log("I've been inserted already")
+                    } else {
+
                 await knex
                     .insert({
                         re_id: query5[0].re_id,
@@ -358,11 +465,12 @@ const getTransactionHistory = async function (i, num, callback) { //num for dist
                         sq_price: response.data.data[5].sq_price_value,
                         winloss: cleanStr
                     }).into('historical_transaction').then(console.log('done 6'))
+                }
                 
             } else {
                 let str = response.data.data[5].winloss
                 let cleanStr = str.slice(0, str.length - 1)
-                return await knex
+                await knex
                     .insert({
                         addr: response.data.data[5].addr,
                         catfathername: response.data.data[5].catfathername,
@@ -380,7 +488,7 @@ const getTransactionHistory = async function (i, num, callback) { //num for dist
                     .andWhere('catname', response.data.data[5].catname)
                     .andWhere('rootid', response.data.data[5].rootid)
 
-                    if (htQuery5.length >= 0 ) {
+                    if (htQuery5.length >= 1 ) {
                         console.log("I've been inserted already")
                     } else {
 
@@ -399,7 +507,7 @@ const getTransactionHistory = async function (i, num, callback) { //num for dist
             }
 
             //sixth item in object
-            let query6 = await knex //doesnt work with the objs. 
+            let query6 = await knex
                 .select('re_id')
                 .from('real_estate')
                 .where('real_estate.addr', response.data.data[6].addr)
@@ -409,6 +517,22 @@ const getTransactionHistory = async function (i, num, callback) { //num for dist
                 let str = response.data.data[6].winloss
                 let cleanStr = str.slice(0, str.length - 1)
                 console.log('information already there' + query6[0].re_id)
+
+                let htQuery = await knex
+                    
+                    .select('id', 'rootid','historical_transaction.re_id')
+                    .from('historical_transaction')
+                    .innerJoin('real_estate', 'historical_transaction.re_id', 'real_estate.re_id')
+                    .where('historical_transaction.id', response.data.data[6].id)
+                    .andWhere('real_estate.addr', response.data.data[6].addr)
+                    .andWhere('real_estate.catfathername', response.data.data[6].catfathername)
+                    .andWhere('real_estate.catname', response.data.data[6].catname)
+                    .andWhere('historical_transaction.rootid', response.data.data[6].rootid)
+
+                    if (htQuery.length >= 1 ) {
+                        console.log("I've been inserted already")
+                    } else {
+
                 await knex
                     .insert({
                         re_id: query6[0].re_id,
@@ -420,11 +544,12 @@ const getTransactionHistory = async function (i, num, callback) { //num for dist
                         sq_price: response.data.data[6].sq_price_value,
                         winloss: cleanStr
                     }).into('historical_transaction').then(console.log('done 7'))
+                }
                 
             } else {
                 let str = response.data.data[6].winloss
                 let cleanStr = str.slice(0, str.length - 1)
-                return await knex
+                await knex
                     .insert({
                         addr: response.data.data[6].addr,
                         catfathername: response.data.data[6].catfathername,
@@ -442,7 +567,7 @@ const getTransactionHistory = async function (i, num, callback) { //num for dist
                     .andWhere('catname', response.data.data[6].catname)
                     .andWhere('rootid', response.data.data[6].rootid)
 
-                    if (htQuery6.length >= 0 ) {
+                    if (htQuery6.length >= 1 ) {
                         console.log("I've been inserted already")
                     } else {
 
@@ -461,7 +586,7 @@ const getTransactionHistory = async function (i, num, callback) { //num for dist
             }
 
             //seventh item in object
-            let query7 = await knex //doesnt work with the objs. 
+            let query7 = await knex
                 .select('re_id')
                 .from('real_estate')
                 .where('real_estate.addr', response.data.data[7].addr)
@@ -472,6 +597,24 @@ const getTransactionHistory = async function (i, num, callback) { //num for dist
                 let cleanStr = str.slice(0, str.length - 1)
 
                     console.log('information already there' + query7[0].re_id)
+
+                    let htQuery = await knex
+                    
+                    .select('id', 'rootid','historical_transaction.re_id')
+                    .from('historical_transaction')
+                    .innerJoin('real_estate', 'historical_transaction.re_id', 'real_estate.re_id')
+                    .where('historical_transaction.id', response.data.data[7].id)
+                    .andWhere('real_estate.addr', response.data.data[7].addr)
+                    .andWhere('real_estate.catfathername', response.data.data[7].catfathername)
+                    .andWhere('real_estate.catname', response.data.data[7].catname)
+                    .andWhere('historical_transaction.rootid', response.data.data[7].rootid)
+
+                    if (htQuery.length >= 1 ) {
+                        console.log("I've been inserted already")
+                    } else {
+
+
+                    
                 await knex
                     .insert({
                         re_id: query7[0].re_id,
@@ -483,11 +626,13 @@ const getTransactionHistory = async function (i, num, callback) { //num for dist
                         sq_price: response.data.data[7].sq_price_value,
                         winloss: cleanStr
                     }).into('historical_transaction').then(console.log('done 8'))
+
+                }
                 
             } else {
                 let str = response.data.data[7].winloss
                 let cleanStr = str.slice(0, str.length - 1)
-                return await knex
+                 await knex
                     .insert({
                         addr: response.data.data[7].addr,
                         catfathername: response.data.data[7].catfathername,
@@ -505,7 +650,7 @@ const getTransactionHistory = async function (i, num, callback) { //num for dist
                     .andWhere('catname', response.data.data[7].catname)
                     .andWhere('rootid', response.data.data[7].rootid)
 
-                    if (htQuery7.length > 0 ) {
+                    if (htQuery7.length >= 1 ) {
                         console.log("I've been inserted already")
                     } else {
 
@@ -524,7 +669,7 @@ const getTransactionHistory = async function (i, num, callback) { //num for dist
             }
 
             //eighth item in object
-            let query8 = await knex //doesnt work with the objs. 
+            let query8 = await knex
                 .select('re_id')
                 .from('real_estate')
                 .where('real_estate.addr', response.data.data[8].addr)
@@ -536,6 +681,22 @@ const getTransactionHistory = async function (i, num, callback) { //num for dist
 
             
                     console.log('information already there' + query8[0].re_id)
+
+                    let htQuery = await knex
+                    
+                    .select('id', 'rootid','historical_transaction.re_id')
+                    .from('historical_transaction')
+                    .innerJoin('real_estate', 'historical_transaction.re_id', 'real_estate.re_id')
+                    .where('historical_transaction.id', response.data.data[8].id)
+                    .andWhere('real_estate.addr', response.data.data[8].addr)
+                    .andWhere('real_estate.catfathername', response.data.data[8].catfathername)
+                    .andWhere('real_estate.catname', response.data.data[8].catname)
+                    .andWhere('historical_transaction.rootid', response.data.data[8].rootid)
+
+                    if (htQuery.length >= 1 ) {
+                        console.log("I've been inserted already")
+                    } else {
+
                 await knex
                     .insert({
                         re_id: query8[0].re_id,
@@ -547,11 +708,12 @@ const getTransactionHistory = async function (i, num, callback) { //num for dist
                         sq_price: response.data.data[8].sq_price_value,
                         winloss: cleanStr
                     }).into('historical_transaction').then(console.log('done 9'))
+                }
                 
             } else {
                 let str = response.data.data[8].winloss
                 let cleanStr = str.slice(0, str.length - 1)
-                return await knex
+                await knex
                     .insert({
                         addr: response.data.data[8].addr,
                         catfathername: response.data.data[8].catfathername,
@@ -569,7 +731,7 @@ const getTransactionHistory = async function (i, num, callback) { //num for dist
                     .andWhere('catname', response.data.data[8].catname)
                     .andWhere('rootid', response.data.data[8].rootid)
 
-                    if (htQuery8.length >= 0 ) {
+                    if (htQuery8.length >= 1 ) {
                         console.log("I've been inserted already")
                     } else {
 
@@ -588,7 +750,7 @@ const getTransactionHistory = async function (i, num, callback) { //num for dist
             }
 
             //ninth item in object
-            let query9 = await knex //doesnt work with the objs. 
+            let query9 = await knex
                 .select('re_id')
                 .from('real_estate')
                 .where('real_estate.addr', response.data.data[9].addr)
@@ -600,6 +762,21 @@ const getTransactionHistory = async function (i, num, callback) { //num for dist
 
 
                     console.log('information already there' + query9[0].re_id)
+                    let htQuery = await knex
+                    
+                    .select('id', 'rootid','historical_transaction.re_id')
+                    .from('historical_transaction')
+                    .innerJoin('real_estate', 'historical_transaction.re_id', 'real_estate.re_id')
+                    .where('historical_transaction.id', response.data.data[0].id)
+                    .andWhere('real_estate.addr', response.data.data[0].addr)
+                    .andWhere('real_estate.catfathername', response.data.data[0].catfathername)
+                    .andWhere('real_estate.catname', response.data.data[0].catname)
+                    .andWhere('historical_transaction.rootid', response.data.data[0].rootid)
+
+                    if (htQuery.length >= 1 ) {
+                        console.log("I've been inserted already")
+                    } else {
+
                 await knex
                     .insert({
                         re_id: query9[0].re_id,
@@ -611,11 +788,12 @@ const getTransactionHistory = async function (i, num, callback) { //num for dist
                         sq_price: response.data.data[9].sq_price_value,
                         winloss: cleanStr
                     }).into('historical_transaction').then(console.log('done 10'))
+                }
                 
             } else {
                 let str = response.data.data[9].winloss
                 let cleanStr = str.slice(0, str.length - 1)
-                return await knex
+                 await knex
                     .insert({
                         addr: response.data.data[9].addr,
                         catfathername: response.data.data[9].catfathername,
@@ -633,7 +811,7 @@ const getTransactionHistory = async function (i, num, callback) { //num for dist
                     .andWhere('catname', response.data.data[9].catname)
                     .andWhere('rootid', response.data.data[9].rootid)
 
-                    if (htQuery9.length >= 0 ) {
+                    if (htQuery9.length >= 1 ) {
                         console.log("I've been inserted already")
                     } else {
 

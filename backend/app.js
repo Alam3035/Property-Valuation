@@ -1,38 +1,33 @@
 //General Initilization
-require("dotenv").config(); //Define Environments
-const REDIS_HOST = process.env.REDIS_HOST || "localhost";
-const REDIS_PORT = process.env.REDIS_PORT || 6379;
+require("dotenv").config(); 
 const NODE_ENV = process.env.NODE_ENV || "development";
-
-const knexFile = require("./knexfile")[NODE_ENV]; // Connect to DB
+const knexFile = require("./knexfile")[NODE_ENV]; 
 const knex = require("knex")(knexFile);
-
-const redis = require("redis"); // Connect to Redis server
-const redisClient = redis.createClient({
-  host: REDIS_HOST,
-  port: REDIS_PORT
-});
-
+const express = require('express')
 const axios = require('axios');
-const jwt = require("jwt-simple");
-var bcrypt = require('./utils/bcrypt');
-var authClass = require('./utils/auth');
+
 const cors = require('cors');
+const jwt = require("jwt-simple");
+const bcrypt = require('./utils/bcrypt');
+const authClass = require('./utils/auth');
 const config = require("./utils/config");
 
-const { app, server, io } = require("./utils/init-app")(redisClient);
+const app = express();
+const server = require('http').Server(app);
+const io = require('socket.io')(server);
+const fs = require("fs");
+const https = require("https");
 
 //body parsers required to parse form
-var bodyParser = require("body-parser");
-app.use(bodyParser.json());
+const bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
 const auth = authClass();
 app.use(auth.initialize());
 app.use(cors());
 
-const fs = require("fs");
-const https = require("https");
+
 
 //Routers and Services
 const {
@@ -59,12 +54,9 @@ const {
 let socialPostService = new SocialPostService(knex);
 let directMessageService = new DirectMessageService(knex);
 let estateService = new EstateService(knex);
-let historicalTransactionService = new HistoricalTransactionService(
-  knex,
-  redisClient
-);
-let tradingPlatformService = new TradingPlatformService(knex, redisClient);
-let userService = new UserService(knex, redisClient);
+let historicalTransactionService = new HistoricalTransactionService(knex);
+let tradingPlatformService = new TradingPlatformService(knex);
+let userService = new UserService(knex);
 let userFavService = new UserFavService(knex);
 
 new SocketIORouter(io, userService).router(); //this is where we provide the middlware to check whether or not users are logged in
@@ -97,7 +89,7 @@ app.use(
 
 //Handle Login POST
 
-app.post("/api/login", async function(req, res) {
+app.post("/api/login", async function (req, res) {
   try {
     let users = await knex("users").where({ email: req.body.email });
     if (users.length == 0) {
@@ -150,7 +142,7 @@ app.post("/api/register", async (req, res) => {
 });
 
 //facebook login with jwt access token
-app.post("/api/login/facebook", function(req, response) {
+app.post("/api/login/facebook", function (req, response) {
   if (req.body.access_token) {
     // console.log("Access Token: " + req.body.access_token);
     var accessToken = req.body.access_token;
@@ -159,13 +151,13 @@ app.post("/api/login/facebook", function(req, response) {
         `https://graph.facebook.com/me?fields=id,name,picture,email&access_token=${accessToken}`,
         console.log("FB graph" + accessToken)
       )
-      .then(async function(res) {
+      .then(async function (res) {
         if (!res.data.error) {
           let query = knex
             .select("user_id")
             .from("users")
             .where("facebook_id", res.data.id);
-          return query.then(async function(rows) {
+          return query.then(async function (rows) {
             if (rows.length === 0) {
               var user = await knex("users")
                 .insert({
