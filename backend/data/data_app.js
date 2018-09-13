@@ -24,7 +24,7 @@ const getTransactionHistory = async function (i, num, callback) { //num for dist
         
         //first item in object
             let query = await knex
-                .select('re_id')
+                .select('real_estate.re_id')
                 .from('real_estate')
                 .where('real_estate.addr', response.data.data[0].addr)
                 .andWhere('catfathername', response.data.data[0].catfathername)
@@ -35,7 +35,7 @@ const getTransactionHistory = async function (i, num, callback) { //num for dist
                     console.log('information already there' + query[0].re_id)
                     let htQuery = await knex
                     
-                    .select('id', 'rootid','historical_transaction.re_id')
+                    .select('historical_transaction.id', 'historical_transaction.rootid','historical_transaction.re_id')
                     .from('historical_transaction')
                     .innerJoin('real_estate', 'historical_transaction.re_id', 'real_estate.re_id')
                     .where('historical_transaction.id', response.data.data[0].id)
@@ -75,7 +75,7 @@ const getTransactionHistory = async function (i, num, callback) { //num for dist
     
                 let htQuery = await knex
                     
-                    .select('id', 'rootid','re_id')
+                    .select('historical_transaction.id', 'historical_transaction.rootid','historical_transaction.re_id')
                     .from('historical_transaction')
                     .innerJoin('real_estate', 'historical_transaction.re_id', 'real_estate.re_id')
                     .where('historical_transaction.id', response.data.data[0].id)
@@ -105,7 +105,7 @@ const getTransactionHistory = async function (i, num, callback) { //num for dist
             //second item in object
             let query1 = await knex 
              
-                .select('re_id')
+                .select('real_estate.re_id')
                 .from('real_estate')
                 .where('real_estate.addr', response.data.data[1].addr)
                 .andWhere('catfathername', response.data.data[1].catfathername)
@@ -118,7 +118,7 @@ const getTransactionHistory = async function (i, num, callback) { //num for dist
 
                     let htQuery = await knex
                     
-                    .select('id', 'rootid','historical_transaction.re_id')
+                    .select('historical_transaction.id', 'historical_transaction.rootid','historical_transaction.re_id')
                     .from('historical_transaction')
                     .innerJoin('real_estate', 'historical_transaction.re_id', 'real_estate.re_id')
                     .where('historical_transaction.id', response.data.data[1].id)
@@ -157,7 +157,7 @@ const getTransactionHistory = async function (i, num, callback) { //num for dist
 
                 let htQuery1 = await knex
                     
-                    .select('id', 'rootid','re_id')
+                    .select('historical_transaction.id', 'historical_transaction.rootid','historical_transaction.re_id')
                     .from('historical_transaction')
                     .innerJoin('real_estate', 'historical_transaction.re_id', 'real_estate.re_id')
                     .where('id', response.data.data[1].id)
@@ -186,7 +186,7 @@ const getTransactionHistory = async function (i, num, callback) { //num for dist
 
             //third item in object
             let query2 = await knex
-                .select('re_id')
+                .select('real_estate.re_id')
                 .from('real_estate')
                 .where('real_estate.addr', response.data.data[2].addr)
                 .andWhere('catfathername', response.data.data[2].catfathername)
@@ -199,7 +199,7 @@ const getTransactionHistory = async function (i, num, callback) { //num for dist
 
                     let htQuery = await knex
                     
-                    .select('id', 'rootid','historical_transaction.re_id')
+                    .select('historical_transaction.id', 'historical_transaction.rootid','historical_transaction.re_id')
                     .from('historical_transaction')
                     .innerJoin('real_estate', 'historical_transaction.re_id', 'real_estate.re_id')
                     .where('historical_transaction.id', response.data.data[2].id)
@@ -239,7 +239,7 @@ const getTransactionHistory = async function (i, num, callback) { //num for dist
                     }).into('real_estate').returning('re_id')
                 let htQuery2 = await knex
                     
-                    .select('id', 'rootid','re_id')
+                    .select('historical_transaction.id', 'historical_transaction.rootid','historical_transaction.re_id')
                     .from('historical_transaction')
                     .innerJoin('real_estate', 'historical_transaction.re_id', 'real_estate.re_id')
                     .where('id', response.data.data[2].id)
@@ -268,7 +268,7 @@ const getTransactionHistory = async function (i, num, callback) { //num for dist
 
             //first item in object
             let query3 = await knex
-                .select('re_id')
+                .select('real_estate.re_id')
                 .from('real_estate')
                 .where('real_estate.addr', response.data.data[3].addr)
                 .andWhere('catfathername', response.data.data[3].catfathername)
@@ -280,7 +280,7 @@ const getTransactionHistory = async function (i, num, callback) { //num for dist
                     console.log('information already there' + query3[0].re_id)
                     let htQuery = await knex
                     
-                    .select('id', 'rootid','historical_transaction.re_id')
+                    .select('historical_transaction.id', 'historical_transaction.rootid','historical_transaction.re_id')
                     .from('historical_transaction')
                     .innerJoin('real_estate', 'historical_transaction.re_id', 'real_estate.re_id')
                     .where('historical_transaction.id', response.data.data[3].id)
@@ -321,7 +321,7 @@ const getTransactionHistory = async function (i, num, callback) { //num for dist
                     }).into('real_estate').returning('re_id')
                 let htQuery3 = await knex
                     
-                    .select('id', 'rootid','re_id')
+                    .select('historical_transaction.id', 'historical_transaction.rootid','historical_transaction.re_id')
                     .from('historical_transaction')
                     .innerJoin('real_estate', 'historical_transaction.re_id', 'real_estate.re_id')
                     .where('id', response.data.data[3].id)
@@ -350,7 +350,7 @@ const getTransactionHistory = async function (i, num, callback) { //num for dist
 
             //fourth item in object
             let query4 = await knex
-                .select('re_id')
+                .select('real_estate.re_id')
                 .from('real_estate')
                 .where('real_estate.addr', response.data.data[4].addr)
                 .andWhere('catfathername', response.data.data[4].catfathername)
@@ -362,7 +362,7 @@ const getTransactionHistory = async function (i, num, callback) { //num for dist
 
                     let htQuery = await knex
                     
-                    .select('id', 'rootid','historical_transaction.re_id')
+                    .select('historical_transaction.id', 'historical_transaction.rootid','historical_transaction.re_id')
                     .from('historical_transaction')
                     .innerJoin('real_estate', 'historical_transaction.re_id', 'real_estate.re_id')
                     .where('historical_transaction.id', response.data.data[0].id)
@@ -400,7 +400,7 @@ const getTransactionHistory = async function (i, num, callback) { //num for dist
                     }).into('real_estate').returning('re_id')
                 let htQuery4 = await knex
                     
-                    .select('id', 'rootid','re_id')
+                    .select('historical_transaction.id', 'historical_transaction.rootid','historical_transaction.re_id')
                     .from('historical_transaction')
                     .innerJoin('real_estate', 'historical_transaction.re_id', 'real_estate.re_id')
                     .where('id', response.data.data[4].id)
@@ -429,7 +429,7 @@ const getTransactionHistory = async function (i, num, callback) { //num for dist
 
             //fifth item in object
             let query5 = await knex
-                .select('re_id')
+                .select('real_estate.re_id')
                 .from('real_estate')
                 .where('real_estate.addr', response.data.data[5].addr)
                 .andWhere('catfathername', response.data.data[5].catfathername)
@@ -441,7 +441,7 @@ const getTransactionHistory = async function (i, num, callback) { //num for dist
 
                     let htQuery = await knex
                     
-                    .select('id', 'rootid','historical_transaction.re_id')
+                    .select('historical_transaction.id', 'historical_transaction.rootid','historical_transaction.re_id')
                     .from('historical_transaction')
                     .innerJoin('real_estate', 'historical_transaction.re_id', 'real_estate.re_id')
                     .where('historical_transaction.id', response.data.data[5].id)
@@ -479,7 +479,7 @@ const getTransactionHistory = async function (i, num, callback) { //num for dist
                     }).into('real_estate').returning('re_id')
                 let htQuery5 = await knex
                     
-                    .select('id', 'rootid','re_id')
+                    .select('historical_transaction.id', 'historical_transaction.rootid','historical_transaction.re_id')
                     .from('historical_transaction')
                     .innerJoin('real_estate', 'historical_transaction.re_id', 'real_estate.re_id')
                     .where('id', response.data.data[5].id)
@@ -508,7 +508,7 @@ const getTransactionHistory = async function (i, num, callback) { //num for dist
 
             //sixth item in object
             let query6 = await knex
-                .select('re_id')
+                .select('real_estate.re_id')
                 .from('real_estate')
                 .where('real_estate.addr', response.data.data[6].addr)
                 .andWhere('catfathername', response.data.data[6].catfathername)
@@ -520,7 +520,7 @@ const getTransactionHistory = async function (i, num, callback) { //num for dist
 
                 let htQuery = await knex
                     
-                    .select('id', 'rootid','historical_transaction.re_id')
+                    .select('historical_transaction.id', 'historical_transaction.rootid','historical_transaction.re_id')
                     .from('historical_transaction')
                     .innerJoin('real_estate', 'historical_transaction.re_id', 'real_estate.re_id')
                     .where('historical_transaction.id', response.data.data[6].id)
@@ -558,7 +558,7 @@ const getTransactionHistory = async function (i, num, callback) { //num for dist
                     }).into('real_estate').returning('re_id')
                 let htQuery6 = await knex
                     
-                    .select('id', 'rootid','re_id')
+                    .select('historical_transaction.id', 'historical_transaction.rootid','historical_transaction.re_id')
                     .from('historical_transaction')
                     .innerJoin('real_estate', 'historical_transaction.re_id', 'real_estate.re_id')
                     .where('id', response.data.data[6].id)
@@ -587,7 +587,7 @@ const getTransactionHistory = async function (i, num, callback) { //num for dist
 
             //seventh item in object
             let query7 = await knex
-                .select('re_id')
+                .select('real_estate.re_id')
                 .from('real_estate')
                 .where('real_estate.addr', response.data.data[7].addr)
                 .andWhere('catfathername', response.data.data[7].catfathername)
@@ -600,7 +600,7 @@ const getTransactionHistory = async function (i, num, callback) { //num for dist
 
                     let htQuery = await knex
                     
-                    .select('id', 'rootid','historical_transaction.re_id')
+                    .select('historical_transaction.id', 'historical_transaction.rootid','historical_transaction.re_id')
                     .from('historical_transaction')
                     .innerJoin('real_estate', 'historical_transaction.re_id', 'real_estate.re_id')
                     .where('historical_transaction.id', response.data.data[7].id)
@@ -641,7 +641,7 @@ const getTransactionHistory = async function (i, num, callback) { //num for dist
                     }).into('real_estate').returning('re_id')
                 let htQuery7 = await knex
                     
-                    .select('id', 'rootid','re_id')
+                    .select('historical_transaction.id', 'historical_transaction.rootid','historical_transaction.re_id')
                     .from('historical_transaction')
                     .innerJoin('real_estate', 'historical_transaction.re_id', 'real_estate.re_id')
                     .where('id', response.data.data[7].id)
@@ -670,7 +670,7 @@ const getTransactionHistory = async function (i, num, callback) { //num for dist
 
             //eighth item in object
             let query8 = await knex
-                .select('re_id')
+                .select('real_estate.re_id')
                 .from('real_estate')
                 .where('real_estate.addr', response.data.data[8].addr)
                 .andWhere('catfathername', response.data.data[8].catfathername)
@@ -684,7 +684,7 @@ const getTransactionHistory = async function (i, num, callback) { //num for dist
 
                     let htQuery = await knex
                     
-                    .select('id', 'rootid','historical_transaction.re_id')
+                    .select('historical_transaction.id', 'historical_transaction.rootid','historical_transaction.re_id')
                     .from('historical_transaction')
                     .innerJoin('real_estate', 'historical_transaction.re_id', 'real_estate.re_id')
                     .where('historical_transaction.id', response.data.data[8].id)
@@ -722,7 +722,7 @@ const getTransactionHistory = async function (i, num, callback) { //num for dist
                     }).into('real_estate').returning('re_id')
                 let htQuery8 = await knex
                     
-                    .select('id', 'rootid','re_id')
+                    .select('historical_transaction.id', 'historical_transaction.rootid','historical_transaction.re_id')
                     .from('historical_transaction')
                     .innerJoin('real_estate', 'historical_transaction.re_id', 'real_estate.re_id')
                     .where('id', response.data.data[8].id)
@@ -751,7 +751,7 @@ const getTransactionHistory = async function (i, num, callback) { //num for dist
 
             //ninth item in object
             let query9 = await knex
-                .select('re_id')
+                .select('real_estate.re_id')
                 .from('real_estate')
                 .where('real_estate.addr', response.data.data[9].addr)
                 .andWhere('catfathername', response.data.data[9].catfathername)
@@ -764,7 +764,7 @@ const getTransactionHistory = async function (i, num, callback) { //num for dist
                     console.log('information already there' + query9[0].re_id)
                     let htQuery = await knex
                     
-                    .select('id', 'rootid','historical_transaction.re_id')
+                    .select('historical_transaction.id', 'historical_transaction.rootid','historical_transaction.re_id')
                     .from('historical_transaction')
                     .innerJoin('real_estate', 'historical_transaction.re_id', 'real_estate.re_id')
                     .where('historical_transaction.id', response.data.data[0].id)
@@ -802,7 +802,7 @@ const getTransactionHistory = async function (i, num, callback) { //num for dist
                     }).into('real_estate').returning('re_id')
                 let htQuery9 = await knex
                     
-                    .select('id', 'rootid','re_id')
+                    .select('historical_transaction.id', 'historical_transaction.rootid','historical_transaction.re_id')
                     .from('historical_transaction')
                     .innerJoin('real_estate', 'historical_transaction.re_id', 'real_estate.re_id')
                     .where('id', response.data.data[9].id)
