@@ -99,7 +99,6 @@ const getTransactionHistory = async function (i, num, callback) { //num for dist
                     .andWhere('real_estate.catname', response.data.data[0].catname)
                     .andWhere('historical_transaction.rootid', response.data.data[0].rootid)
 
-                        await knex
                          .insert({
                         re_id: htQuery[0].re_id,
                         id: response.data.data[0].id,
@@ -192,7 +191,6 @@ const getTransactionHistory = async function (i, num, callback) { //num for dist
                     .andWhere('catname', response.data.data[1].catname)
                     .andWhere('rootid', response.data.data[1].rootid)
 
-                        await knex
                          .insert({
                         re_id: htQuery1[0].re_id,
                         id: response.data.data[1].id,
@@ -283,8 +281,6 @@ const getTransactionHistory = async function (i, num, callback) { //num for dist
                     .andWhere('catname', response.data.data[2].catname)
                     .andWhere('rootid', response.data.data[2].rootid)
 
-
-                        await knex
                          .insert({
                         re_id: htQuery2[0].re_id,
                         id: response.data.data[2].id,
@@ -377,7 +373,6 @@ const getTransactionHistory = async function (i, num, callback) { //num for dist
                         .andWhere('catname', response.data.data[3].catname)
                         .andWhere('rootid', response.data.data[3].rootid)
 
-                        await knex
                          .insert({
                         re_id: htQuery3[0].re_id,
                         id: response.data.data[3].id,
@@ -467,7 +462,6 @@ const getTransactionHistory = async function (i, num, callback) { //num for dist
                         .andWhere('catname', response.data.data[4].catname)
                         .andWhere('rootid', response.data.data[4].rootid)
 
-                        await knex
                          .insert({
                         re_id: htQuery4[0].re_id,
                         id: response.data.data[4].id,
@@ -557,7 +551,6 @@ const getTransactionHistory = async function (i, num, callback) { //num for dist
                         .andWhere('catname', response.data.data[5].catname)
                         .andWhere('rootid', response.data.data[5].rootid)
 
-                        await knex
                          .insert({
                         re_id: htQuery5[0].re_id,
                         id: response.data.data[5].id,
@@ -647,7 +640,6 @@ const getTransactionHistory = async function (i, num, callback) { //num for dist
                         .andWhere('catname', response.data.data[6].catname)
                         .andWhere('rootid', response.data.data[6].rootid)
 
-                        await knex
                          .insert({
                         re_id: htQuery6[0].re_id,
                         id: response.data.data[6].id,
@@ -741,7 +733,6 @@ const getTransactionHistory = async function (i, num, callback) { //num for dist
                         .andWhere('catname', response.data.data[7].catname)
                         .andWhere('rootid', response.data.data[7].rootid)
     
-                        await knex
                          .insert({
                         re_id: htQuery7[0].re_id,
                         id: response.data.data[7].id,
@@ -833,8 +824,6 @@ const getTransactionHistory = async function (i, num, callback) { //num for dist
                         .andWhere('catname', response.data.data[8].catname)
                         .andWhere('rootid', response.data.data[8].rootid)
     
-
-                        await knex
                          .insert({
                         re_id: htQuery8[0].re_id,
                         id: response.data.data[8].id,
@@ -925,7 +914,6 @@ const getTransactionHistory = async function (i, num, callback) { //num for dist
                         .andWhere('catname', response.data.data[9].catname)
                         .andWhere('rootid', response.data.data[9].rootid)
 
-                        await knex
                          .insert({
                         re_id: htQuery9[0].re_id,
                         id: response.data.data[9].id,
