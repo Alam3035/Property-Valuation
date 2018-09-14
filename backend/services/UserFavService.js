@@ -199,10 +199,10 @@ class UserFavService {
                   catname: reRow.catname,
                   catfathername: reRow.catfathername,
                   sq_price: reRow.sq_price,
-                  winloss: reRow.winloss
+                  winloss: reRow.winloss,
                 });
               });
-              return rows;
+              return row;
             });
           })
         );
