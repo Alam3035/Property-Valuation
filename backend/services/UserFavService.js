@@ -199,8 +199,8 @@ class UserFavService {
                 row.address.push({
                   catname: reRow.catname,
                   catfathername: reRow.catfathername,
-                  avWinloss: (Number(row.avg)).toFixed(0),
-                  avPrice_sq:  (Number((row.sum)/row.count)).toFixed(0)     
+                  avWinloss: (Number(reRow.avg)).toFixed(0),
+                  avPrice_sq:  (Number((reRow.sum)/row.count)).toFixed(0)     
                 });
               });
               return row;
