@@ -189,6 +189,8 @@ class UserFavService {
               )
               .where("real_estate.re_id", row.re_id);
 
+              console.log(query)
+
             console.log("I worked too: " + "The length of rows: " + row.re_id);
             // return rows;
 
