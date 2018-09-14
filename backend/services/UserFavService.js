@@ -180,7 +180,7 @@ class UserFavService {
               .sum('historical_transaction.sq_price')
               .count("historical_transaction.sq_price")
               .avg('historical_transaction.winloss')
-              .column('catname', 'catfathername')
+              .column('real_estate.catname', 'real_estate.catfathername')
               .from("historical_transaction")
               .innerJoin(
                 "real_estate","historical_transaction.re_id",
@@ -189,7 +189,7 @@ class UserFavService {
               )
               .where("real_estate.re_id", row.re_id);
 
-            console.log("I worked too: " + "The length of rows: " + rows);
+            console.log("I worked too: " + "The length of rows: " + row.re_id);
             // return rows;
 
             return query.then(reRows => {
