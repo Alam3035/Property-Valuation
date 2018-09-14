@@ -176,25 +176,20 @@ class UserFavService {
           rows.map(row => {
             console.log("I work");
             let query = this.knex
-            .avg('sq_price')
+              .avg('sq_price')
               // .sum('historical_transaction.sq_price')
               // .count("historical_transaction.sq_price")
               // .avg('historical_transaction.winloss')
               .column('real_estate.catname', 'real_estate.catfathername')
               .from("historical_transaction")
               .innerJoin(
-                "real_estate","historical_transaction.re_id",
-                "real_estate.re_id"
-                
-              )
+                "real_estate", "historical_transaction.re_id",
+                "real_estate.re_id")
               .where("real_estate.re_id", row.re_id);
-
-              console.log(query)
-
-              
-
+            console.log(query)
             console.log("I worked too: " + "The length of rows: " + row.re_id);
-            // return rows;
+
+            await knex
 
             return query.then(reRows => {
               console.log('fuck')
