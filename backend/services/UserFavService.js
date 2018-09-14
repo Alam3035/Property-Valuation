@@ -168,7 +168,7 @@ class UserFavService {
       .then(rows => {
         return rows.map(row => ({
           re_id: row.re_id,
-          address: []
+          address: ''
         }));
       })
       .then(rows => {
@@ -180,13 +180,13 @@ class UserFavService {
               .sum('historical_transaction.sq_price')
               .count("historical_transaction.sq_price")
               .avg('historical_transaction.winloss')
-              .column('real_estate.catname', 'real_estate.catfathername')
+              .column('real_estate.catname', 'real_estate.catfathername', 'historical_transaction.price_value')
               .from("historical_transaction")
               .innerJoin(
                 "real_estate", "historical_transaction.re_id",
                 "real_estate.re_id")
               .where("real_estate.re_id", row.re_id)
-              .groupBy('real_estate.catname', 'real_estate.catfathername')
+              .groupBy('real_estate.catname', 'real_estate.catfathername', 'historical_transaction.price_value')
             console.log(query)
             console.log("I worked too: " + "The length of rows: " + row.re_id);
 
@@ -197,6 +197,7 @@ class UserFavService {
                 row.address.push({
                   catname: reRow.catname,
                   catfathername: reRow.catfathername,
+                  price: reRow.price_value,
                   avWinloss: (Number(reRow.avg)).toFixed(0),
                   avPrice_sq:  (Number((reRow.sum)/reRow.count)).toFixed(0)     
                 });
