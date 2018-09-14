@@ -168,7 +168,7 @@ class UserFavService {
       .then(rows => {
         return rows.map(row => ({
           re_id: row.re_id,
-          address: ''
+          address: []
         }));
       })
       .then(rows => {
