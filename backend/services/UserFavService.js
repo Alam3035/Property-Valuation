@@ -193,7 +193,9 @@ class UserFavService {
             // return rows;
 
             return query.then(reRows => {
+              console.log('fuck')
               reRows.forEach(reRow => {
+                console.log('what')
                 row.address.push({
                   catname: reRow.catname,
                   catfathername: reRow.catfathername,
