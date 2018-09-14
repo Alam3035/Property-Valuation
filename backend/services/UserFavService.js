@@ -200,7 +200,7 @@ class UserFavService {
                   catname: reRow.catname,
                   catfathername: reRow.catfathername,
                   avWinloss: (Number(reRow.avg)).toFixed(0),
-                  avPrice_sq:  (Number((reRow.sum)/row.count)).toFixed(0)     
+                  avPrice_sq:  (Number((reRow.sum)/reRow.count)).toFixed(0)     
                 });
               });
               return row;
