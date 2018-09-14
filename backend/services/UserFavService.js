@@ -172,7 +172,7 @@ class UserFavService {
         }));
       })
       .then(rows => {
-        return Promise.all(
+        return await Promise.all(
           rows.map(row => {
             console.log("I work");
             let query = this.knex
