@@ -158,7 +158,7 @@ class UserFavService {
   //         );
   //       });
   //   }
-  async listFlatFavs(user_id) {
+ listFlatFavs(user_id) {
     let query = this.knex
       .select("re_id")
       .from("user_favourites_property")
@@ -172,11 +172,11 @@ class UserFavService {
         }));
       })
       .then(rows => {
-        return await Promise.all(
+        return Promise.all(
           rows.map(row => {
             console.log("I work");
             let query = this.knex
-              .avg('sq_price')
+              // .avg('sq_price')
               // .sum('historical_transaction.sq_price')
               // .count("historical_transaction.sq_price")
               // .avg('historical_transaction.winloss')
@@ -189,8 +189,6 @@ class UserFavService {
             console.log(query)
             console.log("I worked too: " + "The length of rows: " + row.re_id);
 
-            await knex
-
             return query.then(reRows => {
               console.log('fuck')
               reRows.forEach(reRow => {
@@ -198,7 +196,7 @@ class UserFavService {
                 row.address.push({
                   catname: reRow.catname,
                   catfathername: reRow.catfathername,
-                  avPrice_sq: (Number(reRow.avg)).toFixed(0),
+                  // avPrice_sq: (Number(reRow.avg)).toFixed(0),
                   // avPrice_sq:  (Number((reRow.sum)/reRow.count)).toFixed(0)     
                 });
               });
