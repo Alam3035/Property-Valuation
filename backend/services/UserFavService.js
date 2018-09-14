@@ -180,7 +180,7 @@ class UserFavService {
               .sum('historical_transaction.sq_price')
               .count("historical_transaction.sq_price")
               .avg('historical_transaction.winloss')
-              .column('catanme', 'catfathername')
+              .column('catname', 'catfathername')
               .from("historical_transaction")
               .innerJoin(
                 "real_estate","historical_transaction.re_id",
