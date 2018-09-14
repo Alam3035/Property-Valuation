@@ -183,11 +183,11 @@ class UserFavService {
               .sum('historical_transaction.sq_price')
               .count("historical_transaction.sq_price")
               .avg('historical_transaction.winloss')
-              .from("real_estate")
+              .from("historical_transaction")
               .innerJoin(
-                "historical_transaction",
-                "real_estate.re_id",
-                "historical_transaction.re_id"
+                "real_estate","historical_transaction.re_id",
+                "real_estate.re_id"
+                
               )
               .where("real_estate.re_id", row.re_id);
 
