@@ -158,7 +158,7 @@ class UserFavService {
   //         );
   //       });
   //   }
-  listFlatFavs(user_id) {
+  async listFlatFavs(user_id) {
     let query = this.knex
       .select("re_id")
       .from("user_favourites_property")
