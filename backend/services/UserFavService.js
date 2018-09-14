@@ -178,10 +178,11 @@ class UserFavService {
             let query = this.knex
               .select(
                 "real_estate.catname",
-                "real_estate.catfathername",
-                "historical_transaction.sq_price",
-                "historical_transaction.winloss"
+                "real_estate.catfathername"
               )
+              .sum('historical_transaction.sq_price')
+              .count("historical_transaction.sq_price")
+              .avg('historical_transaction.winloss')
               .from("real_estate")
               .innerJoin(
                 "historical_transaction",
@@ -198,8 +199,8 @@ class UserFavService {
                 row.address.push({
                   catname: reRow.catname,
                   catfathername: reRow.catfathername,
-                  sq_price: reRow.sq_price,
-                  winloss: reRow.winloss,
+                  avWinloss: (Number(row.avg)).toFixed(0),
+                  avPrice_sq:  (Number((row.sum)/row.count)).toFixed(0)     
                 });
               });
               return row;
