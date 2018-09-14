@@ -182,7 +182,7 @@ class UserFavService {
               )
               // .sum('historical_transaction.sq_price')
               // .count("historical_transaction.sq_price")
-              // .avg('historical_transaction.winloss')
+              .avg('historical_transaction.winloss')
               .from("historical_transaction")
               .innerJoin(
                 "real_estate","historical_transaction.re_id",
@@ -199,7 +199,7 @@ class UserFavService {
                 row.address.push({
                   catname: reRow.catname,
                   catfathername: reRow.catfathername,
-                  // avWinloss: (Number(reRow.avg)).toFixed(0),
+                  avWinloss: (Number(reRow.avg)).toFixed(0),
                   // avPrice_sq:  (Number((reRow.sum)/reRow.count)).toFixed(0)     
                 });
               });
