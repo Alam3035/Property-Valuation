@@ -162,7 +162,8 @@ class UserFavService {
     let query = this.knex
       .select("re_id")
       .from("user_favourites_property")
-      .where("user_id", user_id);
+      .where("user_id", user_id)
+      // .returning('re_id')
 
     return query
       .then(rows => {
@@ -198,7 +199,7 @@ class UserFavService {
                   avPrice_sq:  (Number((reRow.sum)/reRow.count)).toFixed(0)     
                 });
               });
-              return row;
+              return [row];
             });
           })
         );
