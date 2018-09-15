@@ -163,6 +163,7 @@ class UserFavService {
       .select("re_id")
       .from("user_favourites_property")
       .where("user_id", user_id)
+
       // .returning('re_id')
 
     return query
@@ -187,7 +188,7 @@ class UserFavService {
                 "real_estate.re_id")
               .where("real_estate.re_id", row.re_id)
               .groupBy('real_estate.catname', 'real_estate.catfathername')
-            console.log(query)
+            // console.log(query)
             console.log("I worked too: " + "The length of rows: " + row.re_id);
 
             return query.then(reRows => {
@@ -199,7 +200,7 @@ class UserFavService {
                   avPrice_sq:  (Number((reRow.sum)/reRow.count)).toFixed(0)     
                 });
               });
-              return [row];
+              return row;
             });
           })
         );
