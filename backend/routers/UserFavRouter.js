@@ -70,7 +70,7 @@ class UserFavRouter {
       this.userFavService
         .deleteFavFlat(req.params.reID, req.user.id)
         .then(() =>
-          this.userFavService.isFavFlat(req.params.reID, req.user.id)
+          this.userFavService.listFlatFavs(req.params.reID, req.user.id)
         )
         .then(status => res.json(status))
         .catch(err => res.status(500).json(err));
