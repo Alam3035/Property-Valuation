@@ -3,11 +3,21 @@ const EstateService = require('../services/EstateService')
 
 describe('EstateService', function () { //set up jasmine spies to run real tests
 
-    it('lists the av wl/pricevalue of one Estate you seached for', function () {
+    it('it should spy on getInfoOnEstate', function () {
         const estateService = new EstateService()
-        let data = estateService.getInfoOnEstate()
-        expect(data).toEqual([{roundedAverageHT, roundedAverageWL}])
+        const spy = spyOn(EstateService, 'getInfoOnEstate')
+        estateService.getInfoOnEstate();
+        expect(spy).toHaveBeenCalled();
+
+        // let data = estateService.getInfoOnEstate()
+        // expect(data).toEqual([{roundedAverageHT, roundedAverageWL}])
     })
+
+    it('lists the av wl/pricevalue of one Estate you searched for', function () {
+        const estateService = new EstateService()
+        const spy = spyOn(EstateService, 'getInfoOnEstate')
+        estateService.getInfoOnEstate('')
+
     
     it('lists estates by root id with all ht', function () {
         const estateService = new EstateService()
@@ -34,4 +44,7 @@ describe('EstateService', function () { //set up jasmine spies to run real tests
     })
 })
 
-// need tests for differnt types of estate 
+// need tests for different types of estate 
+
+
+

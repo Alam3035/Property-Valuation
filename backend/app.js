@@ -95,14 +95,22 @@ app.post("/api/login", async function (req, res) {
     if (users.length == 0) {
       return done(null, false, { message: "Incorrect credentials" });
     }
+
+    let userInfo = await knex('users')
+    .select('name', 'email')
+    .where({ email: req.body.email })
     let user = users[0];
     let result = await bcrypt.checkPassword(req.body.password, user.password);
     if (result) {
       var payload = {
         user_id: users[0].user_id
       };
+
+
       var token = jwt.encode(payload, config.jwtSecret);
       res.json({
+        name: userInfo[0].name,
+        email:  userInfo[0].email,
         token: token
       });
     } else {
