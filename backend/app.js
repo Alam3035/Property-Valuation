@@ -141,6 +141,8 @@ app.post("/api/register", async (req, res) => {
     };
     var token = jwt.encode(payload, config.jwtSecret);
     res.json({
+      name: req.body.name,
+      email: req.body.email,
       token: token
     });
   } else {
@@ -182,7 +184,7 @@ app.post("/api/login/facebook", function (req, response) {
                 email: res.data.email,
                 token: token
               });
-              console.log("Response: A");
+              console.log("Response: A - if they have  not registered - inserts data to postgres");
             } else {
               let fbQuery = await knex
               .select('name', 'email')
@@ -199,7 +201,7 @@ app.post("/api/login/facebook", function (req, response) {
                 name: fbQuery[0].name,
                 email: fbQuery[0].email
               });
-              console.log("Response: B");
+              console.log("Response: B - if just logging in - reads data from postgres");
             }
           });
         } else {
