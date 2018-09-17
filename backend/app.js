@@ -106,7 +106,6 @@ app.post("/api/login", async function (req, res) {
         user_id: users[0].user_id
       };
 
-
       var token = jwt.encode(payload, config.jwtSecret);
       res.json({
         name: userInfo[0].name,
@@ -179,17 +178,26 @@ app.post("/api/login/facebook", function (req, response) {
               };
               var token = jwt.encode(payload, config.jwtSecret);
               response.json({
+                name: res.data.name,
+                email: res.data.email,
                 token: token
               });
               console.log("Response: A");
             } else {
+              let fbQuery = await knex
+              .select('name', 'email')
+              .from('users')
+              .where("facebook_id", res.data.id)
+
               var payload = {
                 id: rows[0].user_id
               };
               var token = jwt.encode(payload, config.jwtSecret);
               response.json({
                 id: payload.id,
-                token: token
+                token: token,
+                name: fbQuery[0].name,
+                email: fbQuery[0].email
               });
               console.log("Response: B");
             }
