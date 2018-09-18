@@ -39,7 +39,7 @@ class EstateService {
                 re_id: row.re_id,
                 catfathername: row.catfathername,
                 averages: []
-            }));
+            })); 
         })
             .then(rows => {
                 return Promise.all(
@@ -53,18 +53,19 @@ class EstateService {
                             .from('historical_transaction')
                             .innerJoin('real_estate', 'historical_transaction.re_id', 'real_estate.re_id')
                             .where('historical_transaction.re_id', row.re_id)
-                            .whereNot('historical_transaction.sq_price', 0.00 | null | undefined) // may not work
+                            .whereNot('historical_transaction.sq_price', 0.00 | null | undefined)
+                            .whereNot('historical_transaction.winloss', 0.00 | null | undefined ) // may not work
                             .limit(100)
                             return query.then(reRows => {
                             console.log(reRows)
-                            if (reRows.length === 0) {
-                                reRows.push({
-                                    price_value: 1000000,
-                                    sq_price: 8000,
-                                    winloss: 10
-                                })
-                                console.log(reRows)
-                            }
+                            // if (reRows.length === 0) {
+                            //     reRows.push({
+                            //         price_value: 1000000,
+                            //         sq_price: 8000,
+                            //         winloss: 10 
+                            //     })
+                            //     console.log(reRows)
+                            // }
                            // const averageHT = reRows.reduce(function (acc, reRow) { // for AV price
                                // return acc + Number(reRow.price_value)
                             //     const averageSQP = reRows.reduce(function (acc, reRow) {                               
@@ -304,7 +305,7 @@ class EstateService {
                             .innerJoin('real_estate', 'historical_transaction.re_id', 'real_estate.re_id')
                             .where('real_estate.re_id', row.re_id)
                             .orderBy('historical_transaction.winloss', 'desc')
-                            .limit(100)
+                            .limit(25)
                         console.log('selecting two')
 
                         return query.then(reRows => {
