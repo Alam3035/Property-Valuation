@@ -304,6 +304,7 @@ class EstateService {
                             .from('historical_transaction')
                             .innerJoin('real_estate', 'historical_transaction.re_id', 'real_estate.re_id')
                             .where('real_estate.re_id', row.re_id)
+                            .whereNot('historical_transaction.winloss', null | undefined)
                             .orderBy('historical_transaction.winloss', 'desc')
                             .limit(25)
                         console.log('selecting two')
