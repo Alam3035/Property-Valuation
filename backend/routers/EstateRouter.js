@@ -48,7 +48,7 @@ class EstateRouter {
         router.get('/infoP/:catname', (req, res) => {
             console.log('infoP by catname')
 
-            this.estateService.getInfoOnEstate(req.params.catname)
+            this.estateService.getInfoOnEstate(req.params.catname, req.query.page, req.query.numberOfResults)
                 .then((estateInfo) => res.json(estateInfo))
                 .catch((err) => res.status(500).json(err));
         })
@@ -65,7 +65,7 @@ class EstateRouter {
          router.get('/infoA/:catfathername', (req, res) => {
              console.log('infoA by catfathername')
  
-             this.estateService.getAverageOfCatFatherName(req.params.catfathername)
+             this.estateService.getAverageOfCatFatherName(req.params.catfathername, req.query.page, req.query.numberOfResults)
                  .then((estateInfo) => res.json(estateInfo))
                  .catch((err) => res.status(500).json(err));
          })
@@ -74,7 +74,7 @@ class EstateRouter {
          router.get('/infoA/:catfathername', (req, res) => {
              console.log('list by catfathername')
  
-             this.estateService.listEstateByDistrict(req.params.catfathername || 'Wan Chai')
+             this.estateService.listEstateByDistrict(req.params.catfathername || 'Wan Chai', req.query.page, req.query.numberOfResults)
                  .then((districtDetail) => res.json(districtDetail))
                  .catch((err) => res.status(500).json(err));
          })

@@ -54,7 +54,8 @@ class EstateService {
                             .innerJoin('real_estate', 'historical_transaction.re_id', 'real_estate.re_id')
                             .where('historical_transaction.re_id', row.re_id)
                             .whereNot('historical_transaction.sq_price', 0.00 | null | undefined) // may not work
-                        return query.then(reRows => {
+                            .limit(100)
+                            return query.then(reRows => {
                             console.log(reRows)
                             if (reRows.length === 0) {
                                 reRows.push({
@@ -140,6 +141,7 @@ class EstateService {
                             .from('historical_transaction')
                             .where('historical_transaction.re_id', row.re_id)
                             .orderBy('historical_transaction.winloss', 'desc')
+                            .limit(100)
 
                         return query.then(reRows => {
                             reRows.forEach(reRow => {
@@ -228,7 +230,7 @@ class EstateService {
     }
     // need to test but should produce both values wanted. implement pagination
     //where not for better filtering?
-    getAverageOfCatFatherName(catfathername) {
+    getAverageOfCatFatherName(catfathername, page, numberOfResults) {
             let query = this.knex
     
             .avg('sq_price')
@@ -241,7 +243,8 @@ class EstateService {
             .innerJoin('real_estate', 'historical_transaction.re_id', 'real_estate.re_id')
             .where('real_estate.catfathername', 'like', `%${catfathername}%`)
             .whereNot('historical_transaction.sq_price', 0.00 | undefined | null) //unsure if this will work yet
-            .limit(150)
+            .limit(numberOfResults)
+            .offset(page * numberOfResults - numberOfResults)
             .groupBy('real_estate.catname')
             
 //orderBy
@@ -301,6 +304,7 @@ class EstateService {
                             .innerJoin('real_estate', 'historical_transaction.re_id', 'real_estate.re_id')
                             .where('real_estate.re_id', row.re_id)
                             .orderBy('historical_transaction.winloss', 'desc')
+                            .limit(100)
                         console.log('selecting two')
 
                         return query.then(reRows => {
