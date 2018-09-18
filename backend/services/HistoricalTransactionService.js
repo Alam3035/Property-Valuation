@@ -41,7 +41,7 @@ class HistoricalTransactionService {
                             .where('real_estate.re_id', row.re_id)
                             .whereNot('historical_transaction.winloss', null | 0 | undefined)
                             .orderBy('historical_transaction.winloss', 'desc')
-                            .limit(100)
+                            .limit(50)
                             //could also list by date
                         console.log('selecting two')
 
