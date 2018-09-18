@@ -102,6 +102,7 @@ app.post("/api/login", async function (req, res) {
     let user = users[0];
     let result = await bcrypt.checkPassword(req.body.password, user.password);
     if (result) {
+      console.log('users logging in')
       var payload = {
         user_id: users[0].user_id
       };
