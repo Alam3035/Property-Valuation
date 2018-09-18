@@ -39,6 +39,7 @@ class HistoricalTransactionService {
                             .from('historical_transaction')
                             .innerJoin('real_estate', 'historical_transaction.re_id', 'real_estate.re_id')
                             .where('real_estate.re_id', row.re_id)
+                            .whereNot('historical_transaction.winloss', null | 0 | undefined)
                             .orderBy('historical_transaction.winloss', 'desc')
                             .limit(100)
                             //could also list by date
