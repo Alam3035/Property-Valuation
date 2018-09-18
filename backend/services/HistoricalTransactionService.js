@@ -4,7 +4,7 @@ class HistoricalTransactionService {
     }
 
     //List all historical transactions per estate (re_id)
-    listHistoricalTransactionByRealEstate(reID, page, numberOfResults) {
+    listHistoricalTransactionByRealEstate(reID) {
         let query = this.knex
             .select(
                 'real_estate.addr',
@@ -40,8 +40,7 @@ class HistoricalTransactionService {
                             .innerJoin('real_estate', 'historical_transaction.re_id', 'real_estate.re_id')
                             .where('real_estate.re_id', row.re_id)
                             .orderBy('historical_transaction.winloss', 'desc')
-                            .offset(page * numberOfResults - numberOfResults)
-                            .limit(numberOfResults)
+                            .limit(100)
                             //could also list by date
                         console.log('selecting two')
 
