@@ -177,7 +177,7 @@ app.post("/api/login/facebook", function (req, response) {
                 })
                 .returning("user_id");
               var payload = {
-                id: user.user.id
+                user_id: user.user.id
               };
               var token = jwt.encode(payload, config.jwtSecret);
               response.json({
@@ -193,7 +193,7 @@ app.post("/api/login/facebook", function (req, response) {
               .where("facebook_id", res.data.id)
 
               var payload = {
-                id: rows[0].user_id
+                user_id: rows[0].user_id
               };
               var token = jwt.encode(payload, config.jwtSecret);
               response.json({
